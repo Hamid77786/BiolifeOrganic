@@ -27,11 +27,11 @@ namespace BiolifeOrganic.MVC
                 app.UseHsts();
             }
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var dataInitializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
-                await dataInitializer.InitializeAsync();
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var dataInitializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
+            //    await dataInitializer.InitializeAsync();
+            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
