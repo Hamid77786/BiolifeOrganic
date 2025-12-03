@@ -5,5 +5,8 @@ namespace BiolifeOrganic.Bll.Services.Contracts;
 
 public interface IProductService : ICrudService<Product, ProductViewModel, CreateProductViewModel, UpdateProductViewModel>
 {
+    
+
+
 }
 

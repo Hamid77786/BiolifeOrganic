@@ -14,6 +14,7 @@ public class Order : TimeStample
     public string AppUserId { get; set; } = null!;
     public AppUser AppUser { get; set; } = null!;
     public int OrganizationId { get; set; }
+    public Contact? OrganizationContact { get; set; }
     public Organization? Organization { get; set; }
 
     public string? CourierService { get; set; }

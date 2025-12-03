@@ -6,9 +6,15 @@ using BiolifeOrganic.Dll.Reprositories.Contracts;
 
 namespace BiolifeOrganic.Bll.Services;
 
-public class WebContactManager : CrudManager<WebContact, WebContactViewModel, CreateWebContactViewModel, UpdateWebContactViewModel>, IWebContactService
+public class WebContactManager : IWebContactService
 {
-    public WebContactManager(IWebContactRepository respository, IMapper mapper) : base(respository, mapper)
+   
+
+    public WebContactManager()
     {
+        
     }
+
+  
+
 }

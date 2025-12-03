@@ -16,6 +16,8 @@ namespace BiolifeOrganic.Bll.Services
             _fileService = fileService;
         }
 
+       
+
         public override async Task CreateAsync(CreateCategoryViewModel createViewModel)
         {
             if (createViewModel.ImageFile != null)

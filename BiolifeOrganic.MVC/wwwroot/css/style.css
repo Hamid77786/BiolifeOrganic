@@ -5426,6 +5426,7 @@ body.open-overlay #overlay{
     display: block;
     padding-left: 70px;
 }
+
 .checkout-progress-wrap .checkout-act .box-content .txt-desc{
     font-size: 15px;
     line-height: 30px;
@@ -14566,3 +14567,7 @@ body.open-quickview-block .biolife-quickview-block{
         display: none !important;
     }
 }
+
+
+
+

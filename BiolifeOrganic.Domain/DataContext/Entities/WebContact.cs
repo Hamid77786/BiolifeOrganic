@@ -6,6 +6,7 @@ public class WebContact:Entity
     public string? PhoneNumber { get; set; }
     public string? Address { get; set; }
     public string? Schedule { get; set; }
+    public bool IsDefault { get; set; }
     public ContactOption ContactOption { get; set; }
 }
 

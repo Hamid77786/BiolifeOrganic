@@ -3,7 +3,8 @@ using BiolifeOrganic.Dll.DataContext.Entities;
 
 namespace BiolifeOrganic.Bll.Services.Contracts;
 
-public interface IWebContactService : ICrudService<WebContact, WebContactViewModel, CreateWebContactViewModel, UpdateWebContactViewModel>
+public interface IWebContactService 
 {
+
 }
 

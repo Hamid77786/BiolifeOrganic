@@ -1,0 +1,69 @@
+﻿ @model RegisterViewModel
+ <!--Navigation section-->
+<div class="container">
+    <nav class="biolife-nav">
+        <ul>
+            <li class="nav-item"><a asp-controller="home">Home</a></li>
+            <li class="nav-item"><span class="current-page">Register</span></li>
+        </ul>
+    </nav>
+</div>
+<div class="page-contain login-page">
+
+    <!-- Main content -->
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="signin-container">
+                        <form asp-controller="account" asp-action="register" method="post">
+                            <p class="form-row">
+
+                                <label asp-for="UserName">UserName:<span class="requite">*</span></label>
+                                <input asp-for="UserName" class="txt-input">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+
+
+                            </p>
+                            
+                           
+                            <p class="form-row">
+                                <label asp-for="Email">Email Address:<span class="requite">*</span></label>
+                                <input asp-for="Email" class="txt-input">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+                            </p>
+                            <p class="form-row">
+
+                                <label asp-for="Password">Password:<span class="requite">*</span></label>
+                                <input asp-for="Password" class="txt-input">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+
+
+                            </p>
+                            <p class="form-row">
+                                <label asp-for="ConfirmPassword">ConfirmPassword:<span class="requite">*</span></label>
+                                <input asp-for="ConfirmPassword" class="txt-input">
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </p>
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            <p class="form-row wrap-btn">
+                                <button class="btn btn-submit btn-bold" type="submit">Register</button>
+                            </p>
+
+                        </form>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

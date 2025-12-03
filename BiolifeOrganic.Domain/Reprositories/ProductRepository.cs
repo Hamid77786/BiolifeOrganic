@@ -13,7 +13,7 @@ public class ProductRepository : EfCoreRepository<Product>, IProductRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Product?> GetProductDetailsAsync(int id)
+    public async Task<Product?> GetByIdWithDetailsAsync(int id)
     {
         return await _dbContext.Products
             .Include(p => p.Category)
@@ -22,7 +22,18 @@ public class ProductRepository : EfCoreRepository<Product>, IProductRepository
 
     }
 
+
+    public async Task<List<Product>> GetProductsByCategoryAsync(int categoryId, int excludeProductId)
+    {
+        return await _dbContext.Products
+            .Where(p => p.CategoryId == categoryId && p.Id != excludeProductId)
+            .Include(p => p.ProductImages)
+            .Take(4)
+            .ToListAsync();
+    }
+
     
+
 
 
 

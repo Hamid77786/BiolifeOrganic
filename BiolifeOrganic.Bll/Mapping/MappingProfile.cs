@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BiolifeOrganic.Bll.ViewModels.Category;
+using BiolifeOrganic.Bll.ViewModels.Comment;
 using BiolifeOrganic.Bll.ViewModels.Contact;
 using BiolifeOrganic.Bll.ViewModels.Logo;
 using BiolifeOrganic.Bll.ViewModels.Order;
@@ -39,7 +40,7 @@ public class MappingProfile:Profile
         
         CreateMap<Contact, ContactViewModel>()
             .ForMember(dest => dest.AppUserUserName,
-                       opt => opt.MapFrom(src => src.AppUser!.FirstName));
+                       opt => opt.MapFrom(src => src.AppUser!.UserName));
        
         CreateMap<CreateContactViewModel, Contact>();
         CreateMap<UpdateContactViewModel, Contact>().ReverseMap();
@@ -97,12 +98,39 @@ public class MappingProfile:Profile
         CreateMap<Product, ProductViewModel>()
                .ForMember(dest => dest.CategoryName,
                    opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
-               .ForMember(dest => dest.ProductImageUrls,
+               .ForMember(dest => dest.ProductImages,
                    opt => opt.MapFrom(src => src.ProductImages.Select(pi => pi.ImageUrl).ToList()))
                .ForMember(dest => dest.DiscountedPrice,
                    opt => opt.MapFrom(src => src.DiscountedPrice));
 
        
+         CreateMap<UpdateProductViewModel, Product>()
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.Category, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId != 0 ? src.CategoryId : 0))
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<UpdateProductViewModel, Product>()
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.Category, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId != 0 ? src.CategoryId : 0))
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+        CreateMap<UpdateProductViewModel, Product>()
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.Category, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
+            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId != 0 ? src.CategoryId : 0))
+            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         CreateMap<CreateProductViewModel, Product>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()) 
@@ -121,7 +149,7 @@ public class MappingProfile:Profile
             .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId.HasValue ? src.CategoryId.Value : 0))
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId !=0 ? src.CategoryId : 0))
             .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         
@@ -149,7 +177,7 @@ public class MappingProfile:Profile
 
         CreateMap<Review, ReviewViewModel>()
            .ForMember(dest => dest.AppUserName,
-               opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.FirstName : null));
+               opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.UserName : null));
 
         CreateMap<CreateReviewViewModel, Review>();
 
@@ -164,16 +192,26 @@ public class MappingProfile:Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<Wishlist, WishlistViewModel>()
-           .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.AppUser!.FirstName))
+           .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.AppUser!.UserName))
            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product!.Name));
         CreateMap<CreateWishlistViewModel, Wishlist>();
         CreateMap<UpdateWishlistViewModel, Wishlist>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
+        CreateMap<Comment, CommentViewModel>()
+          .ForMember(dest => dest.AppUserName,
+                     opt => opt.MapFrom(src => src.AppUser!.UserName));
 
+        CreateMap<CreateCommentViewModel, Comment>();
+        CreateMap<UpdateCommentViewModel, Comment>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         
-        
+
+
+
+
+
     }
 
 

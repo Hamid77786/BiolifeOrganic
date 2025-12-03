@@ -1,0 +1,378 @@
+﻿<div class="container">
+    <nav class="biolife-nav">
+        <ul>
+            <li class="nav-item"><a asp-controller="home" asp-action="index">Home</a></li>
+            <li class="nav-item"><a asp-controller="shoppingcart" asp-action="index">ShoppingCart</a></li>
+            <li class="nav-item"><span class="current-page">Checkout</span></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="page-contain checkout">
+    <div id="main-content" class="main-content">
+        <div class="container sm-margin-top-37px">
+            <div class="row">
+                <!-- Левая часть: форма оформления заказа -->
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                    <div class="checkout-progress-wrap">
+                        <ul class="steps">
+                            <!-- STEP 1 - Customer -->
+                            <li class="step">
+                                <div class="checkout-act active" id="step1">
+                                    <h3 class="title-box">
+                                        <span class="number">1</span>
+                                        <span>Customer</span>
+                                    </h3>
+                                    <div class="login-on-checkout">
+                                        <form id="form1" name="frm-login" method="post" onsubmit="return submitStep1(event)">
+                                            <p class="form-row">
+                                                <label for="input_email">Email Address</label>
+                                                <input type="email" name="email" id="input_email" value="" placeholder="Your email" required>
+                                            </p>
+                                            <p class="form-row">
+                                                <input type="checkbox" name="subcribe" id="input_subcribe">
+                                                <label for="input_subcribe">Subscribe to our newsletter</label>
+                                            </p>
+                                            <p class="msg">Already have an account? <a href="#" class="link-forward">Sign in now</a></p>
+                                            <button type="submit" class="btn">Continue</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- STEP 2 - Shipping -->
+                            <li class="step">
+                                <div class="checkout-act locked" id="step2">
+                                    <h3 class="title-box">
+                                        <span class="number">2</span>
+                                        <span>Shipping</span>
+                                    </h3>
+                                    <div class="box-content">
+                                        <p class="txt-desc">Enter your shipping details</p>
+                                        <form id="form2" onsubmit="return submitStep2(event)">
+                                            <div class="form-row">
+                                                <label for="shippingFullName">Full Name *</label>
+                                                <input type="text" name="shippingFullName" id="shippingFullName" placeholder="Full name" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="shippingPhone">Phone *</label>
+                                                <input type="text" name="shippingPhone" id="shippingPhone" placeholder="Phone number" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="shippingCountry">Country *</label>
+                                                <input type="text" name="shippingCountry" id="shippingCountry" placeholder="Country" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="shippingCity">City *</label>
+                                                <input type="text" name="shippingCity" id="shippingCity" placeholder="City" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="shippingAddress">Address Line *</label>
+                                                <input type="text" name="shippingAddress" id="shippingAddress" placeholder="Street, house/apartment" required>
+                                            </div>
+                                            <div class="form-row">
+                                                <label for="shippingPostalCode">Postal Code *</label>
+                                                <input type="text" name="shippingPostalCode" id="shippingPostalCode" placeholder="Postal code" required>
+                                            </div>
+                                           
+                                            <button type="submit" class="btn">Continue to Billing</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                            <!-- STEP 3 - Billing -->
+                            <li class="step">
+                                <div class="checkout-act locked" id="step3">
+                                    <h3 class="title-box">
+                                        <span class="number">3</span>
+                                        <span>Billing</span>
+                                    </h3>
+                                    <div class="box-content">
+                                        <p class="txt-desc">Billing address</p>
+                                        <form id="form3" onsubmit="return submitStep3(event)">
+                                            <div class="form-row">
+                                                <input type="checkbox" id="sameShipping" checked onchange="toggleBillingFields()">
+                                                <label for="sameShipping">Billing address same as shipping</label>
+                                            </div>
+                                            <div id="billingFields">
+                                                <div class="form-row">
+                                                    <label for="billingFirstName">First Name *</label>
+                                                    <input type="text" name="billingFirstName" id="billingFirstName" placeholder="First Name" required>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="billingLastName">Last Name *</label>
+                                                    <input type="text" name="billingLastName" id="billingLastName" placeholder="Last Name" required>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="billingPhone">Phone *</label>
+                                                    <input type="text" name="billingPhone" id="billingPhone" placeholder="Phone number" required>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="billingCountry">Country *</label>
+                                                    <input type="text" name="billingCountry" id="billingCountry" placeholder="Country" required>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="billingCity">City *</label>
+                                                    <input type="text" name="billingCity" id="billingCity" placeholder="City" required>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="billingAddress">Address Line *</label>
+                                                    <input type="text" name="billingAddress" id="billingAddress" placeholder="Street, house/apartment" required>
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="billingPostalCode">Postal Code *</label>
+                                                    <input type="text" name="billingPostalCode" id="billingPostalCode" placeholder="Postal Code" required>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn">Continue to Payment</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- STEP 4 - Payment -->
+                            <li class="step">
+                                <div class="checkout-act locked" id="step4">
+                                    <h3 class="title-box">
+                                        <span class="number">4</span>
+                                        <span>Payment</span>
+                                    </h3>
+                                    <div class="box-content">
+                                        <form id="form4" onsubmit="return submitStep4(event)">
+                                           
+                                            <div id="cardFields">
+                                                <div class="form-row">
+                                                    <label for="cardNumber">Card Number *</label>
+                                                    <input type="text" name="cardNumber" id="cardNumber" placeholder="xxxx xxxx xxxx xxxx" autocomplete="cc-number">
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="cardHolder">Card Holder Name *</label>
+                                                    <input type="text" name="cardHolder" id="cardHolder" placeholder="Name on card" autocomplete="cc-name">
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="cardExpiry">Expiration (MM/YY) *</label>
+                                                    <input type="text" name="cardExpiry" id="cardExpiry" placeholder="MM/YY" autocomplete="cc-exp">
+                                                </div>
+                                                <div class="form-row">
+                                                    <label for="cardCVC">CVC *</label>
+                                                    <input type="text" name="cardCVC" id="cardCVC" placeholder="CVC" autocomplete="cc-csc">
+                                                </div>
+                                            </div>
+
+                                            <button type="submit" class="btn">Complete Order</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- Правая часть: Order Summary -->
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 sm-padding-top-48px sm-margin-bottom-0 xs-margin-bottom-15px">
+                    <div class="order-summary sm-margin-bottom-80px">
+                        <div class="title-block">
+                            <h3 class="title">Order Summary</h3>
+                            <a href="#" class="link-forward">Edit cart</a>
+                        </div>
+                        <div class="cart-list-box short-type">
+                            <span class="number">2 items</span>
+                            <ul class="cart-list">
+                                <li class="cart-elem">
+                                    <div class="cart-item">
+                                        <div class="product-thumb">
+                                            <a class="prd-thumb" href="#">
+                                                <figure><img src="~/images/shippingcart/pr-01.jpg" width="113" height="113" alt="shop-cart"></figure>
+                                            </a>
+                                        </div>
+                                        <div class="info">
+                                            <span class="txt-quantity">1X</span>
+                                            <a href="#" class="pr-name">National Fresh Fruit</a>
+                                        </div>
+                                        <div class="price price-contain">
+                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="cart-elem">
+                                    <div class="cart-item">
+                                        <div class="product-thumb">
+                                            <a class="prd-thumb" href="#">
+                                                <figure><img src="~/images/shippingcart/pr-02.jpg" width="113" height="113" alt="shop-cart"></figure>
+                                            </a>
+                                        </div>
+                                        <div class="info">
+                                            <span class="txt-quantity">1X</span>
+                                            <a href="#" class="pr-name">National Fresh Fruit</a>
+                                        </div>
+                                        <div class="price price-contain">
+                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="subtotal">
+                                <li>
+                                    <div class="subtotal-line">
+                                        <b class="stt-name">Subtotal</b>
+                                        <span class="stt-price">£170.00</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="subtotal-line">
+                                        <b class="stt-name">Shipping</b>
+                                        <span class="stt-price">£20.00</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="subtotal-line">
+                                        <b class="stt-name">Tax</b>
+                                        <span class="stt-price">£0.00</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="subtotal-line">
+                                        <a href="#" class="link-forward">Promo/Gift Certificate</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="subtotal-line">
+                                        <b class="stt-name">total:</b>
+                                        <span class="stt-price">£190.00</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        unlockStep(1);
+        lockStep(2);
+        lockStep(3);
+        lockStep(4);
+
+        toggleBillingFields();
+
+    });
+
+    function unlockStep(stepNum) {
+        const step = document.getElementById('step' + stepNum);
+        if (step) {
+            step.classList.remove('locked');
+            step.classList.add('active');
+            step.classList.remove('completed');
+            step.style.display = 'block'; // если нужно явно показывать
+        }
+    }
+
+    function lockStep(stepNum) {
+        const step = document.getElementById('step' + stepNum);
+        if (step) {
+            step.classList.remove('active', 'completed');
+            step.classList.add('locked');
+        }
+    }
+
+    function completeStep(stepNum) {
+        const step = document.getElementById('step' + stepNum);
+        if (step) {
+            step.classList.remove('active', 'locked');
+            step.classList.add('completed');
+        }
+    }
+
+    function submitStep1(e) {
+        e.preventDefault();
+        completeStep(1);
+        unlockStep(2);
+        setTimeout(() => {
+            document.getElementById('step2').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        return false;
+    }
+
+    function submitStep2(e) {
+        e.preventDefault();
+        const form = document.getElementById('form2');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return false;
+        }
+        completeStep(2);
+        unlockStep(3);
+        setTimeout(() => {
+            document.getElementById('step3').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        return false;
+    }
+
+    function submitStep3(e) {
+        e.preventDefault();
+        const sameShipping = document.getElementById('sameShipping').checked;
+        if (!sameShipping) {
+            const form = document.getElementById('form3');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return false;
+            }
+        }
+        completeStep(3);
+        unlockStep(4);
+        setTimeout(() => {
+            document.getElementById('step4').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        return false;
+    }
+
+    function submitStep4(e) {
+        e.preventDefault();
+        const paymentMethod = document.getElementById('paymentMethod').value;
+        if (paymentMethod === 'card') {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCVC = document.getElementById('cardCVC').value;
+            if (!cardNumber || !cardHolder || !cardExpiry || !cardCVC) {
+                alert('Please fill in all card details');
+                return false;
+            }
+        }
+        completeStep(4);
+        alert('Order completed successfully! Thank you for your purchase.');
+        return false;
+    }
+
+    function toggleBillingFields() {
+        const checkbox = document.getElementById('sameShipping');
+        const billingFields = document.getElementById('billingFields');
+        const inputs = billingFields.querySelectorAll('input');
+        if (checkbox.checked) {
+            billingFields.style.display = 'none';
+            inputs.forEach(input => {
+                input.required = false;
+                input.disabled = true;
+            });
+        } else {
+            billingFields.style.display = 'block';
+            inputs.forEach(input => {
+                input.required = true;
+                input.disabled = false;
+            });
+        }
+    }
+
+    
+</script>
+
+

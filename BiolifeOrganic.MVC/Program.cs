@@ -1,5 +1,11 @@
 using BiolifeOrganic.Dll.DataContext;
 using BiolifeOrganic.Dll;
+using BiolifeOrganic.Bll;
+using BiolifeOrganic.MVC.Models;
+using BiolifeOrganic.Dll.DataContext.Entities;
+using Microsoft.AspNetCore.Identity;
+using BiolifeOrganic.MVC.Settings;
+
 
 
 
@@ -16,6 +22,22 @@ namespace BiolifeOrganic.MVC
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDataAccessLayerServices(builder.Configuration);
+            builder.Services.AddBussinessLogicLayerServices();
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+
+
+            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+
+                options.User.RequireUniqueEmail = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
 
             var app = builder.Build();
 
@@ -27,11 +49,41 @@ namespace BiolifeOrganic.MVC
                 app.UseHsts();
             }
 
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var dataInitializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
-            //    await dataInitializer.InitializeAsync();
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                var dataInitializer = scope.ServiceProvider.GetRequiredService<DataInitializer>();
+                await dataInitializer.InitializeAsync();
+            }
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+                string adminRole = "Admin";
+                string adminEmail = "admin@mail.com";
+                string adminPassword = "777123";
+
+                
+                if (!await roleManager.RoleExistsAsync(adminRole))
+                    await roleManager.CreateAsync(new IdentityRole(adminRole));
+
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                if (adminUser == null)
+                {
+                    adminUser = new AppUser
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(adminUser, adminPassword);
+                }
+
+                if (!await userManager.IsInRoleAsync(adminUser, adminRole))
+                    await userManager.AddToRoleAsync(adminUser, adminRole);
+            }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

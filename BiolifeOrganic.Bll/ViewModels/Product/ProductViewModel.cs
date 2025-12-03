@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BiolifeOrganic.Bll.ViewModels.Product;
 
@@ -27,7 +28,7 @@ public class ProductViewModel
     public int CategoryId { get; set; }
     public string? CategoryName { get; set; }
 
-    public List<string> ProductImageUrls { get; set; } = [];
+    public List<string> ProductImages { get; set; } = [];
 }
 
 public class CreateProductViewModel
@@ -38,10 +39,12 @@ public class CreateProductViewModel
     public string? Description { get; set; }
     public string? AdditionalInformation { get; set; }
 
-    public IFormFile? ImageFile { get; set; }
+    public IFormFile ImageFile { get; set; } = null!;
+    public string? ImageUrl { get; set; }
     public List<IFormFile> ProductImages { get; set; } = [];
 
     public int QuantityAvailable { get; set; }
+    public int Stock { get; set; }
 
     public bool IsBestSeller { get; set; }
     public bool IsAvailable { get; set; }
@@ -53,6 +56,8 @@ public class CreateProductViewModel
     public DateTime? SaleEndDate { get; set; }
 
     public int CategoryId { get; set; }
+    public List<SelectListItem> CategorySelectListItems { get; set; } = [];
+
 }
 
 public class UpdateProductViewModel
@@ -66,12 +71,13 @@ public class UpdateProductViewModel
     public string? AdditionalInformation { get; set; }
 
     public string? ExistingImageUrl { get; set; }
-    public IFormFile? NewImageFile { get; set; }
+    public IFormFile NewImageFile { get; set; } = null!;
 
     public List<string>? ExistingProductImages { get; set; }
     public List<IFormFile>? NewProductImages { get; set; }
 
     public int QuantityAvailable { get; set; }
+    public int Stock { get; set; }
 
     public bool IsBestSeller { get; set; }
     public bool IsAvailable { get; set; }
@@ -83,6 +89,7 @@ public class UpdateProductViewModel
     public DateTime? SaleStartDate { get; set; }
     public DateTime? SaleEndDate { get; set; }
 
-    public int? CategoryId { get; set; }
+    public int CategoryId { get; set; }
+    public List<SelectListItem> CategorySelectListItems { get; set; } = [];
 }
 

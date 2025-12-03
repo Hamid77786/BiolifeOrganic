@@ -13,7 +13,7 @@ public static class DataAccessLayerServiceRegistration
     public static IServiceCollection AddDataAccessLayerServices(this IServiceCollection services,IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(option=>
-          option.UseSqlServer(configuration.GetConnectionString("DefaulConnection"), option =>
+          option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), option =>
           {
               option.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
           }));
@@ -33,6 +33,7 @@ public static class DataAccessLayerServiceRegistration
         services.AddScoped<ISliderRepository, SliderRepository>();
         services.AddScoped<IWebContactRepository, WebContactRepository>();
         services.AddScoped<IWishlistRepository, WishlistRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
 
 
 

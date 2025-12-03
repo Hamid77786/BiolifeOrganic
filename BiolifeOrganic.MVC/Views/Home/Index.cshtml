@@ -1,4 +1,5 @@
-﻿ <!-- Page Contain -->
+﻿ @model HomeViewModel
+<!-- Page Contain -->
 <div class="page-contain">
 
     <!-- Main content -->
@@ -21,170 +22,78 @@
                             <h3 class="second-line">Vegetables 100% Organic</h3>
                             <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
                             <p class="buttons">
-                                <a href="#" class="btn btn-bold">Shop now</a>
-                                <a href="#" class="btn btn-thin">View lookbook</a>
+                                <a asp-controller="shop" class="btn btn-bold">Shop now</a>                            
                             </p>
                         </div>
                     </div>
                 </li>
                 <li>
-                    <div class="slide-contain slider-opt03__layout01">
-                        <div class="media">
-                            <div class="child-elememt"><a href="#" class="link-to"><img src="~/images/home-03/slide-01-child-01.png" width="604" height="580" alt=""></a></div>
+                    <!--Block 04: Banner Promotion 01 -->
+                    <div class="banner-promotion-01 xs-margin-top-50px sm-margin-top-11px">
+                        <div class="biolife-banner promotion biolife-banner__promotion">
+                            <div class="banner-contain">
+                                <div class="media background-biolife-banner__promotion">
+                                    <div class="img-moving position-1">
+                                        <img src="~/images/home-03/img-moving-pst-1.png" width="149" height="139" alt="img msv">
+                                    </div>
+                                    <div class="img-moving position-2">
+                                        <img src="~/images/home-03/img-moving-pst-2.png" width="185" height="265" alt="img msv">
+                                    </div>
+                                    <div class="img-moving position-3">
+                                        <img src="~/images/home-03/img-moving-pst-3-cut.png" width="384" height="151" alt="img msv">
+                                    </div>
+                                    <div class="img-moving position-4">
+                                        <img src="~/images/home-03/img-moving-pst-4.png" width="198" height="269" alt="img msv">
+                                    </div>
+                                </div>
+                                <div class="text-content">
+                                    <div class="container text-wrap">
+                                        <i class="first-line">Healthy Fruit juice</i>
+                                        <span class="second-line">Vegetable Always fresh</span>
+                                        <p class="third-line">Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled...</p>
+                                        <div class="product-detail">
+                                            <p class="txt-price"><span>Only:</span>$8.00</p>
+                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-content">
-                            <i class="first-line">Pomegranate</i>
-                            <h3 class="second-line">Vegetables 100% Organic</h3>
-                            <p class="third-line">A blend of freshly squeezed green apple & fruits</p>
-                            <p class="buttons">
-                                <a href="#" class="btn btn-bold">Shop now</a>
-                                <a href="#" class="btn btn-thin">View lookbook</a>
-                            </p>
+                    </div>
+
+                </li>
+               
+                <li>
+                    <div class="slide-contain biolife-banner__special">
+                        <div class="banner-contain">
+                            <div class="media">
+                                <a href="#" class="bn-link">
+                                    <figure><img src="~/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
+                                </a>
+                            </div>
+                            <div class="text-content">
+                                <b class="first-line">Pomegranate</b>
+                                <span class="second-line">Organic Heaven Made</span>
+                                <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
+                                <div class="product-detail">
+                                    <h4 class="product-name">National Fresh Fruit Production</h4>
+                                    <div class="price price-contain">
+                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
+                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    </div>
+                                    <div class="buttons">
+                                        <a href="#" class="btn add-to-cart-btn">add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </li>
+               
             </ul>
         </div>
 
-        <!--Block 02: Banner-->
-        <div class="special-slide">
-            <div class="container">
-                <ul class="biolife-carousel dots_ring_style" data-slick='{"arrows": false, "dots": true, "slidesMargin": 30, "slidesToShow": 1, "infinite": true, "speed": 800, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 1}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":20, "dots": false}},{"breakpoint":480, "settings":{ "slidesToShow": 1}}]}'>
-                    <li>
-                        <div class="slide-contain biolife-banner__special">
-                            <div class="banner-contain">
-                                <div class="media">
-                                    <a href="#" class="bn-link">
-                                        <figure><img src="~/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                    </a>
-                                </div>
-                                <div class="text-content">
-                                    <b class="first-line">Pomegranate</b>
-                                    <span class="second-line">Organic Heaven Made</span>
-                                    <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                    <div class="product-detail">
-                                        <h4 class="product-name">National Fresh Fruit Production</h4>
-                                        <div class="price price-contain">
-                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                        </div>
-                                        <div class="buttons">
-                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="slide-contain biolife-banner__special">
-                            <div class="banner-contain">
-                                <div class="media">
-                                    <a href="#" class="bn-link">
-                                        <figure><img src="~/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                    </a>
-                                </div>
-                                <div class="text-content">
-                                    <b class="first-line">Pomegranate</b>
-                                    <span class="second-line">Organic Heaven Made</span>
-                                    <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                    <div class="product-detail">
-                                        <h4 class="product-name">National Fresh Fruit Production</h4>
-                                        <div class="price price-contain">
-                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                        </div>
-                                        <div class="buttons">
-                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="slide-contain biolife-banner__special">
-                            <div class="banner-contain">
-                                <div class="media">
-                                    <a href="#" class="bn-link">
-                                        <figure><img src="~/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                    </a>
-                                </div>
-                                <div class="text-content">
-                                    <b class="first-line">Pomegranate</b>
-                                    <span class="second-line">Organic Heaven Made</span>
-                                    <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                    <div class="product-detail">
-                                        <h4 class="product-name">National Fresh Fruit Production</h4>
-                                        <div class="price price-contain">
-                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                        </div>
-                                        <div class="buttons">
-                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="slide-contain biolife-banner__special">
-                            <div class="banner-contain">
-                                <div class="media">
-                                    <a href="#" class="bn-link">
-                                        <figure><img src="~/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
-                                    </a>
-                                </div>
-                                <div class="text-content">
-                                    <b class="first-line">Pomegranate</b>
-                                    <span class="second-line">Organic Heaven Made</span>
-                                    <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
-                                    <div class="product-detail">
-                                        <h4 class="product-name">National Fresh Fruit Production</h4>
-                                        <div class="price price-contain">
-                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                        </div>
-                                        <div class="buttons">
-                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <div class="biolife-service type01 biolife-service__type01 sm-margin-top-0 xs-margin-top-45px">
-                    <b class="txt-show-01">100%Nature</b>
-                    <i class="txt-show-02">Fresh Fruits</i>
-                    <ul class="services-list">
-                        <li>
-                            <div class="service-inner">
-                                <span class="number">1</span>
-                                <span class="biolife-icon icon-beer"></span>
-                                <a class="srv-name" href="#">full stamped product</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="service-inner">
-                                <span class="number">2</span>
-                                <span class="biolife-icon icon-schedule"></span>
-                                <a class="srv-name" href="#">place and delivery on time</a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="service-inner">
-                                <span class="number">3</span>
-                                <span class="biolife-icon icon-car"></span>
-                                <a class="srv-name" href="#">Free shipping in the city</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
+       
         <!--Block 03: Product Tab-->
         <div class="product-tab z-index-20 sm-margin-top-193px xs-margin-top-30px">
             <div class="container">
@@ -235,7 +144,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -261,7 +169,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -287,7 +194,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -313,7 +219,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -339,7 +244,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -365,7 +269,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -391,7 +294,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -417,7 +319,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -443,7 +344,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -469,7 +369,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -500,7 +399,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -526,7 +424,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -552,7 +449,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -578,7 +474,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -604,7 +499,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -630,7 +524,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -656,7 +549,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -682,7 +574,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -708,7 +599,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -734,7 +624,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -766,7 +655,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -792,7 +680,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -818,7 +705,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -844,7 +730,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -870,7 +755,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -896,7 +780,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -922,7 +805,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -948,7 +830,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -974,7 +855,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1000,7 +880,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1032,7 +911,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1058,7 +936,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1084,7 +961,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1110,7 +986,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1136,7 +1011,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1162,7 +1036,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1188,7 +1061,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1214,7 +1086,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1240,7 +1111,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1266,7 +1136,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i>add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1544,59 +1413,73 @@
             </div>
         </div>
 
-        <!--Block 04: Banner Promotion 01 -->
-        <div class="banner-promotion-01 xs-margin-top-50px sm-margin-top-11px">
-            <div class="biolife-banner promotion biolife-banner__promotion">
-                <div class="banner-contain">
-                    <div class="media background-biolife-banner__promotion">
-                        <div class="img-moving position-1">
-                            <img src="~/images/home-03/img-moving-pst-1.png" width="149" height="139" alt="img msv">
+
+        <!--Block 07: Brands-->
+        <div class="brand-slide sm-margin-top-100px background-fafafa xs-margin-top-80px xs-margin-bottom-80px">
+            <div class="container">
+                <ul class="biolife-carousel nav-center-bold nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}},{"breakpoint":450, "settings":{ "slidesToShow": 1, "slidesMargin":10}}]}'>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
+                            </a>
                         </div>
-                        <div class="img-moving position-2">
-                            <img src="~/images/home-03/img-moving-pst-2.png" width="185" height="265" alt="img msv">
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
+                            </a>
                         </div>
-                        <div class="img-moving position-3">
-                            <img src="~/images/home-03/img-moving-pst-3-cut.png" width="384" height="151" alt="img msv">
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
+                            </a>
                         </div>
-                        <div class="img-moving position-4">
-                            <img src="~/images/home-03/img-moving-pst-4.png" width="198" height="269" alt="img msv">
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
+                            </a>
                         </div>
-                    </div>
-                    <div class="text-content">
-                        <div class="container text-wrap">
-                            <i class="first-line">Healthy Fruit juice</i>
-                            <span class="second-line">Vegetable Always fresh</span>
-                            <p class="third-line">Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled...</p>
-                            <div class="product-detail">
-                                <p class="txt-price"><span>Only:</span>$8.00</p>
-                                <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                            </div>
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
+                            </a>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="biolife-brd-container">
+                            <a href="#" class="link">
+                                <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <!--Block 05: Banner Promotion 02-->
-        <div class="banner-promotion-02 z-index-20">
-            <div class="biolife-banner promotion2 biolife-banner__promotion2">
-                <div class="banner-contain">
-                    <div class="container">
-                        <div class="media"></div>
-                        <div class="text-content">
-                            <b class="first-line">Food Heaven Made</b>
-                            <span class="second-line">Easy <i>Healthy, Happy Life</i></span>
-                            <p class="third-line">Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled. The blog is actually a compilation of recipes, cooking videos, and nutrition tips.</p>
-                            <p class="buttons">
-                                <a href="#" class="btn btn-bold">Read More</a>
-                                <a href="#" class="btn btn-thin">View Menu Now</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+      
         <!--Block 06: Products-->
         <div class="Product-box sm-margin-top-96px xs-margin-top-0">
             <div class="container">
@@ -1618,7 +1501,7 @@
                                             </div>
                                         </div>
                                         <div class="info">
-                                            <div class="biolife-countdown" data-datetime="2020/02/18 00:00:00"></div>
+                                            <div class="biolife-countdown" data-datetime="2025/11/30 00:00:00"></div>
                                             <b class="categories">Fresh Fruit</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
@@ -1630,7 +1513,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1688,7 +1570,6 @@
                                                 <div class="buttons">
                                                     <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
                                                     <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                                    <a href="#" class="btn compare-btn"><i class="fa fa-random" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -1889,292 +1770,9 @@
             </div>
         </div>
 
-        <!--Block 07: Brands-->
-        <div class="brand-slide sm-margin-top-100px background-fafafa xs-margin-top-80px xs-margin-bottom-80px">
-            <div class="container">
-                <ul class="biolife-carousel nav-center-bold nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}},{"breakpoint":450, "settings":{ "slidesToShow": 1, "slidesMargin":10}}]}'>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+       
 
-        <!--Block 08: Blog Posts-->
-        <div class="blog-posts sm-margin-top-93px sm-padding-top-72px xs-padding-bottom-50px">
-            <div class="container">
-                <div class="biolife-title-box">
-                    <span class="subtitle">The freshest and most exciting news</span>
-                    <h3 class="main-title">From the Blog</h3>
-                </div>
-                <ul class="biolife-carousel nav-center nav-none-on-mobile xs-margin-top-36px" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":3, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 3}},{"breakpoint":992, "settings":{ "slidesToShow": 2}},{"breakpoint":768, "settings":{ "slidesToShow": 2}},{"breakpoint":600, "settings":{ "slidesToShow": 1}}]}'>
-                    <li>
-                        <div class="post-item effect-01 style-bottom-info layout-02 ">
-                            <div class="thumbnail">
-                                <a href="#" class="link-to-post"><img src="~/images/our-blog/post-thumb-01.jpg" width="370" height="270" alt=""></a>
-                                <div class="post-date">
-                                    <span class="date">26</span>
-                                    <span class="month">dec</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="post-name"><a href="#" class="linktopost">Ashwagandha: The #1 Herb in the World for Anxiety?</a></h4>
-                                <div class="post-meta">
-                                    <a href="#" class="post-meta__item author"><img src="~/images/home-03/post-author.png" width="28" height="28" alt=""><span>Admin</span></a>
-                                    <a href="#" class="post-meta__item btn liked-count">2<span class="biolife-icon icon-comment"></span></a>
-                                    <a href="#" class="post-meta__item btn comment-count">6<span class="biolife-icon icon-like"></span></a>
-                                    <div class="post-meta__item post-meta__item-social-box">
-                                        <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
-                                        <div class="inner-content">
-                                            <ul class="socials">
-                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="excerpt">Did you know that red-staining foods are excellent lymph-movers? In fact, many plants that were historically used as dyes...</p>
-                                <div class="group-buttons">
-                                    <a href="#" class="btn readmore">continue reading</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-item effect-01 style-bottom-info layout-02">
-                            <div class="thumbnail">
-                                <a href="#" class="link-to-post"><img src="~/images/our-blog/post-thumb-02.jpg" width="370" height="270" alt=""></a>
-                                <div class="post-date">
-                                    <span class="date">26</span>
-                                    <span class="month">dec</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="post-name"><a href="#" class="linktopost">Ashwagandha: The #1 Herb in the World for Anxiety?</a></h4>
-                                <div class="post-meta">
-                                    <a href="#" class="post-meta__item author"><img src="~/images/home-03/post-author.png" width="28" height="28" alt=""><span>Admin</span></a>
-                                    <a href="#" class="post-meta__item btn liked-count">2<span class="biolife-icon icon-comment"></span></a>
-                                    <a href="#" class="post-meta__item btn comment-count">6<span class="biolife-icon icon-like"></span></a>
-                                    <div class="post-meta__item post-meta__item-social-box">
-                                        <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
-                                        <div class="inner-content">
-                                            <ul class="socials">
-                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="excerpt">Did you know that red-staining foods are excellent lymph-movers? In fact, many plants that were historically used as dyes...</p>
-                                <div class="group-buttons">
-                                    <a href="#" class="btn readmore">continue reading</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-item effect-01 style-bottom-info layout-02">
-                            <div class="thumbnail">
-                                <a href="#" class="link-to-post"><img src="~/images/our-blog/post-thumb-04.jpg" width="370" height="270" alt=""></a>
-                                <div class="post-date">
-                                    <span class="date">26</span>
-                                    <span class="month">dec</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="post-name"><a href="#" class="linktopost">Ashwagandha: The #1 Herb in the World for Anxiety?</a></h4>
-                                <div class="post-meta">
-                                    <a href="#" class="post-meta__item author"><img src="~/images/home-03/post-author.png" width="28" height="28" alt=""><span>Admin</span></a>
-                                    <a href="#" class="post-meta__item btn liked-count">2<span class="biolife-icon icon-comment"></span></a>
-                                    <a href="#" class="post-meta__item btn comment-count">6<span class="biolife-icon icon-like"></span></a>
-                                    <div class="post-meta__item post-meta__item-social-box">
-                                        <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
-                                        <div class="inner-content">
-                                            <ul class="socials">
-                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="excerpt">Did you know that red-staining foods are excellent lymph-movers? In fact, many plants that were historically used as dyes...</p>
-                                <div class="group-buttons">
-                                    <a href="#" class="btn readmore">continue reading</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-item effect-01 style-bottom-info layout-02">
-                            <div class="thumbnail">
-                                <a href="#" class="link-to-post"><img src="~/images/our-blog/post-thumb-03.jpg" width="370" height="270" alt=""></a>
-                                <div class="post-date">
-                                    <span class="date">26</span>
-                                    <span class="month">dec</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="post-name"><a href="#" class="linktopost">Ashwagandha: The #1 Herb in the World for Anxiety?</a></h4>
-                                <div class="post-meta">
-                                    <a href="#" class="post-meta__item author"><img src="~/images/home-03/post-author.png" width="28" height="28" alt=""><span>Admin</span></a>
-                                    <a href="#" class="post-meta__item btn liked-count">2<span class="biolife-icon icon-comment"></span></a>
-                                    <a href="#" class="post-meta__item btn comment-count">6<span class="biolife-icon icon-like"></span></a>
-                                    <div class="post-meta__item post-meta__item-social-box">
-                                        <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
-                                        <div class="inner-content">
-                                            <ul class="socials">
-                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="excerpt">Did you know that red-staining foods are excellent lymph-movers? In fact, many plants that were historically used as dyes...</p>
-                                <div class="group-buttons">
-                                    <a href="#" class="btn readmore">continue reading</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-item effect-01 style-bottom-info layout-02">
-                            <div class="thumbnail">
-                                <a href="#" class="link-to-post"><img src="~/images/our-blog/post-thumb-05.jpg" width="370" height="270" alt=""></a>
-                                <div class="post-date">
-                                    <span class="date">26</span>
-                                    <span class="month">dec</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="post-name"><a href="#" class="linktopost">Ashwagandha: The #1 Herb in the World for Anxiety?</a></h4>
-                                <div class="post-meta">
-                                    <a href="#" class="post-meta__item author"><img src="~/images/home-03/post-author.png" width="28" height="28" alt=""><span>Admin</span></a>
-                                    <a href="#" class="post-meta__item btn liked-count">2<span class="biolife-icon icon-comment"></span></a>
-                                    <a href="#" class="post-meta__item btn comment-count">6<span class="biolife-icon icon-like"></span></a>
-                                    <div class="post-meta__item post-meta__item-social-box">
-                                        <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
-                                        <div class="inner-content">
-                                            <ul class="socials">
-                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="excerpt">Did you know that red-staining foods are excellent lymph-movers? In fact, many plants that were historically used as dyes...</p>
-                                <div class="group-buttons">
-                                    <a href="#" class="btn readmore">continue reading</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-item effect-01 style-bottom-info layout-02">
-                            <div class="thumbnail">
-                                <a href="#" class="link-to-post"><img src="~/images/our-blog/post-thumb-06.jpg" width="370" height="270" alt=""></a>
-                                <div class="post-date">
-                                    <span class="date">26</span>
-                                    <span class="month">dec</span>
-                                </div>
-                            </div>
-                            <div class="post-content">
-                                <h4 class="post-name"><a href="#" class="linktopost">Ashwagandha: The #1 Herb in the World for Anxiety?</a></h4>
-                                <div class="post-meta">
-                                    <a href="#" class="post-meta__item author"><img src="~/images/home-03/post-author.png" width="28" height="28" alt=""><span>Admin</span></a>
-                                    <a href="#" class="post-meta__item btn liked-count">2<span class="biolife-icon icon-comment"></span></a>
-                                    <a href="#" class="post-meta__item btn comment-count">6<span class="biolife-icon icon-like"></span></a>
-                                    <div class="post-meta__item post-meta__item-social-box">
-                                        <span class="tbn"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
-                                        <div class="inner-content">
-                                            <ul class="socials">
-                                                <li><a href="#" title="twitter" class="socail-btn"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="facebook" class="socail-btn"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="pinterest" class="socail-btn"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="youtube" class="socail-btn"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
-                                                <li><a href="#" title="instagram" class="socail-btn"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="excerpt">Did you know that red-staining foods are excellent lymph-movers? In fact, many plants that were historically used as dyes...</p>
-                                <div class="group-buttons">
-                                    <a href="#" class="btn readmore">continue reading</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
+      
     </div>
 
 </div>
