@@ -1,0 +1,16 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Product
+@model IEnumerable<ProductViewModel>
+
+@if (Model.Any())
+{
+    @foreach (var p in Model)
+    {
+        <p>@p.Name</p>
+    }
+}
+else
+{
+    <p>Mehsul Tapilmadi!</p>
+}
+
+

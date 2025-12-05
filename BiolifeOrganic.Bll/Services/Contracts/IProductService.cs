@@ -7,6 +7,5 @@ public interface IProductService : ICrudService<Product, ProductViewModel, Creat
 {
     
 
-
 }
 

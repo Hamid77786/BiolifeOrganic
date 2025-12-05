@@ -1,0 +1,25 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Basket
+@model BasketViewModel
+
+@if (Model?.Items != null && Model.Items.Any())
+{
+    <a asp-controller="basket">
+        <span class="icon-qty-combine">
+            <i class="icon-cart-mini biolife-icon"></i>
+            <span class="qty">@Model.TotalCount</span>
+        </span>
+        <span class="title">My Cart -</span>
+        <span class="sub-total">@Model.TotalPrice ₼</span>
+    </a>
+}
+else
+{
+    <a asp-controller="basket">
+        <span class="icon-qty-combine">
+            <i class="icon-cart-mini biolife-icon"></i>
+            <span class="qty">0</span>
+        </span>
+        <span class="title">My Cart -</span>
+        <span class="sub-total">0 ₼</span>
+    </a>
+}

@@ -1,0 +1,44 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Basket
+@model List<BasketItemViewModel>
+
+@foreach (var item in Model)
+{
+    <tr class="cart_item">
+        <td class="product-thumbnail" data-title="Product Name">
+            <a class="prd-thumb"><figure><img width="113" height="113" src="~/images/shippingcart/@item.ProductImageUrl"></figure></a>
+            <a class="prd-name">@item.ProductName</a>
+
+            <div class="action">
+                <a href="javascript:void(0)" onclick="removeItem(@item.ProductId)" class="remove">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </div>
+        </td>
+
+        <td class="product-price">
+            <div class="price price-contain">
+                <ins><span class="price-amount"><span class="currencySymbol">£</span>@item.Price</span></ins>
+                <del><span class="price-amount"><span class="currencySymbol">£</span>@item.OldPrice</span></del>
+            </div>
+        </td>
+
+        <td class="product-quantity">
+            <div class="quantity-box type1">
+                <div class="qty-input">
+                    <input type="number" value="@item.Quantity" onchange="changeQty(@item.ProductId, this.value)">
+                </div>
+            </div>
+            
+        </td>
+
+        <td class="product-subtotal">
+            <div class="price price-contain">
+                <ins><span class="price-amount"><span class="currencySymbol">£</span>@item.TotalPrice</span></ins>
+            </div>
+        </td>
+    </tr>
+}
+
+       
+        
+  

@@ -4,6 +4,7 @@ using BiolifeOrganic.Bll.ViewModels.Product;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BiolifeOrganic.Bll.Services;
 
@@ -215,4 +216,5 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
         return true;
     }
 
+ 
 }

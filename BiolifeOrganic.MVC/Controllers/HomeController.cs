@@ -6,20 +6,20 @@ namespace BiolifeOrganic.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly IHomeService _homeService;
+        private readonly IHomeService _homeService;
 
-        //public HomeController(IHomeService homeService)
-        //{
-        //    _homeService = homeService;
-        //}
+        public HomeController(IHomeService homeService)
+        {
+            _homeService = homeService;
+        }
 
         public async Task<IActionResult> Index()
         {
-            //var homeViewModel = await _homeService.GetHomeViewModel();
+            var homeViewModel = await _homeService.GetHomeViewModel();
 
-            return View();
+            return View(homeViewModel);
         }
 
-       
+
     }
 }

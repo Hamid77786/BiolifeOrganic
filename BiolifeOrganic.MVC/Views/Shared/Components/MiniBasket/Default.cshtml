@@ -1,0 +1,10 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Basket
+@model BasketViewModel
+
+<li>
+    <div class="minicart-item" id="miniBasket">
+
+        @await Html.PartialAsync("_MiniBasketItemsPart", Model.Items)
+
+    </div>
+</li>

@@ -32,7 +32,7 @@ public class HomeManager : IHomeService
         var homeViewModel = new HomeViewModel
         {
             Categories = categories.ToList(),
-            Products = products,
+            Products = products.ToList(),
             Sliders = sliders.ToList()
         };
 

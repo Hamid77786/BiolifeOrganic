@@ -260,3 +260,25 @@
         }
     });
 })(jQuery);
+function refreshBasket() {
+    $("#basketTable").load("/Basket/LoadBasket");
+    $("#miniBasket").load("/Basket/LoadMiniBasket");
+}
+
+function addToBasket(id) {
+    $.post("/Basket/Add", { id: id }, function () {
+        refreshBasket();
+    });
+}
+
+function removeItem(id) {
+    $.post("/Basket/Remove", { id: id }, function () {
+        refreshBasket();
+    });
+}
+
+function changeQty(id, qty) {
+    $.post("/Basket/ChangeQty", { id: id, qty: qty }, function () {
+        refreshBasket();
+    });
+}

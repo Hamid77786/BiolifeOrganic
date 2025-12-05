@@ -1,4 +1,5 @@
-﻿using BiolifeOrganic.Bll.ViewModels.Category;
+﻿using BiolifeOrganic.Bll.ViewModels.Basket;
+using BiolifeOrganic.Bll.ViewModels.Category;
 using BiolifeOrganic.Bll.ViewModels.Product;
 using BiolifeOrganic.Bll.ViewModels.Slider;
 

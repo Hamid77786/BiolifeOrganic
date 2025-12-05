@@ -1,36 +1,46 @@
-﻿<!-- HEADER -->
+﻿@using BiolifeOrganic.Bll.ViewModels.Header
+@model HeaderViewModel
+
+
+<!-- HEADER -->
 <header id="header" class="header-area style-01 layout-03">
     <div class="header-top bg-main hidden-xs">
         <div class="container">
             <div class="top-bar left">
                 <ul class="horizontal-menu">
-                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>Organic@company.com</a></li>
+                    @foreach(var contact in Model.WebContacts)
+                    {
+                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>@contact.EmailAgree</a></li>
+
+                    }
                 </ul>
             </div>
             <div class="top-bar right">
-                
+
                 <ul class="horizontal-menu" style="text-align:center">
-                   
+
                     @if (User.Identity!.IsAuthenticated)
                     {
-                       <li>
+                        <li>
                             <a asp-controller="account" asp-action="logout">
                                 <i class="biolife-icon icon-login"></i>LogOut
                             </a>
-                       </li>  
-                       <li>
+                        </li>  
+                        <li>
                             <a asp-controller="account" asp-action="changepassword">
                                 Change Password
 
                             </a>
 
-                       </li>
+                        </li>
                     }
                     else
                     {
                         <li>
-                            <a asp-controller="account" asp-action="login"><i class="biolife-icon icon-login"></i>
-                                <span></span>Login</a>
+                            <a asp-controller="account" asp-action="login">
+                                <i class="biolife-icon icon-login"></i>
+                                <span></span>Login
+                            </a>
 
                         </li>
 
@@ -38,37 +48,45 @@
                             <a asp-controller="account" asp-action="register">Register</a>
 
                         </li>
-                            
                     }
-                               
+
+
+
+
+
 
                 </ul>
-                   
+
             </div>
         </div>
     </div>
-                                
-                           
-                            
 
-                                
-                       
-                               
-                       
-                            
-                   
-                    
-                            
 
-                          
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <div class="header-middle biolife-sticky-object ">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-2 col-md-6 col-xs-6">
-                    <a asp-controller="home"  asp-action="index"class="biolife-logo"><img src="~/images/organic-3.png" alt="biolife logo" width="135" height="34"></a>
-                </div>
+                @foreach(var log in Model.Logos)
+                {
+                    <div class="col-lg-3 col-md-2 col-md-6 col-xs-6">
+                        <a asp-controller="home" asp-action="index" class="biolife-logo"><img src="~/images/@log.Name" alt="biolife logo" width="135" height="34"></a>
+                    </div>
+                }
+
                 <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
                     <div class="primary-menu">
                         <ul class="menu biolife-menu clone-main-menu clone-primary-menu" id="primary-menu" data-menuname="main menu">
@@ -76,7 +94,7 @@
                             <li class="menu-item">
                                 <a asp-controller="shop" asp-action="index">Shop</a>
                             </li>
-                            <li class="menu-item"><a asp-controller="shoppingcart" asp-action="index">Shopping Cart</a></li>
+                            <li class="menu-item"><a asp-controller="basketcontroller" asp-action="index">Basket</a></li>
 
                             <li class="menu-item"><a asp-controller="wishlist" asp-action="index">Wishlist</a></li>
 
@@ -90,28 +108,9 @@
 
 
 
-@*                 <div class="col-lg-3 col-md-3 col-md-6 col-xs-6">
+                <div class="col-lg-3 col-md-3 col-md-6 col-xs-6">
                     <div class="biolife-cart-info">
-                        <div class="mobile-search">
-                            <a href="javascript:void(0)" class="open-searchbox"><i class="biolife-icon icon-search"></i></a>
-                            <div class="mobile-search-content">
-                                <form  asp-controller="product" asp-action="index" class="form-search" name="mobile-seacrh" method="get">
-                                    <a href="#" class="btn-close"><span class="biolife-icon icon-close-menu"></span></a>
-                                    <input type="text" name="s" class="input-text" value="@Model.Search" placeholder="Search here...">
-                                    <select name="categoryId">
-                                        <option value="" selected>All Categories</option>
-                                        @foreach(var cat in Model.Categories)
-                                        {
-                                            <option value="@cat.Id"
-                                                    selected="@(cat.Id.ToString() == Model.CategoryId)">
-                                                @cat.Name
-                                            </option>
-                                        }
-                                    </select>
-                                    <button type="submit" class="btn-submit">go</button>
-                                </form>
-                            </div>
-                        </div>
+
                         <div class="wishlist-block hidden-sm hidden-xs">
                             <a asp-controller="wishlist">
                                 <span class="icon-qty-combine">
@@ -122,19 +121,21 @@
                         </div>
                         <div class="minicart-block">
                             <div class="minicart-contain">
-                                <a asp-controller="shoppingcart">
-                                    <span class="icon-qty-combine">
-                                        <i class="icon-cart-mini biolife-icon"></i>
-                                        <span class="qty">8</span>
-                                    </span>
-                                    <span class="title">My Cart -</span>
-                                    <span class="sub-total">$0.00</span>
-                                </a>
+                                
+                               
+                                    @await Component.InvokeAsync("MiniHeaderBasket")
+                                
+                                
+
+
+                               
                                 <div class="cart-content">
                                     <div class="cart-inner">
                                         <ul class="products">
-                                            <li>
-                                                <div class="minicart-item">
+                                            
+                                                @await Component.InvokeAsync("MiniBasket")
+
+                                                @* <div class="minicart-item">
                                                     <div class="thumb">
                                                         <a href="#"><img src="~/images/minicart/pr-01.jpg" width="90" height="90" alt="National Fresh"></a>
                                                     </div>
@@ -153,9 +154,9 @@
                                                         <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                         <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li>
+                                                </div> *@
+                                            
+                                           @*  <li>
                                                 <div class="minicart-item">
                                                     <div class="thumb">
                                                         <a href="#"><img src="~/images/minicart/pr-02.jpg" width="90" height="90" alt="National Fresh"></a>
@@ -236,17 +237,17 @@
                                                             <label for="cart[id127][qty]">Qty:</label>
                                                             <input type="number" class="input-qty" name="cart[id127][qty]" id="cart[id127][qty]" value="1" disabled>
                                                         </div>
-                                                    </div>
-                                                    <div class="action">
+                                                    </div>  
+                                                  <div class="action">
                                                         <a href="#" class="edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                                         <a href="#" class="remove"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            </li>*@
                                         </ul>
                                         <p class="btn-control">
-                                            <a href="#" class="btn view-cart">view cart</a>
-                                            <a href="#" class="btn">checkout</a>
+                                            <a asp-controller="basket" asp-action="index" class="btn view-cart">view cart</a>
+                                            <a asp-controller="checkout" asp-action="index" class="btn">checkout</a>
                                         </p>
                                     </div>
                                 </div>
@@ -258,41 +259,42 @@
                                 <span></span>
                                 <span></span>
                             </a>
-                        </div>
+                        </div> 
                     </div>
-                </div>
- *@            </div>
+                </div> 
+            </div>
         </div>
     </div>
     <div class="header-bottom hidden-sm hidden-xs">
         <div class="container">
             <div class="row">
-               
+
                 <div class="col-lg-9 col-md-8 padding-top-2px">
                     <div class="header-search-bar layout-01">
-                        <form action="#" class="form-search" name="desktop-seacrh" method="get">
-                            <input type="text" name="s" class="input-text" value="" placeholder="Search here...">
-                            <select name="category">
-                                <option value="-1" selected>All Categories</option>
-                                <option value="vegetables">Vegetables</option>
-                                <option value="fresh_berries">Fresh Berries</option>
-                                <option value="ocean_foods">Ocean Foods</option>
-                                <option value="butter_eggs">Butter & Eggs</option>
-                                <option value="fastfood">Fastfood</option>
-                                <option value="fresh_meat">Fresh Meat</option>
-                                <option value="fresh_onion">Fresh Onion</option>
-                                <option value="papaya_crisps">Papaya & Crisps</option>
-                                <option value="oatmeal">Oatmeal</option>
+                        <form asp-controller="Search" asp-action="Index"  class="form-search" name="desktop-seacrh" method="get">
+                            <input type="text" name="searchText" class="input-text" value="" placeholder="Search here...">
+                            <select name="categoryId">
+                                <option value= selected>All Categories</option>
+                                @foreach(var item in Model.Categories)
+                                {
+                                    <option value=@item.Id>@item.Name</option>
+                                }
+
                             </select>
                             <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                         </form>
                     </div>
                     <div class="live-info">
-                        <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">(+900) 123 456 7891</b></p>
-                        <p class="working-time">Mon-Fri: 8:30am-7:30pm; Sat-Sun: 9:30am-4:30pm</p>
+                        @foreach(var wc in Model.WebContacts)
+                        {
+                            <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">@wc.PhoneNumber</b></p>
+                            <p class="working-time">@wc.Schedule</p>
+                        }
+                        
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 </header>
+
