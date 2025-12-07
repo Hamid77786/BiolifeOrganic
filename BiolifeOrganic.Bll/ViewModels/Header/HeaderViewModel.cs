@@ -5,6 +5,7 @@ using BiolifeOrganic.Bll.ViewModels.Product;
 using BiolifeOrganic.Bll.ViewModels.Search;
 using BiolifeOrganic.Bll.ViewModels.Slider;
 using BiolifeOrganic.Bll.ViewModels.WebContact;
+using BiolifeOrganic.Bll.ViewModels.Wishlist;
 
 namespace BiolifeOrganic.Bll.ViewModels.Header;
 
@@ -14,5 +15,6 @@ public class HeaderViewModel
     public List<WebContactViewModel> WebContacts { get; set; } = [];
     public List<LogoViewModel> Logos { get; set; } = [];
     public List<BasketItemViewModel> Items { get; set; } = [];
+    public List<WishlistItemViewModel> WishItems { get; set; } = [];
 
 }

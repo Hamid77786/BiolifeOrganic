@@ -1,0 +1,98 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Wishlist
+@model IEnumerable<WishlistItemViewModel>
+
+@foreach (var item in Model)
+{
+   
+
+    <li class="product-item">
+
+        <div class="contain-product layout-default">
+
+            <div class="product-thumb">
+                <a href="#" class="link-to-product">
+                    <img src="~/images/products/@item.ImageUrl" alt="Vegetables" width="270" height="270" class="product-thumnail">
+                </a>
+                <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
+            </div>
+            <div class="info">
+                
+                   <h4 class="product-title"><a href="#" class="pr-name">@item.ProductName</a></h4>
+                  <div class="price ">
+                    <ins><span class="price-amount"><span class="currencySymbol">£</span>@item.Price</span></ins>
+                  </div>
+                <div class="slide-down-box">
+                    <p class="message">All products are carefully selected to ensure food safety.</p>
+                    <div class="buttons">
+
+                        <a class="btn wishlist-btn" onclick="removeFromWishlist(@item.ProductId)">
+                            <i class="fa fa-heart" aria-hidden="true"></i>
+                            Remove
+                        </a>
+                            
+                        <a href="javascript:void(0)"
+                           class="btn add-to-cart-btn"
+                           onclick="addToBasket(@item.ProductId)">
+                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                            add to cart
+                        </a>
+
+
+
+
+                            
+                        
+
+
+
+
+
+                    </div>
+                </div>
+            
+            </div>
+        
+        
+        </div>
+    
+    
+    
+    </li>
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+       
+       
+           
+           
+            
+        </div>
+    </div>
+</li>

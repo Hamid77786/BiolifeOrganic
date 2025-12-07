@@ -191,12 +191,7 @@ public class MappingProfile:Profile
         CreateMap<UpdateWebContactViewModel, WebContact>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-        CreateMap<Wishlist, WishlistViewModel>()
-           .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.AppUser!.UserName))
-           .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product!.Name));
-        CreateMap<CreateWishlistViewModel, Wishlist>();
-        CreateMap<UpdateWishlistViewModel, Wishlist>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore());
+       
 
         CreateMap<Comment, CommentViewModel>()
           .ForMember(dest => dest.AppUserName,
@@ -206,29 +201,47 @@ public class MappingProfile:Profile
         CreateMap<UpdateCommentViewModel, Comment>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-        
+        // Wishlist mappings
+        CreateMap<Wishlist, WishlistItemViewModel>()
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Product != null ? src.Product.ImageUrl : null))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product != null ? src.Product.DiscountedPrice : 0))
+            .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.Product != null && src.Product.QuantityAvailable > 0));
 
+        // Mapping Wishlist entity list to WishlistViewModel
+        CreateMap<List<Wishlist>, WishlistViewModel>()
+            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.FirstOrDefault() != null ? src.First().AppUserId : null))
+            .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.FirstOrDefault() != null && src.First().AppUser != null ? src.First().AppUser.FullName : null))
+            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count))
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
+        // Mapping for single Wishlist to WishlistViewModel (for compatibility, but Items will be single)
+        CreateMap<Wishlist, WishlistViewModel>()
+            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
+            .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.FullName : null))
+            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => 1))
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => new List<WishlistItemViewModel> { 
+                new WishlistItemViewModel {
+                    ProductId = src.ProductId,
+                    ProductName = src.Product != null ? src.Product.Name : null,
+                    ImageUrl = src.Product != null ? src.Product.ImageUrl : null,
+                    Price = src.Product != null ? src.Product.DiscountedPrice : 0,
+                    IsAvailable = src.Product != null && src.Product.QuantityAvailable > 0
+                }
+            }));
 
+        CreateMap<CreateWishlistViewModel, Wishlist>()
+            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.AppUser, opt => opt.Ignore())
+            .ForMember(dest => dest.Product, opt => opt.Ignore());
 
-
+        CreateMap<UpdateWishlistViewModel, Wishlist>()
+            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.AppUser, opt => opt.Ignore())
+            .ForMember(dest => dest.Product, opt => opt.Ignore());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 

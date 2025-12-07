@@ -1,6 +1,10 @@
 ﻿using BiolifeOrganic.Bll.Services.Contracts;
 using BiolifeOrganic.Bll.ViewModels.Home;
+using BiolifeOrganic.Dll.DataContext.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BiolifeOrganic.Bll.Services;
 
@@ -9,14 +13,18 @@ public class HomeManager : IHomeService
     private readonly ICategoryService _categoryService;
     private readonly IProductService _productService;
     private readonly ISliderService _sliderService;
+    private readonly IWishlistService _wishlistService;
 
-    public HomeManager(ICategoryService categoryService, IProductService productService, ISliderService sliderService)
+    public HomeManager(IWishlistService wishlistService,ICategoryService categoryService, IProductService productService, ISliderService sliderService)
     {
         _categoryService = categoryService;
         _productService = productService;
         _sliderService = sliderService;
+        _wishlistService = wishlistService;
+       
+        
     }
-    public async Task<HomeViewModel> GetHomeViewModel()
+    public async Task<HomeViewModel> GetHomeViewModel(string? userId)
     {
         var categories = await _categoryService.GetAllAsync(predicate: x => !x.IsDeleted);
 
@@ -26,6 +34,16 @@ public class HomeManager : IHomeService
                 .Include(p => p.ProductImages!)
                 .Include(c => c.Category!)
         )).Take(3).ToList();
+
+        if (!string.IsNullOrEmpty(userId))
+        {
+            var userWishlistIds = await _wishlistService.GetUserWishlistIdsAsync(userId);
+
+            foreach (var p in products)
+            {
+                p.IsInWishlist = userWishlistIds.Contains(p.Id);
+            }
+        }
 
         var sliders = await _sliderService.GetAllAsync();
 

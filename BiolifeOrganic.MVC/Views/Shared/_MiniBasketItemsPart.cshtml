@@ -1,10 +1,30 @@
 ﻿@using BiolifeOrganic.Bll.ViewModels.Basket
 @model List<BasketItemViewModel>
 
-
-@foreach (var item in Model)
+@if (Model == null || !Model.Any())
 {
     
+       
+  
+    
+    <div>
+        <h4>
+            Your basket is empty!
+        </h4>
+        <p class="btn-control">
+            
+            <a asp-controller="shop" asp-action="index" class="btn view-cart">Go to Shop</a>
+                    
+        </p>
+
+    </div>
+    
+}
+else
+{
+    @foreach (var item in Model)
+    {
+
         <div>
             <div class="thumb">
                 <a href="#"><img src="@item.ProductImageUrl" width="90" height="90"></a>
@@ -18,7 +38,7 @@
                 <div class="price">
                     <ins><span class="price-amount">£@item.Price</span></ins>
 
-                    @if(item.OldPrice != null)
+                    @if (item.OldPrice != null)
                     {
                         <del><span class="price-amount">£@item.OldPrice</span></del>
                     }
@@ -40,9 +60,16 @@
             </div>
         </div>
 
-    
-    
+        <p class="btn-control">
+            <a asp-controller="basket" asp-action="index" class="btn view-cart">view cart</a>
+            <a asp-controller="checkout" asp-action="index" class="btn">checkout</a>
+        </p>
+
+
+
+    }
 }
+
 
 
 

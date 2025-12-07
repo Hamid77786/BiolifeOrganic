@@ -110,20 +110,21 @@
 
                 <div class="col-lg-3 col-md-3 col-md-6 col-xs-6">
                     <div class="biolife-cart-info">
+                       
 
-                        <div class="wishlist-block hidden-sm hidden-xs">
-                            <a asp-controller="wishlist">
-                                <span class="icon-qty-combine">
-                                    <i class="icon-heart-bold biolife-icon"></i>
-                                    <span class="qty">4</span>
-                                </span>
-                            </a>
-                        </div>
+                           @await Component.InvokeAsync("WishlistCount")
+                        
+                       
+                        
                         <div class="minicart-block">
                             <div class="minicart-contain">
                                 
-                               
+                                
+                                   
                                     @await Component.InvokeAsync("MiniHeaderBasket")
+
+                               
+                               
                                 
                                 
 
@@ -245,10 +246,7 @@
                                                 </div>
                                             </li>*@
                                         </ul>
-                                        <p class="btn-control">
-                                            <a asp-controller="basket" asp-action="index" class="btn view-cart">view cart</a>
-                                            <a asp-controller="checkout" asp-action="index" class="btn">checkout</a>
-                                        </p>
+                                       
                                     </div>
                                 </div>
                             </div>
