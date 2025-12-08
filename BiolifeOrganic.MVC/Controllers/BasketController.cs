@@ -72,7 +72,7 @@ namespace BiolifeOrganic.MVC.Controllers
         public async Task<IActionResult> RemoveAll()
         {
             _basketManager.RemoveAllFromBasket();
-            return Json(new {success = true});
+            return RedirectToAction("Index");
         }
 
         [HttpPost]

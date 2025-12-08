@@ -11,6 +11,7 @@ public class Product:TimeStample
     public bool IsBestSeller {  get; set; }
     public bool IsAvailable { get; set; }
     public bool IsRated { get; set; }
+    public bool IsRelated { get; set; }
     public bool IsInWishlist { get; set; }
     public bool IsOnSale { get; set; }  
     public decimal? DiscountPercent { get; set; } 

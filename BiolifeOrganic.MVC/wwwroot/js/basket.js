@@ -28,7 +28,6 @@ function removeItem(id) {
     });
 }
 
-// простой дебаунс
 let changeQtyTimer = null;
 function changeQty(id, qty) {
     // приводим qty к числу

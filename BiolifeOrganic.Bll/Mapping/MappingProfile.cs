@@ -12,6 +12,7 @@ using BiolifeOrganic.Bll.ViewModels.Review;
 using BiolifeOrganic.Bll.ViewModels.Slider;
 using BiolifeOrganic.Bll.ViewModels.WebContact;
 using BiolifeOrganic.Bll.ViewModels.Wishlist;
+using BiolifeOrganic.Bll.ViewModels.Basket;
 using BiolifeOrganic.Dll.DataContext.Entities;
 
 namespace BiolifeOrganic.Bll.Mapping;
@@ -209,14 +210,12 @@ public class MappingProfile:Profile
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product != null ? src.Product.DiscountedPrice : 0))
             .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.Product != null && src.Product.QuantityAvailable > 0));
 
-        // Mapping Wishlist entity list to WishlistViewModel
         CreateMap<List<Wishlist>, WishlistViewModel>()
             .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.FirstOrDefault() != null ? src.First().AppUserId : null))
-            .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.FirstOrDefault() != null && src.First().AppUser != null ? src.First().AppUser.FullName : null))
+            .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.FirstOrDefault() != null && src.First().AppUser != null ? src.First().AppUser!.FullName : null))
             .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
 
-        // Mapping for single Wishlist to WishlistViewModel (for compatibility, but Items will be single)
         CreateMap<Wishlist, WishlistViewModel>()
             .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
             .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.FullName : null))

@@ -2,44 +2,38 @@
 @model List<WishlistItemViewModel>
 
 
+<div class="page-contain category-page no-sidebar">
+    <div class="container">
+        <div class="row">
+
+            <div id="main-content" class="main-content col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div class="row">
+                    <ul class="products-list">
+
+                        <div id="wishlistList">
+                             
 
 
-<div class="page-contain">
+                            @await Component.InvokeAsync("Wishlist")
 
-    
-    <div id="main-content" class="main-content">
-
-        <div class="product-tab z-index-20 sm-margin-top-193px xs-margin-top-30px">
-    
-            <div class="container">
-
-                <div class="biolife-tab biolife-tab-contain sm-margin-top-34px">
-                   
-                
-                    <div class="tab-content">
-                        <div id="tab01_1st" class="tab-contain active">
-                            <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain" data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":25 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":15}}]}'>
-
-
-                                <div id="wishlistList">
-
-                                    @await Component.InvokeAsync("Wishlist")
-                                </div>
-
-                            </ul>
-                      
 
                         </div>
 
-                   </div>
+                    </ul>
 
                 </div>
 
+
+
             </div>
 
-        </div>
 
+        </div>
+   
     </div>
 
 </div>
+
+
 

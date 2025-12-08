@@ -102,6 +102,7 @@ public class BasketManager
                     ProductImageUrl = product.ImageUrl!,
                     Price = product.OriginalPrice,
                     OldPrice = product.DiscountedPrice,
+                    IsOnSale = product.IsOnSale,
                     Quantity = item.Quantity
                 });
             }

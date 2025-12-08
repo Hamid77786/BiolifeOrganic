@@ -1,4 +1,6 @@
 ﻿ @model HomeViewModel
+
+
 <!-- Page Contain -->
 <div class="page-contain">
 
@@ -103,11 +105,21 @@
                 </div>
                 <div class="biolife-tab biolife-tab-contain sm-margin-top-34px">
                     <div class="tab-head tab-head__icon-top-layout icon-top-layout">
+                        @{
+                            int index = 1;
+                        }
                         <ul class="tabs md-margin-bottom-35-im xs-margin-bottom-40-im">
-                            <li class="tab-element active">
-                                <a href="#tab01_1st" class="tab-link"><span class="biolife-icon icon-lemon"></span>Oranges</a>
-                            </li>
-                            <li class="tab-element">
+                            @foreach (var cat in Model.Categories.Where(x => x.IsRelated))
+                            {
+                                <li class="tab-element @(index == 1 ? "active" : "")">
+                                    <a href="#tab_cat_@index" class="tab-link">
+                                        <span class="biolife-icon @cat.CategoryIcon"></span>@cat.Name
+                                    </a>
+                                </li>
+                                index++;
+                            }
+
+                            @*  <li class="tab-element">
                                 <a href="#tab01_2nd" class="tab-link"><span class="biolife-icon icon-grape2"></span>Grapes</a>
                             </li>
                             <li class="tab-element">
@@ -118,10 +130,79 @@
                             </li>
                             <li class="tab-element">
                                 <a href="#tab01_5th" class="tab-link"><span class="biolife-icon icon-broccoli"></span>Vegetables</a>
-                            </li>
+                            </li> *@
                         </ul>
                     </div>
+                    @{
+                        index = 1; // ← сбрасываем, чтобы совпадало с вкладками
+                    }
+
                     <div class="tab-content">
+                        @foreach (var cat in Model.Categories.Where(x => x.IsRelated))
+                        {
+                            <div id="tab_cat_@index" class="tab-contain @(index == 1 ? "active" : "")">
+
+                                <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain"
+                                    data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4}'>
+
+                                    @foreach (var p in Model.Products.Where(x => x.CategoryId == cat.Id))
+                                    {
+                                        <li class="product-item">
+                                            <!-- твоя разметка товара -->
+
+                                            <div class="contain-product layout-default">
+                                                <div class="product-thumb">
+                                                    <a href="#" class="link-to-product">
+                                                        <img src="~/images/products/@p.ImageUrl" width="270" height="270">
+                                                    </a>
+                                                    <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
+
+                                                </div>
+
+                                                <div class="info">
+                                                    <b class="categories">@p.CategoryName</b>
+                                                    <h4 class="product-title">@p.Name</h4>
+
+                                                    <div class="price">
+                                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>@p.OriginalPrice</span></ins>
+                                                        <del><span class="price-amount"><span class="currencySymbol">£</span>@p.DiscountedPrice</span></del>
+                                                    </div>
+                                                    <div class="slide-down-box">
+                                                        <p class="message">All products are carefully selected to ensure food safety.</p>
+
+                                                        <div class="buttons">
+                                                            <a id="wish-@p.Id"
+                                                               class="btn wishlist-btn @(p.IsInWishlist ? "active" : "")"
+                                                               onclick="toggleWishlist(@p.Id)">
+                                                                <i class="fa fa-heart"></i>
+                                                            </a>
+
+
+                                                            <a href="javascript:void(0)"
+                                                               class="btn add-to-cart-btn"
+                                                               onclick="addToBasket(@p.Id)">
+                                                                <i class="fa fa-cart-arrow-down"></i> add to cart
+                                                            </a>
+                                                        </div>
+                                                    
+                                                    </div>
+
+                                                   
+                                                </div>
+                                            </div>
+
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+
+                            index++;
+                        }
+                    </div>
+
+                   @*  <div class="tab-content">
+                       
                         <div id="tab01_1st" class="tab-contain active">
                             <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain" data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":25 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":15}}]}'>
                                 @foreach (var p in Model.Products)
@@ -146,8 +227,7 @@
                                                 <div class="slide-down-box">
                                                     <p class="message">All products are carefully selected to ensure food safety.</p>
                                                     <div class="buttons">
-@*                                                          <a href="#" class="btn wishlist-btn"><i class="fa fa-heart" aria-hidden="true"></i></a>
- *@
+ 
                                                         <a id="wish-@p.Id"
                                                                 class="btn wishlist-btn @(p.IsInWishlist ? "active" : "")"
                                                                 onclick="toggleWishlist(@p.Id)">
@@ -174,7 +254,7 @@
                                     </li>
                                 }
                                 
-                                @* <li class="product-item">
+                    *@             @* <li class="product-item">
                                     <div class="contain-product layout-default">
                                         <div class="product-thumb">
                                             <a href="#" class="link-to-product">
@@ -399,8 +479,8 @@
                                         </div>
                                     </div>
                                 </li> *@
-                            </ul>
-                        </div>
+                            
+                       @*  
                         <div id="tab01_2nd" class="tab-contain ">
                             <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain" data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":25 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":15}}]}'>
 
@@ -1432,7 +1512,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> *@
                     </div>
                 </div>
             </div>
@@ -1515,7 +1595,84 @@
                                 <h3 class="title">Deals of the day</h3>
                             </div>
                             <ul class="products biolife-carousel nav-top-right nav-none-on-mobile" data-slick='{"arrows":true, "dots":false, "infinite":false, "speed":400, "slidesMargin":30, "slidesToShow":1}'>
-                                <li class="product-item">
+
+                               @foreach (var item in Model.Products.Where(x => x.IsOnSale))
+                               {
+                                    <li class="product-item">
+                                        <div class="contain-product deal-layout contain-product__deal-layout">
+
+                                            <div class="product-thumb">
+                                               
+                                                <a href="#" class="link-to-product">
+                                                    <img src="~/images/products/@item.ImageUrl"  width="330" height="330" class="product-thumnail">
+                                                </a>
+                                                <div class="labels">
+                                                    <span class="sale-label">-@item.DiscountPercent%</span>
+                                                </div>
+                                           
+
+                                            </div>
+                                            <div class="info">
+                                            
+
+
+                                                 <div class="biolife-countdown"
+                                                     data-datetime='@(item.SaleEndDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "2026/02/01 00:00:00")'>
+                                                </div>
+
+ 
+                                                     
+                                             
+                                                <b class="categories">@item.CategoryName</b>
+                                                <h4 class="product-title">@item.Name</h4>
+                                                <div class="price">
+                                                    <ins><span class="price-amount"><span class="currencySymbol">£@item.DiscountedPrice</span></ins>
+                                                    <del><span class="price-amount"><span class="currencySymbol">£</span>@item.OriginalPrice</span></del>
+
+                                                </div>
+                                                <div class="slide-down-box">
+                                                    <p class="message">@item.Description</p>
+                                                    <div class="buttons">
+                                                        <a id="wish-@item.Id"
+                                                           class="btn wishlist-btn @(item.IsInWishlist ? "active" : "")"
+                                                           onclick="toggleWishlist(@item.Id)">
+                                                            <i class="fa fa-heart"></i>
+                                                        </a>
+
+
+                                                        <a href="javascript:void(0)"
+                                                           class="btn add-to-cart-btn"
+                                                           onclick="addToBasket(@item.Id)">
+                                                            <i class="fa fa-cart-arrow-down"></i> add to cart
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                               }
+                                            
+                                           
+
+                                           
+                                            
+
+                                               
+                                                
+                                                
+
+                                         
+
+                                                  
+
+
+
+
+
+
+                                
+                                
+                                @* <li class="product-item">
                                     <div class="contain-product deal-layout contain-product__deal-layout">
                                         <div class="product-thumb">
                                             <a href="#" class="link-to-product">
@@ -1599,7 +1756,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> *@
                             </ul>
                         </div>
                     </div>

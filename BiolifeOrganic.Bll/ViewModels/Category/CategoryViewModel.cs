@@ -10,6 +10,7 @@ public class CategoryViewModel
     public string? ImageUrl { get; set; }
     public string? CategoryIcon { get; set; }
     public bool IsDeleted { get; set; }
+    public bool IsRelated { get; set; }
 
     public List<ProductViewModel> Products { get; set; } = [];
     
@@ -26,19 +27,19 @@ public class CreateCategoryViewModel
 
 
 
+
+
 public class UpdateCategoryViewModel
 {
     public int Id { get; set; }
-
     public string? Name { get; set; }
-
     public string? ImageUrl { get; set; }
     public IFormFile? ImageFile { get; set; }
-
-
     public string? CategoryIcon { get; set; }
+}
+
+
 
    
 
-}
 

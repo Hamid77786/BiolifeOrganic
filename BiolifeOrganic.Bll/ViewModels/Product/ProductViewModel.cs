@@ -15,6 +15,7 @@ public class ProductViewModel
     public string? ImageUrl { get; set; }
 
     public int QuantityAvailable { get; set; }
+    public bool IsRelated {  get; set; }
     public bool IsInWishlist { get; set; }
     public bool IsBestSeller { get; set; }
     public bool IsAvailable { get; set; }
