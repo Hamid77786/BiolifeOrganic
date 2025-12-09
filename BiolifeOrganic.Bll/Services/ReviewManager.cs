@@ -1,14 +1,64 @@
 ﻿using AutoMapper;
 using BiolifeOrganic.Bll.Services.Contracts;
 using BiolifeOrganic.Bll.ViewModels.Review;
+using BiolifeOrganic.Dll.DataContext;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace BiolifeOrganic.Bll.Services;
 
 public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewViewModel, UpdateReviewViewModel>, IReviewService
 {
-    public ReviewManager(IReviewRepository respository, IMapper mapper) : base(respository, mapper)
+    private readonly AppDbContext _dbContext;
+    public ReviewManager(AppDbContext dbContext ,IReviewRepository respository, IMapper mapper) : base(respository, mapper)
     {
+        _dbContext = dbContext;
+    }
+
+    public async Task AddReview(ReviewViewModel viewModel)
+    {
+        var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == viewModel.ProductId);
+       
+        if (product == null)
+            throw new Exception("Product not found");
+
+        var review = new Review
+        {
+            ProductId = viewModel.ProductId,
+            Name = viewModel.Name!,
+            EmailAdress = viewModel.EmailAddress!,
+            Note = viewModel.Note,
+            Stars = viewModel.Stars,
+            AppUserId = viewModel.AppUserId,
+            PostedDate = DateTime.Now
+        };
+        await _dbContext.Reviews.AddAsync(review);
+
+        if (review.Stars > 0 && review.Stars <= 5)
+            product.IsRated = true;
+
+        await _dbContext.SaveChangesAsync();
+
+    }
+    public async Task<List<ReviewViewModel>> GetByProductIdAsync(int productId)
+    {
+        return await _dbContext.Reviews
+            .Where(r => r.ProductId == productId)
+            .OrderByDescending(r => r.PostedDate)
+            .Include(r => r.Product)
+             .Select(r => new ReviewViewModel
+             {
+                 Id = r.Id,
+                 Name = r.Name,
+                 EmailAddress = r.EmailAdress,
+                 Note = r.Note,
+                 Stars = r.Stars,
+                 PostedDate = r.PostedDate,
+                 ProductId = r.ProductId,
+                 AppUserId = r.AppUserId,
+                 ProductName = r.Product != null ? r.Product.Name : null
+             })
+            .ToListAsync();
     }
 }

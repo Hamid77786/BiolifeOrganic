@@ -152,10 +152,9 @@
 
                                             <div class="contain-product layout-default">
                                                 <div class="product-thumb">
-                                                    <a href="#" class="link-to-product">
+                                                    <a asp-controller="shop" asp-action="detail" asp-route-id="@p.Id" class="link-to-product">
                                                         <img src="~/images/products/@p.ImageUrl" width="270" height="270">
                                                     </a>
-                                                    <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
 
                                                 </div>
 
@@ -1602,10 +1601,11 @@
                                         <div class="contain-product deal-layout contain-product__deal-layout">
 
                                             <div class="product-thumb">
-                                               
-                                                <a href="#" class="link-to-product">
+
+                                            <a asp-controller="shop" asp-action="detail" asp-route-id="@item.Id" class="link-to-product">
                                                     <img src="~/images/products/@item.ImageUrl"  width="330" height="330" class="product-thumnail">
                                                 </a>
+
                                                 <div class="labels">
                                                     <span class="sale-label">-@item.DiscountPercent%</span>
                                                 </div>
@@ -1626,7 +1626,7 @@
                                                 <b class="categories">@item.CategoryName</b>
                                                 <h4 class="product-title">@item.Name</h4>
                                                 <div class="price">
-                                                    <ins><span class="price-amount"><span class="currencySymbol">£@item.DiscountedPrice</span></ins>
+                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>@item.DiscountedPrice</span></ins>
                                                     <del><span class="price-amount"><span class="currencySymbol">£</span>@item.OriginalPrice</span></del>
 
                                                 </div>

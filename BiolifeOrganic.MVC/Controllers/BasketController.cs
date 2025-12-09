@@ -44,10 +44,24 @@ namespace BiolifeOrganic.MVC.Controllers
             var basket = await _basketManager.GetBasketAsync();
             return PartialView("_BasketHeader", basket);
         }
+        
+        [HttpPost]
 
 
 
 
+        [HttpPost]
+        public async Task<IActionResult> AddNew(int id, int qty = 1)
+        {
+            if (qty < 1) qty = 1;
+            if (qty > 5) qty = 5;
+
+            _basketManager.AddToBasketNew(id, qty);
+
+            var basket = await _basketManager.GetBasketAsync();
+
+            return Json(new { success = true, count = basket.TotalCount });
+        }
 
 
 
@@ -78,6 +92,9 @@ namespace BiolifeOrganic.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeQty(int id, int qty)
         {
+            if (qty < 1) qty = 1;
+            if (qty > 5) qty = 5;
+
             var basket = await _basketManager.ChangeQuantityAsync(id, qty);
             return Json(new
             {

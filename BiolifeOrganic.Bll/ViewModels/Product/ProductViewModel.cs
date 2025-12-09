@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BiolifeOrganic.Bll.ViewModels.Category;
+using BiolifeOrganic.Bll.ViewModels.Review;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BiolifeOrganic.Bll.ViewModels.Product;
@@ -13,6 +15,7 @@ public class ProductViewModel
     public string? Description { get; set; }
     public string? AdditionalInformation { get; set; }
     public string? ImageUrl { get; set; }
+    public int QuantityInput { get; set; }
 
     public int QuantityAvailable { get; set; }
     public bool IsRelated {  get; set; }
@@ -29,8 +32,12 @@ public class ProductViewModel
 
     public int CategoryId { get; set; }
     public string? CategoryName { get; set; }
-
+    public List<ReviewViewModel> Reviews { get; set; } = [];
+    public List<CategoryViewModel> Categories { get; set; } = [];
     public List<string> ProductImages { get; set; } = [];
+
+    
+
 }
 
 public class CreateProductViewModel

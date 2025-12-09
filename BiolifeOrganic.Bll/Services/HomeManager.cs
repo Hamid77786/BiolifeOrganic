@@ -33,6 +33,7 @@ public class HomeManager : IHomeService
             include: query => query
                 .Include(p => p.ProductImages!)
                 .Include(c => c.Category!)
+                .Include(r=>r.Reviews!)
         )).ToList();
 
         if (!string.IsNullOrEmpty(userId))

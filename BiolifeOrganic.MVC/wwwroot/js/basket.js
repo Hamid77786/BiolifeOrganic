@@ -17,11 +17,18 @@ function refreshBasketBlock() {
 
 function addToBasket(id) {
     $.post("/Basket/Add", { id: id }, function (res) {
-        // res может содержать count
         refreshBasket();
     });
 }
 
+function addToBasketNew(id) {
+    let qty = parseInt($("#qty-" + id).val());
+    if (!qty || qty < 1) qty = 1;
+    if (qty > 5) qty = 5;
+    $.post("/Basket/AddNew", { id: id, qty: qty }, function (res) {
+        refreshBasket();
+    });
+}
 function removeItem(id) {
     $.post("/Basket/Remove", { id: id }, function () {
         refreshBasket();
@@ -30,20 +37,44 @@ function removeItem(id) {
 
 let changeQtyTimer = null;
 function changeQty(id, qty) {
-    // приводим qty к числу
-    qty = parseInt(qty) || 0;
 
-    // отменяем предыдущий таймер
+    let qtyNum = parseInt(qty);
+
+    if (isNaN(qtyNum) || qtyNum < 1) {
+        qtyNum = 1;
+    }
+
+    if (qtyNum > 5) {
+        qtyNum = 5;
+    }
+
+    qty = qtyNum;
+
+    
+
     if (changeQtyTimer) clearTimeout(changeQtyTimer);
 
     changeQtyTimer = setTimeout(function () {
         $.post("/Basket/ChangeQty", { id: id, qty: qty }, function (res) {
-            if (res && res.success) {
-                // можно обновлять только мини-корзину и таблицу без полной перезагрузки страницы
-                refreshBasket();
-            }
+           
+             refreshBasket();
+           
         });
-    }, 300); // 300ms — подберите значение под UX
+    }, 300);
 }
+
+
+
+
+
+  
+
+
+        
+        
+
+
+
+
 
 

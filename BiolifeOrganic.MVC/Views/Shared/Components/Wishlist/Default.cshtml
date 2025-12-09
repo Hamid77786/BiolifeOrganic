@@ -11,10 +11,10 @@
         <div class="contain-product layout-default">
 
             <div class="product-thumb">
-                <a href="#" class="link-to-product">
+                <a class="link-to-product">
                     <img src="~/images/products/@item.ImageUrl" alt="Vegetables" width="270" height="270" class="product-thumnail">
                 </a>
-                <a class="lookup btn_call_quickview" href="#"><i class="biolife-icon icon-search"></i></a>
+                <a class="lookup btn_call_quickview" asp-controller="shop" asp-action="detail" asp-route-id="@item.ProductId"><i class="biolife-icon icon-search"></i></a>
             </div>
             <div class="info">
 

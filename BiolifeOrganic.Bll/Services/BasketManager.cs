@@ -27,8 +27,11 @@ public class BasketManager
         }
         try
         {
-            var list = JsonSerializer.Deserialize<List<BasketCookieItemViewModel>>(cookie);
-            return list ?? new List<BasketCookieItemViewModel>();
+            //var list = JsonSerializer.Deserialize<List<BasketCookieItemViewModel>>(cookie);
+            //return list ?? new List<BasketCookieItemViewModel>();
+
+            return System.Text.Json.JsonSerializer.Deserialize<List<BasketCookieItemViewModel>>(cookie)
+              ?? new List<BasketCookieItemViewModel>();
         }
         catch
         {
@@ -42,6 +45,7 @@ public class BasketManager
         {
             Expires = DateTimeOffset.UtcNow.AddDays(7),
             HttpOnly = true,
+            SameSite = SameSiteMode.Lax
         };
         var cookieValue = System.Text.Json.JsonSerializer.Serialize(basket);
         _httpContextAccessor.HttpContext?.Response.Cookies.Append(BasketCookieName, cookieValue, cookieOptions);
@@ -128,6 +132,35 @@ public class BasketManager
         }
         SaveBasketToCookie(basket);
     }
+
+    public void AddToBasketNew(int productId, int quantity)
+    {
+        if (quantity < 1)
+            quantity = 1;
+        if (quantity > 5)       
+            quantity = 5;
+
+        var basket = GetBasketFromCookie();
+        var basketItem = basket.FirstOrDefault(x => x.ProductId == productId);
+
+        if (basketItem != null)
+        {
+            basketItem.Quantity += quantity;
+            if (basketItem.Quantity > 5)       // ⬅️ максимум 5
+                basketItem.Quantity = 5;
+        }
+        else
+        {
+            basket.Add(new BasketCookieItemViewModel
+            {
+                ProductId = productId,
+                Quantity = quantity
+            });
+        }
+
+        SaveBasketToCookie(basket);
+    }
+
 
     public void RemoveFromBasket(int productId)
     {
