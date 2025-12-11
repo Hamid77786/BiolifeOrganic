@@ -1,0 +1,76 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Review
+@using BiolifeOrganic.Bll.ViewModels.Shop
+@model ShopViewModel
+
+<ol class="commentlist">
+    @if (Model.PagedReviews != null && Model.PagedReviews.Any())
+    {
+        @foreach (var review in Model.PagedReviews)
+        {
+            <li class="review">
+                <div class="comment-container">
+                    <div class="row">
+                        <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
+                            <p class="comment-in">
+                                <span class="post-name">@review.ProductName</span>
+                                <span class="post-date">@(review.PostedDate?.ToString("yyyy-MM-dd") ?? "-")</span>
+                            </p>
+                            <div class="rating">
+                                <p class="star-rating">
+                                    <span style="width:@($"{review.Stars * 20}%")"></span>
+
+                                </p>
+                            </div>
+                            
+                            <p class="author">by: <b>@review.Name</b></p>
+                            <p class="comment-text">@review.Note</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+    else
+    {
+        <li class="no-comments">
+            <p>Comments not created yet.</p>
+        </li>
+    }
+
+ </ol>
+@if (Model.Pagination != null && Model.Pagination.TotalPages > 1)
+{
+    <div class="biolife-panigations-block version-2">
+        <ul class="panigation-contain">
+            @if (Model.Pagination.HasPrevious)
+            {
+                <li>
+                    <a class="link-page prev" href="?page=@(Model.Pagination.CurrentPage - 1)">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+            }
+
+            @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+            {
+                if (i == Model.Pagination.CurrentPage)
+                {
+                    <li><span class="current-page">@i</span></li>
+                }
+                else
+                {
+                    <li><a class="link-page" href="?page=@i">@i</a></li>
+                }
+            }
+
+            @if (Model.Pagination.HasNext)
+            {
+                <li>
+                    <a class="link-page next" href="?page=@(Model.Pagination.CurrentPage + 1)">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}

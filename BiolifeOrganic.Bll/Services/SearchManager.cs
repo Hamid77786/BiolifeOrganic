@@ -18,9 +18,13 @@ public class SearchManager : ISearchService
 
     public async Task<IEnumerable<ProductViewModel>> GetAllProductWithSearch(int? categoryId, string? productName)
     {
-        var datas = await _productRepository.GetAllAsync(p => p.CategoryId == categoryId && p.Name.Contains(productName!));
 
-        var products = _mapper.Map<IEnumerable<ProductViewModel>>(datas);
-        return products;
+        var datas = await _productRepository.GetAllAsync(p =>
+        (categoryId == null || p.CategoryId == categoryId) &&
+        (string.IsNullOrEmpty(productName) || p.Name.Contains(productName)));
+
+
+        return _mapper.Map<IEnumerable<ProductViewModel>>(datas);
+
     }
 }

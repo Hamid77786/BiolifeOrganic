@@ -57,7 +57,7 @@ public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewVi
                  PostedDate = r.PostedDate,
                  ProductId = r.ProductId,
                  AppUserId = r.AppUserId,
-                 ProductName = r.Product != null ? r.Product.Name : null
+                
              })
             .ToListAsync();
     }

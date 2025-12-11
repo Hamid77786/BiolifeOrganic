@@ -25,6 +25,8 @@ public class AppDbContext: IdentityDbContext<AppUser>
     public DbSet<WebContact> WebContacts { get; set; } = null!;
     public DbSet<Wishlist> Wishlists { get; set; } = null!;
     public DbSet<Comment> Comments { get; set; } = null!;
+    public DbSet<NewsletterSubscriber> NewsletterSubscribers { get; set; } = null!;
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

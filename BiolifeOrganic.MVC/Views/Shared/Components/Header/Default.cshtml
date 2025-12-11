@@ -10,7 +10,7 @@
                 <ul class="horizontal-menu">
                     @foreach(var contact in Model.WebContacts)
                     {
-                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>@contact.EmailAgree</a></li>
+                        <li><a asp-controller="contact" asp-action="index"><i class="fa fa-envelope" aria-hidden="true"></i>@contact.EmailAgree</a></li>
 
                     }
                 </ul>
@@ -143,8 +143,8 @@
                                                     <div class="left-info">
                                                         <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
                                                         <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                                         </div>
                                                         <div class="qty">
                                                             <label for="cart[id123][qty]">Qty:</label>
@@ -165,8 +165,8 @@
                                                     <div class="left-info">
                                                         <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
                                                         <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                                         </div>
                                                         <div class="qty">
                                                             <label for="cart[id124][qty]">Qty:</label>
@@ -187,8 +187,8 @@
                                                     <div class="left-info">
                                                         <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
                                                         <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                                         </div>
                                                         <div class="qty">
                                                             <label for="cart[id125][qty]">Qty:</label>
@@ -209,8 +209,8 @@
                                                     <div class="left-info">
                                                         <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
                                                         <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                                         </div>
                                                         <div class="qty">
                                                             <label for="cart[id126][qty]">Qty:</label>
@@ -231,8 +231,8 @@
                                                     <div class="left-info">
                                                         <div class="product-title"><a href="#" class="product-name">National Fresh Fruit</a></div>
                                                         <div class="price">
-                                                            <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                            <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                                         </div>
                                                         <div class="qty">
                                                             <label for="cart[id127][qty]">Qty:</label>
@@ -270,9 +270,9 @@
                 <div class="col-lg-9 col-md-8 padding-top-2px">
                     <div class="header-search-bar layout-01">
                         <form asp-controller="Search" asp-action="Index"  class="form-search" name="desktop-seacrh" method="get">
-                            <input type="text" name="searchText" class="input-text" value="" placeholder="Search here...">
-                            <select name="categoryId">
-                                <option value= selected>All Categories</option>
+                            <input id="searchBox" type="text" name="searchText" class="input-text" value="" placeholder="Search here...">
+                            <select id="categorySelect" name="categoryId">
+                                <option value="">All Categories</option>
                                 @foreach(var item in Model.Categories)
                                 {
                                     <option value=@item.Id>@item.Name</option>
@@ -281,6 +281,9 @@
                             </select>
                             <button type="submit" class="btn-submit"><i class="biolife-icon icon-search"></i></button>
                         </form>
+
+                        <div id="liveSearchResults" class="live-results"></div>
+
                     </div>
                     <div class="live-info">
                         @foreach(var wc in Model.WebContacts)

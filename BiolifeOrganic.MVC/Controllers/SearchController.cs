@@ -13,11 +13,21 @@ namespace BiolifeOrganic.MVC.Controllers
         }
       
         [HttpGet]
-        public async Task<IActionResult> Index(string searchText,int categoryId)
+        public async Task<IActionResult> Index(string? searchText,int? categoryId)
         {
             IEnumerable<ProductViewModel> products = await _searchService.GetAllProductWithSearch(categoryId,searchText);
 
             return View(products);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> LivePartial(string? searchText, int? categoryId)
+        {
+            var products = await _searchService.GetAllProductWithSearch(categoryId, searchText);
+
+            return PartialView("_LiveSearchResults", products);
+
+        }
+
     }
 }

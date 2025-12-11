@@ -9,6 +9,8 @@ public class ReviewViewModel
     public int Stars { get; set; }
     public int ProductId { get; set; }
     public string? ProductName { get; set; }
+    
+    public bool ProductIsRated { get; set; }
     public DateTime? PostedDate { get; set; }
 
     public string? AppUserId { get; set; }

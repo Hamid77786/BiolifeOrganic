@@ -1,16 +1,95 @@
 ﻿@using BiolifeOrganic.Bll.ViewModels.Product
 @model IEnumerable<ProductViewModel>
 
-@if (Model.Any())
-{
-    @foreach (var p in Model)
-    {
-        <p>@p.Name</p>
-    }
-}
-else
-{
-    <p>Mehsul Tapilmadi!</p>
-}
+
+    
+        <div class="page-contain category-page no-sidebar">
+            <div class="container">
+                <div class="row">
+
+                    <div id="main-content" class="main-content col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="row">
+                            <ul class="products-list">
+                                @if (Model.Any())
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <li class="product-item col-lg-2 col-md-3 col-sm-4 col-xs-6">
+
+                                            <div class="contain-product layout-default">
+
+                                                <div class="product-thumb">
+                                                    <a asp-controller="shop" asp-action="detail" asp-route-id="@item.Id" class="link-to-product">
+                                                        <img src="~/images/products/@item.ImageUrl" alt="Vegetables" width="270" height="270" class="product-thumnail">
+                                                    </a>
+                                                </div>
+                                                <div class="info">
+
+                                                    <h4 class="product-title"><a href="#" class="pr-name">@item.Name</a></h4>
+                                                    <div class="price ">
+                                                        <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@item.OriginalPrice</span></ins>
+                                                    </div>
+                                                    <div class="slide-down-box">
+                                                        <p class="message">All products are carefully selected to ensure food safety.</p>
+                                                        <div class="buttons">
+
+                                                            <a id="wish-@item.Id"
+                                                               class="btn wishlist-btn @(item.IsInWishlist ? "active" : "")"
+                                                               onclick="toggleWishlist(@item.Id)">
+                                                                <i class="fa fa-heart"></i>
+                                                            </a>
+
+                                                            <a href="javascript:void(0)"
+                                                               class="btn add-to-cart-btn"
+                                                               onclick="addToBasket(@item.Id)">
+                                                                <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                                                add to cart
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+
+
+
+
+                                    }
+                                    else
+                                    {
+                                        <p>Product not found!</p>
+                                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            </ul>
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+   
+
 
 

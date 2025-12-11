@@ -10,12 +10,19 @@
         <!--Block 01: Main slide-->
         <div class="main-slide block-slider">
             <ul class="biolife-carousel nav-none-on-mobile" data-slick='{"arrows": true, "dots": false, "slidesMargin": 0, "slidesToShow": 1, "infinite": true, "speed": 800}'>
-                <li>
+                @foreach(var slider in Model.Sliders)
+                {
+                    @Html.Raw(slider.HtmlContent)
+                }
+
+                
+                @* <li>
                     <div class="slide-contain slider-opt03__layout01">
                         <div class="media">
                             <div class="child-elememt">
                                 <a href="#" class="link-to">
-                                    <img src="~/images/home-03/slide-01-child-01.png" width="604" height="580" alt="">
+                                    <img src="/images/home-03/slide-01-child-01.png">
+
                                 </a>
                             </div>
                         </div>
@@ -30,47 +37,40 @@
                     </div>
                 </li>
                 <li>
-                    <!--Block 04: Banner Promotion 01 -->
-                    <div class="banner-promotion-01 xs-margin-top-50px sm-margin-top-11px">
-                        <div class="biolife-banner promotion biolife-banner__promotion">
-                            <div class="banner-contain">
-                                <div class="media background-biolife-banner__promotion">
-                                    <div class="img-moving position-1">
-                                        <img src="~/images/home-03/img-moving-pst-1.png" width="149" height="139" alt="img msv">
-                                    </div>
-                                    <div class="img-moving position-2">
-                                        <img src="~/images/home-03/img-moving-pst-2.png" width="185" height="265" alt="img msv">
-                                    </div>
-                                    <div class="img-moving position-3">
-                                        <img src="~/images/home-03/img-moving-pst-3-cut.png" width="384" height="151" alt="img msv">
-                                    </div>
-                                    <div class="img-moving position-4">
-                                        <img src="~/images/home-03/img-moving-pst-4.png" width="198" height="269" alt="img msv">
-                                    </div>
-                                </div>
-                                <div class="text-content">
-                                    <div class="container text-wrap">
-                                        <i class="first-line">Healthy Fruit juice</i>
-                                        <span class="second-line">Vegetable Always fresh</span>
-                                        <p class="third-line">Food Heaven Made Easy sounds like the name of an amazingly delicious food delivery service, but don't be fooled...</p>
-                                        <div class="product-detail">
-                                            <p class="txt-price"><span>Only:</span>$8.00</p>
-                                            <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                        </div>
-                                    </div>
+                    <div class="slide-contain biolife-banner__special">
+                        <div class="banner-contain">
+                            <div class="media">
+                                <a href="#" class="bn-link">
+
+                                    <figure><img src="/images/home-01/thumb-bn-special-02.jpg" width="616" height="483" alt=""></figure>
+                                </a>
+                            </div>
+                            <div class="text-content">
+                                <b class="first-line">Vegetables</b>
+                                <span class="second-line">Organic Heaven Made</span>
+                                <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
+                                <div class="product-detail">
+                                    <h4 class="product-name">National Fresh Fruit Production</h4>
+                                    <p class="buttons">
+                                        <a asp-controller="shop" class="btn btn-bold">Shop now</a>
+                                    </p>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </li>
+
+               
+              
 
                 <li>
                     <div class="slide-contain biolife-banner__special">
                         <div class="banner-contain">
                             <div class="media">
                                 <a href="#" class="bn-link">
-                                    <figure><img src="~/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
+                                    <figure><img src="/images/home-03/bn_special_org.jpg" width="616" height="483" alt=""></figure>
                                 </a>
                             </div>
                             <div class="text-content">
@@ -79,18 +79,16 @@
                                 <span class="third-line">Easy <i>Healthy, Happy Life</i></span>
                                 <div class="product-detail">
                                     <h4 class="product-name">National Fresh Fruit Production</h4>
-                                    <div class="price price-contain">
-                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                        <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
-                                    </div>
-                                    <div class="buttons">
-                                        <a href="#" class="btn add-to-cart-btn">add to cart</a>
-                                    </div>
+                                    <p class="buttons">
+                                        <a asp-controller="shop" class="btn btn-bold">Shop now</a>
+                                    </p>
                                 </div>
+                                    
+                                   
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> *@
 
             </ul>
         </div>
@@ -101,7 +99,7 @@
             <div class="container">
                 <div class="biolife-title-box">
                     <span class="subtitle">All the best item for You</span>
-                    <h3 class="main-title">Related Products</h3>
+                    <h3 class="main-title">Category Products</h3>
                 </div>
                 <div class="biolife-tab biolife-tab-contain sm-margin-top-34px">
                     <div class="tab-head tab-head__icon-top-layout icon-top-layout">
@@ -143,7 +141,7 @@
                             <div id="tab_cat_@index" class="tab-contain @(index == 1 ? "active" : "")">
 
                                 <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain"
-                                    data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4}'>
+                                data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4}'>
 
                                     @foreach (var p in Model.Products.Where(x => x.CategoryId == cat.Id))
                                     {
@@ -163,30 +161,30 @@
                                                     <h4 class="product-title">@p.Name</h4>
 
                                                     <div class="price">
-                                                        <ins><span class="price-amount"><span class="currencySymbol">£</span>@p.OriginalPrice</span></ins>
-                                                        <del><span class="price-amount"><span class="currencySymbol">£</span>@p.DiscountedPrice</span></del>
+                                                        <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@p.OriginalPrice</span></ins>
+                                                        <del><span class="price-amount"><span class="currencySymbol"> ₼</span>@p.DiscountedPrice</span></del>
                                                     </div>
                                                     <div class="slide-down-box">
                                                         <p class="message">All products are carefully selected to ensure food safety.</p>
 
                                                         <div class="buttons">
                                                             <a id="wish-@p.Id"
-                                                               class="btn wishlist-btn @(p.IsInWishlist ? "active" : "")"
-                                                               onclick="toggleWishlist(@p.Id)">
+                                                            class="btn wishlist-btn @(p.IsInWishlist ? "active" : "")"
+                                                            onclick="toggleWishlist(@p.Id)">
                                                                 <i class="fa fa-heart"></i>
                                                             </a>
 
 
                                                             <a href="javascript:void(0)"
-                                                               class="btn add-to-cart-btn"
-                                                               onclick="addToBasket(@p.Id)">
+                                                            class="btn add-to-cart-btn"
+                                                            onclick="addToBasket(@p.Id)">
                                                                 <i class="fa fa-cart-arrow-down"></i> add to cart
                                                             </a>
                                                         </div>
-                                                    
+
                                                     </div>
 
-                                                   
+
                                                 </div>
                                             </div>
 
@@ -200,8 +198,8 @@
                         }
                     </div>
 
-                   @*  <div class="tab-content">
-                       
+                    @*  <div class="tab-content">
+
                         <div id="tab01_1st" class="tab-contain active">
                             <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain" data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":25 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":15}}]}'>
                                 @foreach (var p in Model.Products)
@@ -220,13 +218,13 @@
                                                 <b class="categories">@p.CategoryName</b>
                                                 <h4 class="product-title"><a href="#" class="pr-name">@p.Name</a></h4>
                                                 <div class="price ">
-                                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>@p.OriginalPrice</span></ins>
-                                                    <del><span class="price-amount"><span class="currencySymbol">£</span>@p.DiscountedPrice</span></del>
+                                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@p.OriginalPrice</span></ins>
+                                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>@p.DiscountedPrice</span></del>
                                                 </div>
                                                 <div class="slide-down-box">
                                                     <p class="message">All products are carefully selected to ensure food safety.</p>
                                                     <div class="buttons">
- 
+
                                                         <a id="wish-@p.Id"
                                                                 class="btn wishlist-btn @(p.IsInWishlist ? "active" : "")"
                                                                 onclick="toggleWishlist(@p.Id)">
@@ -236,8 +234,8 @@
 
 
 
- 
-                                                            
+
+
                                                         <a href="javascript:void(0)"
                                                            class="btn add-to-cart-btn"
                                                            onclick="addToBasket(@p.Id)">
@@ -252,7 +250,7 @@
                                         </div>
                                     </li>
                                 }
-                                
+
                     *@             @* <li class="product-item">
                                     <div class="contain-product layout-default">
                                         <div class="product-thumb">
@@ -265,8 +263,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">13 Healing Powers of Lemons</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -290,8 +288,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers Magnetic Salt</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -315,8 +313,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower Kugel</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -340,8 +338,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -365,8 +363,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -390,8 +388,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Pumpkins Fairytale</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -415,8 +413,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -440,8 +438,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -465,8 +463,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -478,8 +476,8 @@
                                         </div>
                                     </div>
                                 </li> *@
-                            
-                       @*  
+
+                    @*  
                         <div id="tab01_2nd" class="tab-contain ">
                             <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile eq-height-contain" data-slick='{"rows":2 ,"arrows":true,"dots":false,"infinite":true,"speed":400,"slidesMargin":10,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":25 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":15}}]}'>
 
@@ -495,8 +493,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado, Large</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -520,8 +518,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">13 Healing Powers of Lemons</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -545,8 +543,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers Magnetic Salt</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -570,8 +568,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -595,8 +593,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Pumpkins Fairytale</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -620,8 +618,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower Kugel</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -645,8 +643,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -670,8 +668,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -695,8 +693,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -720,8 +718,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -751,8 +749,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado, Large</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -776,8 +774,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers Magnetic Salt</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -801,8 +799,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -826,8 +824,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -851,8 +849,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">13 Healing Powers of Lemons</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -876,8 +874,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -901,8 +899,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -926,8 +924,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -951,8 +949,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Pumpkins Fairytale</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -976,8 +974,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower Kugel</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1007,8 +1005,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1032,8 +1030,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado, Large</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1057,8 +1055,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1082,8 +1080,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">13 Healing Powers of Lemons</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1107,8 +1105,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers Magnetic Salt</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1132,8 +1130,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1157,8 +1155,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower Kugel</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1182,8 +1180,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1207,8 +1205,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Pumpkins Fairytale</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1232,8 +1230,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1262,8 +1260,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1288,8 +1286,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1314,8 +1312,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado, Large</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1340,8 +1338,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers Magnetic Salt</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1366,8 +1364,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">13 Healing Powers of Lemons</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1392,8 +1390,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower Kugel</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1418,8 +1416,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1444,8 +1442,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Pumpkins Fairytale</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1470,8 +1468,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1496,8 +1494,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1512,167 +1510,167 @@
                                 </li>
                             </ul>
                         </div> *@
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <!--Block 07: Brands-->
-        <div class="brand-slide sm-margin-top-100px background-fafafa xs-margin-top-80px xs-margin-bottom-80px">
-            <div class="container">
-                <ul class="biolife-carousel nav-center-bold nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}},{"breakpoint":450, "settings":{ "slidesToShow": 1, "slidesMargin":10}}]}'>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="biolife-brd-container">
-                            <a href="#" class="link">
-                                <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+    <!--Block 07: Brands-->
+    <div class="brand-slide sm-margin-top-100px background-fafafa xs-margin-top-80px xs-margin-bottom-80px">
+        <div class="container">
+            <ul class="biolife-carousel nav-center-bold nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":4, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3}},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}},{"breakpoint":450, "settings":{ "slidesToShow": 1, "slidesMargin":10}}]}'>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-01.jpg" width="214" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-02.jpg" width="214" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-03.jpg" width="153" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="biolife-brd-container">
+                        <a href="#" class="link">
+                            <figure><img src="~/images/home-03/brd-04.jpg" width="224" height="163" alt=""></figure>
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </div>
 
 
-      
-        <!--Block 06: Products-->
-        <div class="Product-box sm-margin-top-96px xs-margin-top-0">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-5 col-sm-6">
-                        <div class="advance-product-box">
-                            <div class="biolife-title-box bold-style biolife-title-box__bold-style">
-                                <h3 class="title">Deals of the day</h3>
-                            </div>
-                            <ul class="products biolife-carousel nav-top-right nav-none-on-mobile" data-slick='{"arrows":true, "dots":false, "infinite":false, "speed":400, "slidesMargin":30, "slidesToShow":1}'>
 
-                               @foreach (var item in Model.Products.Where(x => x.IsOnSale))
-                               {
-                                    <li class="product-item">
-                                        <div class="contain-product deal-layout contain-product__deal-layout">
+    <!--Block 06: Products-->
+    <div class="Product-box sm-margin-top-96px xs-margin-top-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-5 col-sm-6">
+                    <div class="advance-product-box">
+                        <div class="biolife-title-box bold-style biolife-title-box__bold-style">
+                            <h3 class="title">Deals of the day</h3>
+                        </div>
+                        <ul class="products biolife-carousel nav-top-right nav-none-on-mobile" data-slick='{"arrows":true, "dots":false, "infinite":false, "speed":400, "slidesMargin":30, "slidesToShow":1}'>
 
-                                            <div class="product-thumb">
+                            @foreach (var item in Model.Products.Where(x => x.IsOnSale))
+                            {
+                                <li class="product-item">
+                                    <div class="contain-product deal-layout contain-product__deal-layout">
+
+                                        <div class="product-thumb">
 
                                             <a asp-controller="shop" asp-action="detail" asp-route-id="@item.Id" class="link-to-product">
-                                                    <img src="~/images/products/@item.ImageUrl"  width="330" height="330" class="product-thumnail">
-                                                </a>
+                                                <img src="~/images/products/@item.ImageUrl"  width="330" height="330" class="product-thumnail">
+                                            </a>
 
-                                                <div class="labels">
-                                                    <span class="sale-label">-@item.DiscountPercent%</span>
-                                                </div>
-                                           
+                                            <div class="labels">
+                                                <span class="sale-label">-@item.DiscountPercent%</span>
+                                            </div>
+
+
+                                        </div>
+                                        <div class="info">
+
+
+
+                                            <div class="biolife-countdown"
+                                            data-datetime='@(item.SaleEndDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "2026/02/01 00:00:00")'>
+                                            </div>
+
+
+
+
+                                            <b class="categories">@item.CategoryName</b>
+                                            <h4 class="product-title">@item.Name</h4>
+                                            <div class="price">
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@item.DiscountedPrice</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>@item.OriginalPrice</span></del>
 
                                             </div>
-                                            <div class="info">
-                                            
+                                            <div class="slide-down-box">
+                                                <p class="message">@item.Description</p>
+                                                <div class="buttons">
+                                                    <a id="wish-@item.Id"
+                                                    class="btn wishlist-btn @(item.IsInWishlist ? "active" : "")"
+                                                    onclick="toggleWishlist(@item.Id)">
+                                                        <i class="fa fa-heart"></i>
+                                                    </a>
 
 
-                                                 <div class="biolife-countdown"
-                                                     data-datetime='@(item.SaleEndDate?.ToString("yyyy-MM-dd HH:mm:ss") ?? "2026/02/01 00:00:00")'>
-                                                </div>
-
- 
-                                                     
-                                             
-                                                <b class="categories">@item.CategoryName</b>
-                                                <h4 class="product-title">@item.Name</h4>
-                                                <div class="price">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>@item.DiscountedPrice</span></ins>
-                                                    <del><span class="price-amount"><span class="currencySymbol">£</span>@item.OriginalPrice</span></del>
-
-                                                </div>
-                                                <div class="slide-down-box">
-                                                    <p class="message">@item.Description</p>
-                                                    <div class="buttons">
-                                                        <a id="wish-@item.Id"
-                                                           class="btn wishlist-btn @(item.IsInWishlist ? "active" : "")"
-                                                           onclick="toggleWishlist(@item.Id)">
-                                                            <i class="fa fa-heart"></i>
-                                                        </a>
-
-
-                                                        <a href="javascript:void(0)"
-                                                           class="btn add-to-cart-btn"
-                                                           onclick="addToBasket(@item.Id)">
-                                                            <i class="fa fa-cart-arrow-down"></i> add to cart
-                                                        </a>
-                                                    </div>
+                                                    <a href="javascript:void(0)"
+                                                    class="btn add-to-cart-btn"
+                                                    onclick="addToBasket(@item.Id)">
+                                                        <i class="fa fa-cart-arrow-down"></i> add to cart
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </li>
-                               }
-                                            
-                                           
-
-                                           
-                                            
-
-                                               
-                                                
-                                                
-
-                                         
-
-                                                  
+                                    </div>
+                                </li>
+                            }
 
 
 
 
 
 
-                                
-                                
-                                @* <li class="product-item">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            @* <li class="product-item">
                                     <div class="contain-product deal-layout contain-product__deal-layout">
                                         <div class="product-thumb">
                                             <a href="#" class="link-to-product">
@@ -1687,8 +1685,8 @@
                                             <b class="categories">Fresh Fruit</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1715,8 +1713,8 @@
                                             <b class="categories">Fresh Fruit</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1744,8 +1742,8 @@
                                             <b class="categories">Fresh Fruit</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="slide-down-box">
                                                 <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -1757,37 +1755,55 @@
                                         </div>
                                     </div>
                                 </li> *@
-                            </ul>
-                        </div>
+                        </ul>
                     </div>
-                    <div class="col-lg-8 col-md-7 col-sm-6">
-                        <div class="advance-product-box">
-                            <div class="biolife-title-box bold-style biolife-title-box__bold-style">
-                                <h3 class="title">Top Rated Products</h3>
-                            </div>
-                            <ul class="products biolife-carousel eq-height-contain nav-center-03 nav-none-on-mobile row-space-29px" data-slick='{"rows":2,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":2,"responsive":[{"breakpoint":1200,"settings":{ "rows":2, "slidesToShow": 2}},{"breakpoint":992, "settings":{ "rows":2, "slidesToShow": 1}},{"breakpoint":768, "settings":{ "rows":2, "slidesToShow": 2}},{"breakpoint":500, "settings":{ "rows":2, "slidesToShow": 1}}]}'>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-19.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">Pumpkins Fairytale</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                </div>
+                <div class="col-lg-8 col-md-7 col-sm-6">
+                    <div class="advance-product-box">
+                        <div class="biolife-title-box bold-style biolife-title-box__bold-style">
+                            <h3 class="title">Top Rated Products</h3>
+                        </div>
+                        <ul class="products biolife-carousel eq-height-contain nav-center-03 nav-none-on-mobile row-space-29px" data-slick='{"rows":2,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":30,"slidesToShow":2,"responsive":[{"breakpoint":1200,"settings":{ "rows":2, "slidesToShow": 2}},{"breakpoint":992, "settings":{ "rows":2, "slidesToShow": 1}},{"breakpoint":768, "settings":{ "rows":2, "slidesToShow": 2}},{"breakpoint":500, "settings":{ "rows":2, "slidesToShow": 1}}]}'>
+
+                            @if (Model.Products?.Any(p => p.IsRated) == true)
+                            {
+                                foreach (var product in Model.Products.Where(p => p.IsRated))
+                                {
+                                    <li class="product-item">
+                                        <div class="contain-product right-info-layout contain-product__right-info-layout">
+                                            <div class="product-thumb">
+                                                <a asp-controller="shop" asp-action="detail" asp-route-id="@product.Id" class="link-to-product">
+                                                    <img src="~/images/products/@product.ImageUrl" width="270" height="270" class="product-thumnail" />
+                                                </a>
                                             </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
+
+                                            <div class="info">
+                                                <b class="categories">@product.CategoryName</b>
+
+                                                <h4 class="product-title">
+                                                    <a href="#" class="pr-name">@product.Name</a>
+                                                </h4>
+
+                                                <div class="price">
+                                                    <ins><span class="price-amount"> ₼@product.DiscountedPrice</span></ins>
+                                                    <del><span class="price-amount"> ₼@product.OriginalPrice</span></del>
+                                                </div>
+
+                                                <div class="rating">
+                                                    <p class="star-rating">
+                                                        <span class="width-@((product.AverageStars / 5.0) * 100)percent"></span>
+                                                    </p>
+
+                                                    <span class="review-count">(@product.ReviewCount Reviews)</span>
+                                                </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
+                                    </li>
+                                }
+                            }
+
+                             @*    <li class="product-item">
                                     <div class="contain-product right-info-layout contain-product__right-info-layout">
                                         <div class="product-thumb">
                                             <a href="#" class="link-to-product">
@@ -1798,8 +1814,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1819,8 +1835,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1840,8 +1856,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1861,8 +1877,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1882,8 +1898,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1903,8 +1919,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1924,8 +1940,8 @@
                                             <b class="categories">Vegetables</b>
                                             <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                             <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                             </div>
                                             <div class="rating">
                                                 <p class="star-rating"><span class="width-80percent"></span></p>
@@ -1933,7 +1949,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> *@
                             </ul>
                             <div class="biolife-banner style-01 biolife-banner__style-01 xs-margin-top-80px-im sm-margin-top-30px-im">
                                 <div class="banner-contain">

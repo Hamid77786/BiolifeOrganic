@@ -1,0 +1,18 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Product
+@model IEnumerable<ProductViewModel>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var p in Model)
+    {
+        <div class="result-item"
+             onclick="window.location.href='@Url.Action("Index", "Search", new { searchText = p.Name })'">
+            @p.Name
+        </div>
+
+    }
+}
+else
+{
+    <div class="result-item">No results</div>
+}

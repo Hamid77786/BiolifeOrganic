@@ -2,9 +2,9 @@
 
 public class Slider:TimeStample
 {
-    public string? ImageUrl { get; set; }
-    public string? Title { get; set; }
-    public string? LinkUrl { get; set; }
+    public string HtmlContent { get; set; } = string.Empty;
+    public int DisplayOrder { get; set; }
+    public bool IsActive { get; set; }
 
 
 }

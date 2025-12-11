@@ -19,7 +19,7 @@ public class Product:TimeStample
     public DateTime? SaleEndDate { get; set; }
     public decimal DiscountedPrice =>
         IsOnSale && DiscountPercent.HasValue
-    ? OriginalPrice - (OriginalPrice * DiscountPercent.Value / 100)
+    ? Math.Round(OriginalPrice - (OriginalPrice * DiscountPercent.Value / 100),2)
         : OriginalPrice;
 
     public int CategoryId { get; set; }

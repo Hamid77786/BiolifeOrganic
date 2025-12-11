@@ -11,16 +11,15 @@
         <div class="contain-product layout-default">
 
             <div class="product-thumb">
-                <a class="link-to-product">
+                <a asp-controller="shop" asp-action="detail" asp-route-id="@item.ProductId" class="link-to-product">
                     <img src="~/images/products/@item.ImageUrl" alt="Vegetables" width="270" height="270" class="product-thumnail">
                 </a>
-                <a class="lookup btn_call_quickview" asp-controller="shop" asp-action="detail" asp-route-id="@item.ProductId"><i class="biolife-icon icon-search"></i></a>
             </div>
             <div class="info">
 
                 <h4 class="product-title"><a href="#" class="pr-name">@item.ProductName</a></h4>
                 <div class="price ">
-                    <ins><span class="price-amount"><span class="currencySymbol">£</span>@item.Price</span></ins>
+                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@item.Price</span></ins>
                 </div>
                 <div class="slide-down-box">
                     <p class="message">All products are carefully selected to ensure food safety.</p>

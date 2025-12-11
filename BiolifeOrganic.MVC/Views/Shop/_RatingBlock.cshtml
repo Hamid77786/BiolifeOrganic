@@ -1,0 +1,46 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Shop
+@model ShopViewModel
+
+<div id="rating-info" class="rating-info">
+    <p class="index">
+        <strong class="rating">
+            @((Model.Reviews != null && Model.Reviews.Any())
+                ? Model.Reviews.Average(r => r.Stars).ToString("0.0")
+                : "No Review")
+        </strong> out of 5
+    </p>
+    <div class="rating">
+        <p class="star-rating">
+            <span class="width-@(((Model.Reviews != null && Model.Reviews.Any())
+                                                            ? Model.Reviews.Average(r => r.Stars) * 20
+                                                            : 0))percent">
+            </span>
+
+        </p>
+    </div>
+    <ul class="options">
+        @for (int i = 5; i >= 1; i--)
+        {
+            var count = (Model.StarCounts != null && Model.StarCounts.ContainsKey(i))
+            ? Model.StarCounts[i]
+            : 0;
+
+            var total = Model.TotalReviews > 0 ? Model.TotalReviews : 1;
+            var percent = (count * 100) / total;
+
+
+            <li>
+                <div class="detail-for">
+                    <span class="option-name">@i stars</span>
+                    <span class="progres">
+                        <span class="line-100percent">
+                            <span class="percent width-@($"{percent}%")"></span>
+                        </span>
+                    </span>
+                    <span class="number">@count</span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+                                

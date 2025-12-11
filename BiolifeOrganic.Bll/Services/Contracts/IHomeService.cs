@@ -6,5 +6,5 @@ namespace BiolifeOrganic.Bll.Services.Contracts;
 
 public interface IHomeService
 {
-    Task<HomeViewModel> GetHomeViewModel(string? userId);
+    Task<HomeViewModel> GetHomeViewModel(string? userId,int? productId);
 }

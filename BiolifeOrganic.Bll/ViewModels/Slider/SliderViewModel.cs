@@ -3,18 +3,14 @@
 public class SliderViewModel
 {
     public int Id { get; set; }
-    public string? ImageUrl { get; set; }
-    public string? Title { get; set; }
-    public string? LinkUrl { get; set; }
-
+    public string HtmlContent { get; set; } = string.Empty;
 
 }
 
 public class CreateSliderViewModel
 {
-    public string? ImageUrl { get; set; }
-    public string? Title { get; set; }
-    public string? LinkUrl { get; set; }
+    public string HtmlContent { get; set; } = null!;
+
 
 }
 
@@ -22,9 +18,8 @@ public class CreateSliderViewModel
 public class UpdateSliderViewModel
 {
     public int Id { get; set; }
-    public string? ImageUrl { get; set; }
-    public string? Title { get; set; }
-    public string? LinkUrl { get; set; }
+    public string HtmlContent { get; set; } = null!;
+
 
 }
 

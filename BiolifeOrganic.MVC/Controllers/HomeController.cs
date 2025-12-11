@@ -19,10 +19,10 @@ namespace BiolifeOrganic.MVC.Controllers
 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int productId)
         {
             var userId = _userManager.GetUserId(User);
-            var homeViewModel = await _homeService.GetHomeViewModel(userId);
+            var homeViewModel = await _homeService.GetHomeViewModel(userId,productId);
 
             return View(homeViewModel);
         }

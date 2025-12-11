@@ -96,6 +96,7 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
             SaleStartDate = null,
             SaleEndDate = null,
 
+
             ProductImages = new List<ProductImage>
             {
                 new ProductImage

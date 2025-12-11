@@ -1,5 +1,7 @@
 ﻿using BiolifeOrganic.Bll.Services.Contracts;
+using BiolifeOrganic.Bll.ViewModels.Pagination;
 using BiolifeOrganic.Bll.ViewModels.Product;
+using BiolifeOrganic.Bll.ViewModels.Review;
 using BiolifeOrganic.Bll.ViewModels.Shop;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +21,7 @@ public class ShopManager : IShopService
         _reviewService = reviewService;
     }
 
-    public async Task<ShopViewModel> GetShopViewModel(int productId,string? userId)
+    public async Task<ShopViewModel> GetShopViewModel(int productId, string? userId, int page = 1, int pageSize = 2)
     {
         var products = (await _productService.GetAllAsync(
             predicate: x => !x.IsDeleted,
@@ -28,59 +30,64 @@ public class ShopManager : IShopService
                 .Include(c => c.Category!)
                 .Include(r => r.Reviews!)
         )).ToList();
-        var product = products.FirstOrDefault(x => x.Id == productId);
 
+        var product = products.FirstOrDefault(x => x.Id == productId);
         var reviews = await _reviewService.GetByProductIdAsync(productId);
 
-        Dictionary<int, int> starCounts = new();
-        int totalReviews = 0;
+        int pageNumber = page < 1 ? 1 : page;
 
-        if (reviews != null && reviews.Any())
+        int totalReviews = reviews?.Count ?? 0;
+
+        var pagedReviews = (reviews != null && reviews.Any())
+         ? reviews.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList()
+         : new List<ReviewViewModel>();
+
+        
+        var starCounts = reviews?
+            .GroupBy(r => r.Stars)
+            .ToDictionary(g => g.Key, g => g.Count())
+            ?? new Dictionary<int, int>();
+
+        List<ProductViewModel> relatedProducts = new();
+
+        if (product != null)
         {
-            starCounts = reviews
-                .GroupBy(r => r.Stars)
-                .ToDictionary(g => g.Key, g => g.Count());
-
-            totalReviews = starCounts.Values.Sum();
+            relatedProducts = products
+                .Where(p => p.CategoryId == product.CategoryId && p.Id != product.Id)
+                .Take(5)
+                .ToList();
         }
 
 
         if (!string.IsNullOrEmpty(userId))
         {
             var userWishlistIds = await _wishlistService.GetUserWishlistIdsAsync(userId);
-
             foreach (var p in products)
-            {
                 p.IsInWishlist = userWishlistIds.Contains(p.Id);
 
-
-                if (product != null)
-                    product.IsInWishlist = userWishlistIds.Contains(product.Id);
-            }
-            if (product == null)
-            {
-                return new ShopViewModel
-                {
-                    Products = products,
-                    Reviews = reviews!,
-                    Product = null,
-                    StarCounts = starCounts,
-                    TotalReviews = totalReviews
-                };
-            }
-
+            if (product != null)
+                product.IsInWishlist = userWishlistIds.Contains(product.Id);
         }
 
         var shopViewModel = new ShopViewModel
         {
-            Products = products.ToList(),
-            Reviews = reviews,
-            Product = product
+            Products = products,
+            RelatedProducts = relatedProducts,
+            Product = product,
+            Reviews = reviews ?? new List<ReviewViewModel>(),
+            PagedReviews = pagedReviews,
+            StarCounts = starCounts,
+            TotalReviews = totalReviews,
+            Pagination = new PaginationViewModel
+            {
+                CurrentPage = page,
+                TotalPages = (int)Math.Ceiling(totalReviews / (double)pageSize)
+            }
         };
-           
-        return shopViewModel;
 
+        return shopViewModel;
     }
+
 
 
 

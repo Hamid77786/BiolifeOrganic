@@ -10,8 +10,8 @@
 <div class="container">
     <nav class="biolife-nav">
         <ul>
-            <li class="nav-item"><a asp-controller="home" class="permal-link">Home</a></li>
-            <li class="nav-item"><a asp-controller="shop" class="permal-link">Shop</a></li>
+            <li class="nav-item"><a asp-controller="home" asp-action="index" class="permal-link">Home</a></li>
+            <li class="nav-item"><a asp-controller="shop" asp-action="index" class="permal-link">Shop</a></li>
             <li class="nav-item"><span class="current-page">Product Detail</span></li>
         </ul>
     </nav>
@@ -40,34 +40,39 @@
                     <h3 class="title">Organic Sweet Potatoes</h3>
                     @if (Model.Product.IsRated)
                     {
+                        var avg = (Model.Reviews != null && Model.Reviews.Any())
+                        ? Model.Reviews.Average(r => r.Stars)
+                        : 0;
+
                         <div class="rating">
                             <p class="star-rating">
-                                <span class="width-@((Model.Review!.Stars * 20))percent"></span>
+                                <span style="width:@(avg * 20)%"></span>
                             </p>
-                            <span class="review-count">(@Model.Review.Stars stars)</span>
+                            <span class="review-count">(@avg.ToString("0.0") stars)</span>
                         </div>
                     }
                     else
                     {
                         <div class="rating">
                             <span class="review-count">(No reviews)</span>
-
                         </div>
                     }
+
+
 
                     <p class="excerpt">Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum porta. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Cras ultricies ligula sed magna dictum porta. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
                     @if (Model.Product.IsOnSale)
                     {
                         <div class="price">
-                            <ins><span class="price-amount"><span class="currencySymbol">£</span>@Model.Product.DiscountedPrice</span></ins>
-                            <del><span class="price-amount"><span class="currencySymbol">£</span>@Model.Product.OriginalPrice</span></del>
+                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@Model.Product.DiscountedPrice.ToString("0.00")</span></ins>
+                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>@Model.Product.OriginalPrice</span></del>
                         </div>
                     }
                     else
                     {
                         <div class="price">
-                            <ins><span class="price-amount"><span class="currencySymbol">£</span>@Model.Product.OriginalPrice</span></ins>
-                            <del><span class="price-amount"><span class="currencySymbol">£</span>@Model.Product.DiscountedPrice</span></del>
+                            <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@Model.Product.OriginalPrice</span></ins>
+                            <del><span class="price-amount"><span class="currencySymbol"> ₼</span>@Model.Product.DiscountedPrice.ToString("0.00")</span></del>
                         </div>
                     }
                     <div class="shipping-info">
@@ -111,7 +116,12 @@
                     <ul class="tabs">
                         <li class="tab-element active"><a href="#tab_1st" class="tab-link">Products Descriptions</a></li>
                         <li class="tab-element"><a href="#tab_2rd" class="tab-link">Shipping & Delivery</a></li>
-                        <li class="tab-element"><a href="#tab_3rd" class="tab-link">Customer Reviews </a></li>
+                        <li class="tab-element">
+                            <a href="#tab_3rd" class="tab-link">
+                                Customer Reviews(<span id="review-count">@Model.Reviews!.Count</span>)
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
                 <div class="tab-content">
@@ -180,40 +190,10 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                                    <div class="rating-info">
-                                        <p class="index">
-                                            <strong class="rating">
-                                                @Model.Reviews.Any()
-                                                ? Model.Reviews.Average(r => r.Stars).ToString("0.0")
-                                                : "No Review"
-                                            </strong> out of 5
-                                        </p>
-                                        <div class="rating">
-                                            <p class="star-rating">
-                                                <span class="width-@(Model.Reviews.Any() ? Model.Reviews.Average(r => r.Stars) * 20 : 0)percent"></span>
-                                            </p>
-                                        </div>
-                                        <ul class="options">
-                                            @for (int i = 5; i >= 1; i--)
-                                            {
-                                                var count = Model.StarCounts.ContainsKey(i) ? Model.StarCounts[i] : 0;
-                                                var percent = Model.TotalReviews > 0 ? (count * 100 / Model.TotalReviews) : 0;
-                                                <li>
-                                                    <div class="detail-for">
-                                                        <span class="option-name">@i stars</span>
-                                                        <span class="progres">
-                                                            <span class="line-100percent">
-                                                                <span class="percent width-@percent%"></span>
-                                                            </span>
-                                                        </span>
-                                                        <span class="number">@count</span>
-                                                    </div>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
-                                </div>
 
+                                    @await Html.PartialAsync("_RatingBlock", Model)
+
+                                </div>
                                 <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
                                     <div class="review-form-wrapper">
                                         <span class="title">Submit your review</span>
@@ -253,43 +233,10 @@
                                 </div>
                             </div>
                             <div id="comments">
-                                <ol class="commentlist">
-                                    @if (Model.Reviews != null && Model.Reviews.Any())
-                                    {
-                                        @foreach (var review in Model.Reviews)
-                                        {
-                                            <li class="review">
-                                                <div class="comment-container">
-                                                    <div class="row">
-                                                        <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
-                                                            <p class="comment-in">
-                                                                <span class="post-name">@review.ProductName</span>
-                                                                <span class="post-date">@review.PostedDate.ToString()</span>
-                                                            </p>
-                                                            <div class="rating">
-                                                                <p class="star-rating">
-                                                                    @{
-                                                                        var widthPercent = review.Stars * 20;
-                                                                    }
-                                                                    <span class="width-@widthPercent%"></span>
-                                                                </p>
-                                                            </div>
-                                                            <p class="author">by: <b>@review.AppUserName</b></p>
-                                                            <p class="comment-text">@review.Note</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <li class="no-comments">
-                                            <p>Comments not created else(.</p>
-                                        </li>
-                                    }
-                                   
-                                   @*  <li class="review">
+                                
+                                @await Html.PartialAsync("_CommentsList", Model)
+                                
+                                @*  <li class="review">
                                         <div class="comment-container">
                                             <div class="row">
                                                 <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
@@ -327,18 +274,8 @@
                                             </div>
                                         </div>
                                     </li> *@
-                                </ol>
-                                <div class="biolife-panigations-block version-2">
-                                    <ul class="panigation-contain">
-                                        <li><span class="current-page">1</span></li>
-                                        <li><a href="#" class="link-page">2</a></li>
-                                        <li><a href="#" class="link-page">3</a></li>
-                                        <li><span class="sep">....</span></li>
-                                        <li><a href="#" class="link-page">20</a></li>
-                                        <li><a href="#" class="link-page next"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                                    </ul>
-                                   
-                                </div>
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -353,8 +290,46 @@
                     <h3 class="main-title">Related Products</h3>
                 </div>
                 <ul class="products-list biolife-carousel nav-center-02 nav-none-on-mobile" data-slick='{"rows":1,"arrows":true,"dots":false,"infinite":false,"speed":400,"slidesMargin":0,"slidesToShow":5, "responsive":[{"breakpoint":1200, "settings":{ "slidesToShow": 4}},{"breakpoint":992, "settings":{ "slidesToShow": 3, "slidesMargin":20 }},{"breakpoint":768, "settings":{ "slidesToShow": 2, "slidesMargin":10}}]}'>
+                   
+                    @foreach (var item in Model.RelatedProducts)
+                    {
+                        <li class="product-item">
+                            <div class="contain-product layout-default">
+                                <div class="product-thumb">
+                                    <a asp-controller="shop" asp-route-id="@item.Id" class="link-to-product">
+                                        <img src="~/images/products/@item.ImageUrl" alt="dd" width="270" height="270" class="product-thumnail">
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <b class="categories">@item.CategoryName</b>
+                                    <h4 class="product-title"><a href="#" class="pr-name">@item.Name</a></h4>
+                                    <div class="price">
+                                        <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>@item.DiscountedPrice.ToString("0.00")</span></ins>
+                                        <del><span class="price-amount"><span class="currencySymbol"> ₼</span>@item.OriginalPrice</span></del>
+                                    </div>
+                                    <div class="slide-down-box">
+                                        <p class="message">All products are carefully selected to ensure food safety.</p>
+                                        <div class="buttons">
+                                           
+                                            <a id="wish-@Model.Product.Id" class="btn wishlist-btn @(Model.Product.IsInWishlist ? "active" : "")" onclick="toggleWishlist(@Model.Product.Id)">
+                                                <i class="fa fa-heart"></i>
+                                            </a>
+                                           
+                                            <a href="javascript:void(0)" class="btn add-to-cart-btn" onclick="addToBasketNew(@Model.Product.Id)">
+                                                <i class="fa fa-cart-arrow-down"></i> Add to cart
+                                            </a>
+                                            
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                   
 
-                    <li class="product-item">
+
+                    @* <li class="product-item">
                         <div class="contain-product layout-default">
                             <div class="product-thumb">
                                 <a href="#" class="link-to-product">
@@ -365,8 +340,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -390,8 +365,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -415,8 +390,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -440,8 +415,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -465,8 +440,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -490,8 +465,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -515,8 +490,8 @@
                                 <b class="categories">Fresh Fruit</b>
                                 <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
                                 <div class="price">
-                                    <ins><span class="price-amount"><span class="currencySymbol">£</span>85.00</span></ins>
-                                    <del><span class="price-amount"><span class="currencySymbol">£</span>95.00</span></del>
+                                    <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
+                                    <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
                                 </div>
                                 <div class="slide-down-box">
                                     <p class="message">All products are carefully selected to ensure food safety.</p>
@@ -528,7 +503,7 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
+                    </li> *@
 
                 </ul>
             </div>

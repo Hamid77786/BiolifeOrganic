@@ -80,4 +80,10 @@ where TEntity : Entity
 
         return true;
     }
+    public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        var entities = await Repository.GetAllAsync(predicate);
+        return entities.Count();
+    }
+
 }

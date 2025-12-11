@@ -27,13 +27,13 @@ public class ShopController : Controller
     {
         return View();
     }
-    public async Task<IActionResult> Detail(int id)
+    public async Task<IActionResult> Detail(int id,int page =1)
     {
         var userId = _userManager.GetUserId(User);
 
         var productId = await _productService.GetByIdAsync(id);
 
-        var shopViewModel = await _shopService.GetShopViewModel(id,userId);
+        var shopViewModel = await _shopService.GetShopViewModel(id,userId,page,2);
 
         return View(shopViewModel);
     }
@@ -48,6 +48,31 @@ public class ShopController : Controller
         await _reviewService.AddReview(model); 
         return Json(new { success = true });
     }
+
+    public async Task<IActionResult> LoadComments(int productId, int page = 1)
+    {
+        var userId = _userManager.GetUserId(User);
+        var model = await _shopService.GetShopViewModel(productId, userId, page, 2);
+
+        return PartialView("_CommentsList", model);
+    }
+
+    public async Task<IActionResult> LoadRatingBlock(int productId)
+    {
+        var userId = _userManager.GetUserId(User);
+        var model = await _shopService.GetShopViewModel(productId, userId, 1, 2);
+
+        return PartialView("_RatingBlock", model);
+    }
+
+    public IActionResult LoadReviewCount(int productId)
+    {
+        var reviewCount = _reviewService.CountAsync(r => r.ProductId == productId).Result;
+
+        return Content(reviewCount!.ToString() ?? "0");
+    }
+
+
 
 
 }

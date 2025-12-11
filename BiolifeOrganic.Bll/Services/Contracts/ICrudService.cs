@@ -21,4 +21,6 @@ public interface ICrudService<TEntity,TViewModel,TCreateViewModel,TUpdateViewMod
     Task CreateAsync(TCreateViewModel model);
     Task<bool> UpdateAsync(int id, TUpdateViewModel model);
     Task<bool> DeleteAsync(int id);
+    Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null);
+
 }

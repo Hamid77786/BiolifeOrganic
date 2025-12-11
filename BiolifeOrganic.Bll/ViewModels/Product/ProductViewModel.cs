@@ -15,7 +15,6 @@ public class ProductViewModel
     public string? Description { get; set; }
     public string? AdditionalInformation { get; set; }
     public string? ImageUrl { get; set; }
-    public int QuantityInput { get; set; }
 
     public int QuantityAvailable { get; set; }
     public bool IsRelated {  get; set; }
@@ -27,6 +26,8 @@ public class ProductViewModel
     public bool IsOnSale { get; set; }
 
     public decimal? DiscountPercent { get; set; }
+    public double AverageStars { get; set; } 
+    public int ReviewCount { get; set; } 
     public DateTime? SaleStartDate { get; set; }
     public DateTime? SaleEndDate { get; set; }
 
@@ -36,9 +37,10 @@ public class ProductViewModel
     public List<CategoryViewModel> Categories { get; set; } = [];
     public List<string> ProductImages { get; set; } = [];
 
+}
+
     
 
-}
 
 public class CreateProductViewModel
 {
