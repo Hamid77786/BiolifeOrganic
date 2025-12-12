@@ -1,11 +1,9 @@
 ﻿$(document).ready(function () {
 
-
     $(".btn-rating").click(function (e) {
         e.preventDefault();
         var value = $(this).data("value");
         $("#stars").val(value);
-
 
         $(this).siblings().find("i").removeClass("fa-star").addClass("fa-star-o");
         $(this).prevAll().find("i").removeClass("fa-star-o").addClass("fa-star");
@@ -16,45 +14,35 @@
     $("#frm-review").submit(function (e) {
         e.preventDefault();
 
-        const data = {
-            productId: $("#product-id").val(),
-            name: $("#name").val(),
-            emailAddress: $("#email").val(),
-            note: $("#comment").val(),
-            stars: parseInt($("#stars").val()) || 0
-        };
+        let formData = new FormData(this);
 
-        $.post("/Shop/AddReview", data, function (res) {
-            if (res.success) {
+        $.ajax({
+            url: "/Shop/AddReview",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (res.success) {
 
-                // Удаляем "нет комментариев"
-                $("#comments .no-comments").remove();
+                    let productId = $("#product-id").val();
 
-                // Обновляем count в табе
-                let currentCount = parseInt($("#review-count").text()) || 0;
-                $("#review-count").text(currentCount + 1);
+                    $("#comments .no-comments").remove();
+                    $("#comments").load(`/Shop/LoadComments?productId=${productId}`);
+                    $("#rating-info").load(`/Shop/LoadRatingBlock?productId=${productId}`);
 
-                // Обновляем комментарии через отдельный action (нужен LoadComments)
-                $("#comments").load(`/Shop/LoadComments?productId=${data.productId}`);
+                    let currentCount = parseInt($("#review-count").text()) || 0;
+                    $("#review-count").text(currentCount + 1);
 
-                // Обновляем рейтинг через отдельный action
-                $("#rating-info").load(`/Shop/LoadRatingBlock?productId=${data.productId}`);
-
-                // Сброс формы
-                $("#frm-review")[0].reset();
-                $("#stars").val(0);
-                $(".btn-rating i").removeClass("fa-star").addClass("fa-star-o");
-
-            } else {
-                alert(res.message || "Error");
+                    $("#frm-review")[0].reset();
+                    $("#stars").val(0);
+                    $(".btn-rating i").removeClass("fa-star").addClass("fa-star-o");
+                }
+                else {
+                    alert(res.message || "Error");
+                }
             }
         });
-
-
-
-
-
     });
 
 });
-

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using BiolifeOrganic.Bll.Constants;
 using BiolifeOrganic.Bll.Services.Contracts;
 using BiolifeOrganic.Bll.ViewModels.Review;
 using BiolifeOrganic.Dll.DataContext;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BiolifeOrganic.Bll.Services;
@@ -11,17 +13,28 @@ namespace BiolifeOrganic.Bll.Services;
 public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewViewModel, UpdateReviewViewModel>, IReviewService
 {
     private readonly AppDbContext _dbContext;
-    public ReviewManager(AppDbContext dbContext ,IReviewRepository respository, IMapper mapper) : base(respository, mapper)
+    private readonly FileService _fileService;
+    public ReviewManager(FileService fileService,AppDbContext dbContext ,IReviewRepository respository, IMapper mapper) : base(respository, mapper)
     {
         _dbContext = dbContext;
+        _fileService = fileService;
     }
 
+    
     public async Task AddReview(ReviewViewModel viewModel)
     {
         var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == viewModel.ProductId);
        
         if (product == null)
             throw new Exception("Product not found");
+
+        string? photoUrl = null;
+
+        if (viewModel.Photo != null)
+        {
+            string fileName = await _fileService.SaveFileAsync(viewModel.Photo, FilePathConstants.ReviewImagePath);
+            photoUrl = _fileService.GetFileUrl(FilePathConstants.ReviewImagePath, fileName);
+        }
 
         var review = new Review
         {
@@ -31,7 +44,8 @@ public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewVi
             Note = viewModel.Note,
             Stars = viewModel.Stars,
             AppUserId = viewModel.AppUserId,
-            PostedDate = DateTime.Now
+            PostedDate = DateTime.Now,
+            PhotoPath = photoUrl,
         };
         await _dbContext.Reviews.AddAsync(review);
 

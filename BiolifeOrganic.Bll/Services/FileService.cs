@@ -34,12 +34,27 @@ public class FileService
         return contentType.StartsWith("image/");
     }
 
-    public async Task<string> SaveFileAsync(IFormFile file)
+    public async Task<string> SaveFileAsync(IFormFile file, string targetFolderPath)
     {
-        var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-        var uploadsFolder = Path.Combine(wwwrootPath, "images", "products");
-        return await GenerateFile(file, uploadsFolder);
+        if (file == null || file.Length == 0)
+            throw new ArgumentException("File is null or empty", nameof(file));
+
+        string rootPath = Directory.GetCurrentDirectory();
+
+        string fullFolderPath = Path.Combine(rootPath, targetFolderPath);
+        Directory.CreateDirectory(fullFolderPath);
+
+        return await GenerateFile(file, fullFolderPath);
     }
+
+    public string GetFileUrl(string targetFolderPath, string fileName)
+    {
+        
+        var webPath = targetFolderPath.Replace("wwwroot", "").Replace("\\", "/");
+        return $"{webPath}/{fileName}";
+    }
+
+
 
     public void DeleteFile(string fileName)
     {

@@ -5,6 +5,7 @@ using BiolifeOrganic.Dll.DataContext.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BiolifeOrganic.MVC.Controllers;
 
@@ -12,8 +13,8 @@ namespace BiolifeOrganic.MVC.Controllers;
 public class ShopController : Controller
 {
     private readonly IShopService _shopService;
-    private readonly IProductService _productService;
     private readonly UserManager<AppUser> _userManager;
+    private readonly IProductService _productService;
     private readonly IReviewService _reviewService;
 
     public ShopController(IReviewService reviewService,IShopService shopService,IProductService productService,UserManager<AppUser> userManager)
@@ -37,10 +38,17 @@ public class ShopController : Controller
 
         return View(shopViewModel);
     }
+
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddReview(ReviewViewModel model)
     {
-       
+        model.AppUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        model.AppUserName = User.Identity!.Name;
+        model.EmailAddress = User.FindFirstValue(ClaimTypes.Email) ?? model.AppUserName;
+
+        if (model.AppUserId == null)
+            return Unauthorized();
 
         if (model.Stars < 1 || model.Stars > 5)
             return Json(new { success = false, message = "Invalid rating" });

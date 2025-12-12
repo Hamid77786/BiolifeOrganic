@@ -1,5 +1,7 @@
 ﻿@using BiolifeOrganic.Bll.ViewModels.Shop
+@using System.Security.Claims;
 @model ShopViewModel
+
 
 <!--Hero Section-->
 <div class="hero-section hero-background">
@@ -194,47 +196,59 @@
                                     @await Html.PartialAsync("_RatingBlock", Model)
 
                                 </div>
-                                <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
-                                    <div class="review-form-wrapper">
-                                        <span class="title">Submit your review</span>
+                                @if (User.Identity!.IsAuthenticated)
+                                {
+                                    <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+                                        <div class="review-form-wrapper">
+                                            <span class="title">Submit your review</span>
 
-                                        <form name="frm-review" method="post" id="frm-review">
-                                            <div class="comment-form-rating">
-                                                <label>1. Your rating of this products:</label>
-                                                <p class="stars">
-                                                    <span>
-                                                        <a class="btn-rating" data-value="1" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="2" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="3" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="4" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                        <a class="btn-rating" data-value="5" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
-                                                    </span>
+                                            <form name="frm-review" method="post" id="frm-review" enctype="multipart/form-data">
+                                                <div class="comment-form-rating">
+                                                    <label>1. Your rating of this products:</label>
+                                                    <p class="stars">
+                                                        <span>
+                                                            <a class="btn-rating" data-value="1" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                            <a class="btn-rating" data-value="2" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                            <a class="btn-rating" data-value="3" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                            <a class="btn-rating" data-value="4" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                            <a class="btn-rating" data-value="5" href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a>
+                                                        </span>
+                                                    </p>
+                                                </div>
+
+                                                <input type="hidden" id="stars" name="stars" value="0" /> @* area hidden *@
+
+                                                <input type="hidden" id="product-id" value="@Model.Product.Id" />  @* area hidden *@
+
+                                                <p class="form-row">
+                                                    <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Write your review here..."></textarea>
                                                 </p>
-                                            </div>
-
-                                            <input type="hidden" id="stars" name="stars" value="0" /> @* area hidden *@
-
-                                            <input type="hidden" id="product-id" value="@Model.Product.Id" />  @* area hidden *@
-
-                                            <p class="form-row wide-half">
-                                                <input id="name" type="text" name="name" value="" placeholder="Your name">
-                                            </p>
-                                            <p class="form-row wide-half">
-                                                <input id="email" type="email" name="email" value="" placeholder="Email address">
-                                            </p>
-                                            <p class="form-row">
-                                                <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Write your review here..."></textarea>
-                                            </p>
-                                            <p class="form-row">
-                                                <button type="submit">submit review</button>
-                                            </p>
-                                        </form>
+                                                <p class="form-row">
+                                                    <label>Upload your photo (optional):</label>
+                                                    <input type="file" name="Photo" id="photo" accept="image/*" />
+                                                </p>
+                                               
+                                                <p class="form-row">
+                                                    <button type="submit">submit review</button>
+                                                </p>
+                                               
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
+
+                                }
+                                else
+                                {
+                                    <p>You must <a asp-controller="account" asp-action="login"><h4>Log in</h4></a>or <a asp-controller="account" asp-action="register"><h4>Register</h4></a> to leave a review.</p>
+                                }
                             </div>
                             <div id="comments">
-                                
-                                @await Html.PartialAsync("_CommentsList", Model)
+
+                               
+                                    @await Html.PartialAsync("_CommentsList", Model)
+
+                               
+
                                 
                                 @*  <li class="review">
                                         <div class="comment-container">

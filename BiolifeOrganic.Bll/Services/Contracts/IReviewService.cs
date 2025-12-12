@@ -7,5 +7,6 @@ public interface IReviewService : ICrudService<Review, ReviewViewModel, CreateRe
 {
     Task AddReview(ReviewViewModel viewModel);
     Task<List<ReviewViewModel>> GetByProductIdAsync(int  productId);
+
 }
 

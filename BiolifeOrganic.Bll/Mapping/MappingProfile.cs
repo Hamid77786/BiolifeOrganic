@@ -180,7 +180,6 @@ public class MappingProfile:Profile
            .ForMember(dest => dest.AppUserName,
                opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.UserName : null));
 
-        CreateMap<CreateReviewViewModel, Review>();
 
         CreateMap<Slider, SliderViewModel>();
         CreateMap<CreateSliderViewModel, Slider>();

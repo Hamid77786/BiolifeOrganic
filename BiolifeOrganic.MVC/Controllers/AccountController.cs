@@ -4,6 +4,7 @@ using BiolifeOrganic.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace BiolifeOrganic.MVC.Controllers
 {
@@ -50,22 +51,45 @@ namespace BiolifeOrganic.MVC.Controllers
                 {
                     ModelState.AddModelError("", item.Description);
                 }
-
-
-
                 return View(model);
             }
+            await _userManager.AddToRoleAsync(user, "User");
 
-            var userRoleResult = await _roleManager.CreateAsync(new IdentityRole { Name = "User" });
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            if (userRoleResult.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, "User");
-            }
+            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
+                             new { userId = user.Id, token }, Request.Scheme);
+
+            await _emailService.SendEmailAsync(user.Email!,
+                   "Confirm your email",
+                   $"<p>Thank you for registering! Please confirm your email by clicking the link below:</p>" +
+                   $"<a href='{confirmationLink}'>Confirm Email</a>");
+
 
             return RedirectToAction("Index", "Home");
-        }
 
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+                return BadRequest("Invalid email confirmation request.");
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound("User not found.");
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Email confirmed. Please log in.";
+                return RedirectToAction(nameof(Login));
+            }
+
+            TempData["ErrorMessage"] = "Email confirmation failed.";
+            return RedirectToAction("Index", "Home");
+        }
         public IActionResult Login()
         {
             return View();
@@ -109,11 +133,7 @@ namespace BiolifeOrganic.MVC.Controllers
             }
 
             return RedirectToAction("Index", "Home");
-           
-
-
         }
-
         public async Task<IActionResult> Logout()
         {
 
@@ -166,10 +186,9 @@ namespace BiolifeOrganic.MVC.Controllers
                 }
             }
 
-           
-
             return RedirectToAction(nameof(Login));
         }
+           
 
         public IActionResult ForgotPassword()
         {
@@ -264,3 +283,15 @@ namespace BiolifeOrganic.MVC.Controllers
 
     }
 }
+           
+
+
+
+
+
+
+
+
+
+
+

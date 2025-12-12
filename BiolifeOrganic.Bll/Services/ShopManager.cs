@@ -20,6 +20,33 @@ public class ShopManager : IShopService
         _wishlistService = wishlistService;
         _reviewService = reviewService;
     }
+    public async Task<List<ReviewViewModel>> GetRecentReviewsAsync(int take = 10)
+    {
+        var reviews = (await _reviewService.GetAllAsync(
+         predicate: null,
+         include: q => q.Include(r => r.Product!),
+         orderBy: q => q.OrderByDescending(r => r.PostedDate)
+         )).ToList();
+
+
+        var topReviews = reviews.Take(take)
+            .Select(r => new ReviewViewModel
+            {
+                Id = r.Id,
+                Name = r.Name,
+                EmailAddress = r.EmailAddress,
+                Note = r.Note,
+                Stars = r.Stars,
+                ProductId = r.ProductId,
+                ProductName = r.ProductName,
+                PostedDate = r.PostedDate,
+                AppUserId = r.AppUserId,
+                PhotoPath = r.PhotoPath
+            })
+            .ToList();
+
+        return topReviews;
+    }
 
     public async Task<ShopViewModel> GetShopViewModel(int productId, string? userId, int page = 1, int pageSize = 2)
     {

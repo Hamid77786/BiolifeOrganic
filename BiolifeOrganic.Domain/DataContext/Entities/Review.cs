@@ -7,6 +7,8 @@ public class Review:TimeStample
     public string Note { get; set; } = null!;
     public int Stars { get; set; }
     public DateTime PostedDate { get; set; }= DateTime.Now;
+    public string? PhotoPath { get; set; }
+
     public string? AppUserId { get; set; }
     public AppUser? AppUser { get; set; }
     public int ProductId { get; set; }
