@@ -1,4 +1,6 @@
-﻿using BiolifeOrganic.Bll.Services.Contracts;
+﻿using BiolifeOrganic.Bll.Constants;
+using BiolifeOrganic.Bll.Services;
+using BiolifeOrganic.Bll.Services.Contracts;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,12 +16,14 @@ namespace BiolifeOrganic.MVC.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailService _emailService;
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,IEmailService emailService)
+        private readonly FileService _fileService;
+        public AccountController(FileService fileService, UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _emailService = emailService;
+            _fileService = fileService;
 
         }
         public IActionResult Register()
@@ -35,12 +39,18 @@ namespace BiolifeOrganic.MVC.Controllers
                 return View(model);
             }
 
+            string? profileFileName = null;
+
+            if (model.Photo != null && _fileService.IsImageFile(model.Photo))
+            {
+                profileFileName = await _fileService.SaveFileAsync(model.Photo, FilePathConstants.ProfileImagePath);
+            }
 
             var user = new AppUser
             {
                 UserName = model.UserName,
-                Email = model.Email
-               
+                Email = model.Email,
+                ProfileImagePath = profileFileName 
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

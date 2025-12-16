@@ -22,8 +22,11 @@
                     @if (User.Identity!.IsAuthenticated)
                     {
                         <li>
+
+                            
+                            <a>@User.Identity.Name</a>
                             <a asp-controller="account" asp-action="logout">
-                                <i class="biolife-icon icon-login"></i>LogOut
+                                <i class="biolife-icon icon-login"></i>Log Out
                             </a>
                         </li>  
                         <li>

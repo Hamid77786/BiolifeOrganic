@@ -27,8 +27,7 @@ public class BasketManager
         }
         try
         {
-            //var list = JsonSerializer.Deserialize<List<BasketCookieItemViewModel>>(cookie);
-            //return list ?? new List<BasketCookieItemViewModel>();
+
 
             return System.Text.Json.JsonSerializer.Deserialize<List<BasketCookieItemViewModel>>(cookie)
               ?? new List<BasketCookieItemViewModel>();
@@ -45,7 +44,8 @@ public class BasketManager
         {
             Expires = DateTimeOffset.UtcNow.AddDays(7),
             HttpOnly = true,
-            SameSite = SameSiteMode.Lax
+            SameSite = SameSiteMode.Lax,
+            Secure = true,
         };
         var cookieValue = System.Text.Json.JsonSerializer.Serialize(basket);
         _httpContextAccessor.HttpContext?.Response.Cookies.Append(BasketCookieName, cookieValue, cookieOptions);

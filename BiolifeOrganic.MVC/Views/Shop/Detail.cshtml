@@ -202,7 +202,8 @@
                                         <div class="review-form-wrapper">
                                             <span class="title">Submit your review</span>
 
-                                            <form name="frm-review" method="post" id="frm-review" enctype="multipart/form-data">
+                                            <form  method="post" id="frm-review">
+                                                @Html.AntiForgeryToken()
                                                 <div class="comment-form-rating">
                                                     <label>1. Your rating of this products:</label>
                                                     <p class="stars">
@@ -216,17 +217,14 @@
                                                     </p>
                                                 </div>
 
-                                                <input type="hidden" id="stars" name="stars" value="0" /> @* area hidden *@
+                                                <input type="hidden" id="stars" name="Stars" value="0" /> @* area hidden *@
 
-                                                <input type="hidden" id="product-id" value="@Model.Product.Id" />  @* area hidden *@
+                                                <input type="hidden" id="product-id" name="ProductId" value="@Model.Product.Id" />  @* area hidden *@
 
                                                 <p class="form-row">
-                                                    <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Write your review here..."></textarea>
+                                                    <textarea name="Note" id="comment" cols="30" rows="10" placeholder="Write your review here..."></textarea>
                                                 </p>
-                                                <p class="form-row">
-                                                    <label>Upload your photo (optional):</label>
-                                                    <input type="file" name="Photo" id="photo" accept="image/*" />
-                                                </p>
+                                               
                                                
                                                 <p class="form-row">
                                                     <button type="submit">submit review</button>
@@ -239,8 +237,23 @@
                                 }
                                 else
                                 {
-                                    <p>You must <a asp-controller="account" asp-action="login"><h4>Log in</h4></a>or <a asp-controller="account" asp-action="register"><h4>Register</h4></a> to leave a review.</p>
-                                }
+                                    <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+                                        <div class="register-in-container">
+                                            <div class="intro">
+                                                <h4 class="box-title">New Customer?</h4>
+                                                <p class="sub-title">Create an account with us and you’ll be able to:</p>
+                                                <ul class="lis">
+                                                    <li>Submit Review</li>
+                                                    <li>Access your order history</li>
+                                                    <li>Track new orders</li>
+                                                    <li>Save items to your Wishlist</li>
+                                                </ul>
+                                                <a asp-controller="account" asp-action="register">Create an account</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                              }
                             </div>
                             <div id="comments">
 
@@ -249,45 +262,6 @@
 
                                
 
-                                
-                                @*  <li class="review">
-                                        <div class="comment-container">
-                                            <div class="row">
-                                                <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
-                                                    <p class="comment-in"><span class="post-name">Quality is our way of life</span><span class="post-date">01/04/2018</span></p>
-                                                    <div class="rating"><p class="star-rating"><span class="width-80percent"></span></p></div>
-                                                    <p class="author">by: <b>Shop organic</b></p>
-                                                    <p class="comment-text">There are few things in life that please people more than the succulence of quality fresh fruit and vegetables.  At Fresh Fruits we work to deliver the world’s freshest, choicest, and juiciest produce to discerning customers across the UAE and GCC.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="review">
-                                        <div class="comment-container">
-                                            <div class="row">
-                                                <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
-                                                    <p class="comment-in"><span class="post-name">Quality is our way of life</span><span class="post-date">01/04/2018</span></p>
-                                                    <div class="rating"><p class="star-rating"><span class="width-80percent"></span></p></div>
-                                                    <p class="author">by: <b>Shop organic</b></p>
-                                                    <p class="comment-text">There are few things in life that please people more than the succulence of quality fresh fruit and vegetables.  At Fresh Fruits we work to deliver the world’s freshest, choicest, and juiciest produce to discerning customers across the UAE and GCC.</p>
-                                                </div>
-                                               
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="review">
-                                        <div class="comment-container">
-                                            <div class="row">
-                                                <div class="comment-content col-lg-8 col-md-9 col-sm-8 col-xs-12">
-                                                    <p class="comment-in"><span class="post-name">Quality is our way of life</span><span class="post-date">01/04/2018</span></p>
-                                                    <div class="rating"><p class="star-rating"><span class="width-80percent"></span></p></div>
-                                                    <p class="author">by: <b>Shop organic</b></p>
-                                                    <p class="comment-text">There are few things in life that please people more than the succulence of quality fresh fruit and vegetables.  At Fresh Fruits we work to deliver the world’s freshest, choicest, and juiciest produce to discerning customers across the UAE and GCC.</p>
-                                                </div>
-                                              
-                                            </div>
-                                        </div>
-                                    </li> *@
                                 
                                 
                             </div>

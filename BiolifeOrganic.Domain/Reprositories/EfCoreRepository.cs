@@ -62,6 +62,26 @@ public class EfCoreRepository<T> : IRepository<T> where T : Entity
         return await DbContext.Set<T>().FindAsync(id);
     }
 
+    public IQueryable<T> GetQuery(
+    Expression<Func<T, bool>>? predicate = null,
+    Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    bool AsNoTracking = false)
+    {
+        IQueryable<T> query = DbContext.Set<T>();
+
+        if (AsNoTracking)
+            query = query.AsNoTracking();
+
+        if (predicate != null)
+            query = query.Where(predicate);
+
+        if (include != null)
+            query = include(query);
+
+        return query;
+    }
+
+
     public virtual async Task UpdateAsync(T entity)
     {
         DbContext.Set<T>().Update(entity);

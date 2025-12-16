@@ -1,4 +1,6 @@
-﻿ <!--Navigation section-->
+﻿@using BiolifeOrganic.Bll.ViewModels.WebContact
+@model WebContactViewModel 
+<!--Navigation section-->
 <div class="container">
     <nav class="biolife-nav nav-86px">
         <ul>
@@ -11,67 +13,71 @@
 
     <!-- Main content -->
     <div id="main-content" class="main-content">
-       
+
 
         <div class="container">
 
             <div class="row">
+               
+                
+                    <!--Contact info-->
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="contact-info-container sm-margin-top-27px xs-margin-bottom-60px xs-margin-top-60px">
+                            <h4 class="box-title">Our Contact</h4>
+                            <p class="frst-desc">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+                            <ul class="addr-info">
+                                <li>
+                                    <div class="if-item">
+                                        <b class="tie">Addess:</b>
+                                        <p class="dsc">@Model.Address</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="if-item">
+                                        <b class="tie">Phone:</b>
+                                        <p class="dsc">@Model.PhoneNumber</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="if-item">
+                                        <b class="tie">Email:</b>
+                                        <p class="dsc">@Model.EmailAgree</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="if-item">
+                                        <b class="tie">Store Open:</b>
+                                        <p class="dsc">@Model.Schedule</p>
+                                    </div>
+                                </li>
+                            </ul>
 
-                <!--Contact info-->
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="contact-info-container sm-margin-top-27px xs-margin-bottom-60px xs-margin-top-60px">
-                        <h4 class="box-title">Our Contact</h4>
-                        <p class="frst-desc">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
-                        <ul class="addr-info">
-                            <li>
-                                <div class="if-item">
-                                    <b class="tie">Addess:</b>
-                                    <p class="dsc">7563 St. Vicent Place, Glasgow, Greater<br>Newyork NH7689, UK</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="if-item">
-                                    <b class="tie">Phone:</b>
-                                    <p class="dsc">(800) 123 456789</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="if-item">
-                                    <b class="tie">Email:</b>
-                                    <p class="dsc">Organic@example.com</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="if-item">
-                                    <b class="tie">Store Open:</b>
-                                    <p class="dsc">8am - 08pm, Mon - Sat</p>
-                                </div>
-                            </li>
-                        </ul>
-                        
+                        </div>
                     </div>
-                </div>
 
+                
+                
                 <!--Contact form-->
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="contact-form-container sm-margin-top-112px">
-                        <form action="#" name="frm-contact">
+                        <form asp-controller="Contact" asp-action="Send" method="post">
                             <p class="form-row">
-                                <input type="text" name="name" value="" placeholder="Your Name" class="txt-input">
+                                <input type="text" name="LastName" placeholder="Your Name" class="txt-input">
                             </p>
                             <p class="form-row">
-                                <input type="email" name="email" value="" placeholder="Email Address" class="txt-input">
+                                <input type="email" name="Email" placeholder="Email Address" class="txt-input">
                             </p>
                             <p class="form-row">
-                                <input type="tel" name="phone" value="" placeholder="Phone Number" class="txt-input">
+                                <input type="tel" name="Phone" placeholder="Phone Number" class="txt-input">
                             </p>
                             <p class="form-row">
-                                <textarea name="mes" id="mes-1" cols="30" rows="9" placeholder="Leave Message"></textarea>
+                                <textarea name="Message" cols="30" rows="9" placeholder="Leave Message"></textarea>
                             </p>
                             <p class="form-row">
-                                <button class="btn btn-submit" type="submit">send message</button>
+                                <button class="btn btn-submit" type="submit">Send message</button>
                             </p>
                         </form>
+
                     </div>
                 </div>
 

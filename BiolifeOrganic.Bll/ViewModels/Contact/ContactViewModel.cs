@@ -25,10 +25,12 @@ public class ContactViewModel
     
     [Required(ErrorMessage = "Phone number is required")]
     [Phone(ErrorMessage = "Invalid phone number")]
-    public string? PhoneNumber { get; set; }
+    public string? Phone { get; set; }
     
     [EmailAddress(ErrorMessage = "Invalid email address")]
     public string? Email { get; set; }
+    public string Message { get; set; } = null!;
+
     public string? AppUserId { get; set; }
     public string? AppUserUserName { get; set; }
     public bool IsDefault { get; set; }

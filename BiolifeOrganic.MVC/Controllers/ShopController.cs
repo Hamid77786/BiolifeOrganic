@@ -5,6 +5,7 @@ using BiolifeOrganic.Dll.DataContext.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Printing;
 using System.Security.Claims;
 
 namespace BiolifeOrganic.MVC.Controllers;
@@ -24,9 +25,15 @@ public class ShopController : Controller
         _userManager = userManager;
         _reviewService = reviewService;
     }
-    public IActionResult Index()
+    public async Task<IActionResult> Index(int page=1,int pageSize=10, string? price ="all",
+        string? availability ="all")
     {
-        return View();
+        var shopViewModel = await _shopService.GetShopAsync(page,
+            pageSize,
+            price,
+            availability);
+
+        return View(shopViewModel);
     }
     public async Task<IActionResult> Detail(int id,int page =1)
     {
@@ -41,7 +48,8 @@ public class ShopController : Controller
 
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> AddReview(ReviewViewModel model)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddReview([FromForm] ReviewViewModel model)
     {
         model.AppUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         model.AppUserName = User.Identity!.Name;
@@ -50,11 +58,17 @@ public class ShopController : Controller
         if (model.AppUserId == null)
             return Unauthorized();
 
+        if (model.ProductId == 0)
+            return Json(new { success = false, message = "ProductId missing" });
+
+
         if (model.Stars < 1 || model.Stars > 5)
             return Json(new { success = false, message = "Invalid rating" });
 
-        await _reviewService.AddReview(model); 
+        await _reviewService.AddReview(model);
         return Json(new { success = true });
+
+
     }
 
     public async Task<IActionResult> LoadComments(int productId, int page = 1)

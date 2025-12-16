@@ -8,6 +8,7 @@ namespace BiolifeOrganic.Bll.Services;
 
 public class ContactManager : CrudManager<Contact, ContactViewModel, CreateContactViewModel, UpdateContactViewModel>, IContactService
 {
+
     public ContactManager(IContactRepository respository, IMapper mapper) : base(respository, mapper)
     {
     }

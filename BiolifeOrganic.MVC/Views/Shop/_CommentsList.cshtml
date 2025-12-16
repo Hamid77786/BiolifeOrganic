@@ -38,11 +38,11 @@
     }
 
  </ol>
-@if (Model.Pagination != null && Model.Pagination.TotalPages > 1)
+@if (Model.Pagination != null && Model.Pagination.TotalPagesReviews > 1)
 {
     <div class="biolife-panigations-block version-2">
         <ul class="panigation-contain">
-            @if (Model.Pagination.HasPrevious)
+            @if (Model.Pagination.HasPreviousReviews)
             {
                 <li>
                     <a class="link-page prev" href="?page=@(Model.Pagination.CurrentPage - 1)">
@@ -51,7 +51,7 @@
                 </li>
             }
 
-            @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+            @for (int i = 1; i <= Model.Pagination.TotalPagesReviews; i++)
             {
                 if (i == Model.Pagination.CurrentPage)
                 {
@@ -63,7 +63,7 @@
                 }
             }
 
-            @if (Model.Pagination.HasNext)
+            @if (Model.Pagination.HasNextReviews)
             {
                 <li>
                     <a class="link-page next" href="?page=@(Model.Pagination.CurrentPage + 1)">

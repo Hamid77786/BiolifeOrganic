@@ -10,11 +10,17 @@
         $(this).find("i").removeClass("fa-star-o").addClass("fa-star");
     });
 
-
-    $("#frm-review").submit(function (e) {
+    $("#frm-review").on("submit", function (e) {
         e.preventDefault();
 
-        let formData = new FormData(this);
+        let form = this;
+        let formData = new FormData(form);
+
+        formData.set("Stars", $("#stars").val());
+        formData.set("ProductId", $("#product-id").val());
+        formData.set("__RequestVerificationToken",
+            $('input[name="__RequestVerificationToken"]').val()
+        );
 
         $.ajax({
             url: "/Shop/AddReview",
@@ -28,21 +34,29 @@
                     let productId = $("#product-id").val();
 
                     $("#comments .no-comments").remove();
-                    $("#comments").load(`/Shop/LoadComments?productId=${productId}`);
+                    $("#comments").load(`/Shop/LoadComments?productId=${productId}&page=1`);
                     $("#rating-info").load(`/Shop/LoadRatingBlock?productId=${productId}`);
 
-                    let currentCount = parseInt($("#review-count").text()) || 0;
-                    $("#review-count").text(currentCount + 1);
+                    let count = parseInt($("#review-count").text()) || 0;
+                    $("#review-count").text(count + 1);
 
-                    $("#frm-review")[0].reset();
+                    // сброс формы
+                    form.reset();
                     $("#stars").val(0);
-                    $(".btn-rating i").removeClass("fa-star").addClass("fa-star-o");
+                    $(".btn-rating i")
+                        .removeClass("fa-star")
+                        .addClass("fa-star-o");
                 }
                 else {
                     alert(res.message || "Error");
                 }
+            },
+            error: function (xhr) {
+                console.error(xhr.responseText);
+                alert("Error while submitting review");
             }
         });
     });
+   
 
 });

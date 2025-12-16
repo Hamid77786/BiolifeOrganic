@@ -18,7 +18,7 @@
 
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <div class="signin-container">
-                        <form asp-controller="account" asp-action="register" method="post">
+                        <form asp-controller="account" asp-action="register" method="post" enctype="multipart/form-data">
                             <p class="form-row">
 
                                 <label asp-for="UserName">UserName:<span class="requite">*</span></label>
@@ -48,6 +48,12 @@
                                 <input asp-for="ConfirmPassword" class="txt-input">
                                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                             </p>
+                            <p class="form-row">
+                                <label asp-for="Photo">Profile Photo:</label>
+                                <input asp-for="Photo" type="file" class="txt-input">
+                                <span asp-validation-for="Photo" class="text-danger"></span>
+                            </p>
+                            
                             <div asp-validation-summary="All" class="text-danger"></div>
 
                             <p class="form-row wrap-btn">

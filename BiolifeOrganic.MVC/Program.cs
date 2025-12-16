@@ -60,7 +60,7 @@ namespace BiolifeOrganic.MVC
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
 
                 string adminRole = "Admin";
-                string adminEmail = "admin@mail.com";
+                string adminEmail = "gamidha@code.edu.az";
                 string adminPassword = "777123";
 
                 

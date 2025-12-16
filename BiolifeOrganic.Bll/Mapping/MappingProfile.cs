@@ -176,10 +176,7 @@ public class MappingProfile:Profile
            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
            .ForMember(dest => dest.Product, opt => opt.Ignore());
 
-        CreateMap<Review, ReviewViewModel>()
-           .ForMember(dest => dest.AppUserName,
-               opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.UserName : null));
-
+       
 
         CreateMap<Slider, SliderViewModel>();
         CreateMap<CreateSliderViewModel, Slider>();
@@ -240,6 +237,19 @@ public class MappingProfile:Profile
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
             .ForMember(dest => dest.AppUser, opt => opt.Ignore())
             .ForMember(dest => dest.Product, opt => opt.Ignore());
+
+
+        CreateMap<Review, ReviewViewModel>()
+            .ForMember(d => d.AppUserName,
+                o => o.MapFrom(s => s.AppUser != null ? s.AppUser.UserName : null))
+            .ForMember(d => d.AppUserPhoto,
+                o => o.MapFrom(s => s.AppUser != null ? s.AppUser.ProfileImagePath : null))
+            .ForMember(d => d.ProductName,
+                o => o.MapFrom(s => s.Product != null ? s.Product.Name : null));
+
+
+
+
     }
 }
 

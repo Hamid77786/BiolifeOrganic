@@ -7,6 +7,13 @@ namespace BiolifeOrganic.Dll.Reprositories.Contracts;
 public interface IRepository<T> where T : Entity
 {
     Task<T?> GetByIdAsync(int id);
+   
+    IQueryable<T> GetQuery(
+    Expression<Func<T, bool>>? predicate = null,
+    Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    bool AsNoTracking = false);
+
+
 
     Task<T?> GetAsync(Expression<Func<T, bool>> predicate,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,

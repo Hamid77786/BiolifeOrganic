@@ -55,6 +55,14 @@ where TEntity : Entity
         return viewModel;
     }
 
+    public virtual IQueryable<TEntity> GetQuery(
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool AsNoTracking = false)
+    {
+        return Repository.GetQuery(predicate, include, AsNoTracking);
+    }
+
     public virtual async Task<TViewModel?> GetByIdAsync(int id)
     {
         var entity = await Repository.GetByIdAsync(id);

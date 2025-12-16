@@ -13,11 +13,10 @@ namespace BiolifeOrganic.Bll.Services;
 public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewViewModel, UpdateReviewViewModel>, IReviewService
 {
     private readonly AppDbContext _dbContext;
-    private readonly FileService _fileService;
-    public ReviewManager(FileService fileService,AppDbContext dbContext ,IReviewRepository respository, IMapper mapper) : base(respository, mapper)
+    public ReviewManager(AppDbContext dbContext ,IReviewRepository respository, IMapper mapper) : base(respository, mapper)
     {
         _dbContext = dbContext;
-        _fileService = fileService;
+       
     }
 
     
@@ -28,25 +27,18 @@ public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewVi
         if (product == null)
             throw new Exception("Product not found");
 
-        string? photoUrl = null;
-
-        if (viewModel.Photo != null)
-        {
-            string fileName = await _fileService.SaveFileAsync(viewModel.Photo, FilePathConstants.ReviewImagePath);
-            photoUrl = _fileService.GetFileUrl(FilePathConstants.ReviewImagePath, fileName);
-        }
-
         var review = new Review
         {
             ProductId = viewModel.ProductId,
-            Name = viewModel.Name!,
+            Name = viewModel.AppUserName,
             EmailAdress = viewModel.EmailAddress!,
             Note = viewModel.Note,
             Stars = viewModel.Stars,
             AppUserId = viewModel.AppUserId,
             PostedDate = DateTime.Now,
-            PhotoPath = photoUrl,
+           
         };
+        
         await _dbContext.Reviews.AddAsync(review);
 
         if (review.Stars > 0 && review.Stars <= 5)
@@ -55,6 +47,9 @@ public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewVi
         await _dbContext.SaveChangesAsync();
 
     }
+        
+
+
     public async Task<List<ReviewViewModel>> GetByProductIdAsync(int productId)
     {
         return await _dbContext.Reviews
@@ -71,6 +66,7 @@ public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewVi
                  PostedDate = r.PostedDate,
                  ProductId = r.ProductId,
                  AppUserId = r.AppUserId,
+                
                 
              })
             .ToListAsync();

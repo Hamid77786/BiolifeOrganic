@@ -108,10 +108,10 @@
                         {
                             <li>
                                 <div class="testml-elem">
-                                    @if (!string.IsNullOrEmpty(review.PhotoPath))
+                                    @if (!string.IsNullOrEmpty(review.AppUserPhoto))
                                     {
                                         <div class="avata photo">
-                                            <img src="@review.PhotoPath" alt="@review.Name" />
+                                            <img src="~/images/profiles/@review.AppUserPhoto" alt="@review.AppUserName" />
                                         </div>
                                     }
                                     else
@@ -122,7 +122,6 @@
                                     }
 
                                     <b class="name">@review.Name</b>
-                                    <b class="title">@review.EmailAddress</b>
                                     <p class="desc">@review.Note</p>
                                     <div class="rating">
                                         <p class="star-rating"><span style="width:@($"{review.Stars * 20}%")"></span></p>

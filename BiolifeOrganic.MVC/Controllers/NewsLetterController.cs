@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BiolifeOrganic.MVC.Controllers
 {
+    
     public class NewsLetterController : Controller
     {
         private readonly INewsletterService _newsletterService;

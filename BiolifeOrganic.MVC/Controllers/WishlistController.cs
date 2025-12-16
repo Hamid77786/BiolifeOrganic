@@ -1,11 +1,12 @@
 ﻿using BiolifeOrganic.Bll.Services.Contracts;
 using BiolifeOrganic.Dll.DataContext.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BiolifeOrganic.MVC.Controllersж
 {
-    
+    [Authorize]
     public class WishlistController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

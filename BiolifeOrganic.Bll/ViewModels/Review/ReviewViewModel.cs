@@ -9,14 +9,14 @@ public class ReviewViewModel
     public string? EmailAddress { get; set; }
     public string Note { get; set; } = null!;
     public int Stars { get; set; }
-    public IFormFile? Photo { get; set; }
-    public string? PhotoPath { get; set; }
-
     public int ProductId { get; set; }
     public string? ProductName { get; set; }
     public DateTime? PostedDate { get; set; }
     public string? AppUserId { get; set; }
     public string? AppUserName { get; set; }
+    public string? AppUserPhoto {  get; set; }
+   
+
     
 
 }

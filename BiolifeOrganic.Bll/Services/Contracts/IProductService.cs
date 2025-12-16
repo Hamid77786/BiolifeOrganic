@@ -5,7 +5,10 @@ namespace BiolifeOrganic.Bll.Services.Contracts;
 
 public interface IProductService : ICrudService<Product, ProductViewModel, CreateProductViewModel, UpdateProductViewModel>
 {
-    
 
+    IQueryable<Product> GetProductsQuery(
+       string? priceFilter = null,
+       string? availabilityFilter = null
+   );
 }
 

@@ -10,20 +10,58 @@ namespace BiolifeOrganic.Bll.Services;
 
 public class ProductManager : CrudManager<Product, ProductViewModel, CreateProductViewModel, UpdateProductViewModel>, IProductService
 {
-    private readonly IProductRepository _repository;
+    private readonly IProductRepository _productRepository;
     private readonly ICategoryService _categoryService;
     private readonly FileService _fileService;
     private readonly IMapper _mapper;
 
     public ProductManager(IProductRepository respository,ICategoryService categoryService,FileService fileService, IMapper mapper) : base(respository, mapper)
     {
-        _repository = respository;
+        _productRepository = respository;
         _categoryService = categoryService;
         _fileService = fileService;
         _mapper = mapper;
     }
 
-   
+    public IQueryable<Product> GetProductsQuery(
+        string? priceFilter = null,
+        string? availabilityFilter = null)
+    {
+        var query = GetQuery(
+            p => !p.IsDeleted,
+            q => q
+                .Include(p => p.ProductImages)
+                .Include(p => p.Category)
+                .Include(p => p.Reviews),
+            AsNoTracking: true
+        );
+
+        
+        if (!string.IsNullOrEmpty(priceFilter) && priceFilter != "all")
+        {
+            query = priceFilter switch
+            {
+                "class-1st" => query.Where(p => p.OriginalPrice < 5),
+                "class-2nd" => query.Where(p => p.OriginalPrice >= 5 && p.OriginalPrice <= 10),
+                "class-3rd" => query.Where(p => p.OriginalPrice > 10 && p.OriginalPrice <= 20),
+                "class-4th" => query.Where(p => p.OriginalPrice > 20 && p.OriginalPrice <= 45),
+                "class-5th" => query.Where(p => p.OriginalPrice > 45 && p.OriginalPrice <= 100),
+                "class-6th" => query.Where(p => p.OriginalPrice > 100 && p.OriginalPrice <= 150),
+                "class-7th" => query.Where(p => p.OriginalPrice > 150),
+                _ => query
+            };
+        }
+
+        
+        if (availabilityFilter == "IsOnSale")
+            query = query.Where(p => p.IsOnSale);
+
+        if (availabilityFilter == "IsRated")
+            query = query.Where(p => p.Reviews.Any());
+
+        return query;
+    }
+
     public async Task<List<ProductViewModel>> GetAllWithDetailsAsync()
     {
         var products = await Repository.GetAllAsync(
@@ -35,7 +73,7 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
 
     public async Task<ProductViewModel?> GetByIdWithDetailsAsync(int id)
     {
-        var product = await _repository.GetByIdWithDetailsAsync(id);
+        var product = await _productRepository.GetByIdWithDetailsAsync(id);
 
         if (product == null) return null;
 
@@ -50,7 +88,7 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
 
     public async Task<List<ProductViewModel>> GetRelatedProductsAsync(int categoryId, int id)
     {
-        var products = await _repository.GetProductsByCategoryAsync(categoryId, id);
+        var products = await _productRepository.GetProductsByCategoryAsync(categoryId, id);
 
         var relatedProductsViewModel = _mapper.Map<List<ProductViewModel>>(products);
 

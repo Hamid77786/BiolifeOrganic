@@ -1,6 +1,7 @@
 ﻿namespace BiolifeOrganic.Dll.DataContext.Entities;
 
-public class AdminContact:Entity
+public class AdminContact:TimeStample
 {
+    
     public string Email { get; set; } = null!;
 }
