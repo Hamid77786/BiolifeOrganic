@@ -4,6 +4,7 @@ using BiolifeOrganic.Dll.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BiolifeOrganic.Dll.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251218230531_EditOrderEntityAddSomeProperty")]
+    partial class EditOrderEntityAddSomeProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,7 +397,7 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Property<int?>("OrganizationContactId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrganizationId")
+                    b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("OrganizationId1")
@@ -416,9 +419,8 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Property<int>("ShippingContactId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("SubTotalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -977,7 +979,8 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.Organization", null)
                         .WithMany("Orders")

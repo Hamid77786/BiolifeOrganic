@@ -1,84 +1,58 @@
-﻿using BiolifeOrganic.Bll.ViewModels.Contact;
-using BiolifeOrganic.Bll.ViewModels.OrderItem;
-using BiolifeOrganic.Dll.DataContext.Entities;
+﻿namespace BiolifeOrganic.Bll.ViewModels.Order;
 
-namespace BiolifeOrganic.Bll.ViewModels.Order;
 
-public class OrderViewModel
+public class OrderListViewModel
 {
     public int Id { get; set; }
-    public string OrderNumber { get; set; } = null!;
+    public string OrderNumber { get; set; } = string.Empty;
+    public DateTime OrderDate { get; set; }
+    public string Status { get; set; } = string.Empty;
+
+    public decimal SubtotalAmount { get; set; }      
+    public decimal DiscountAmount { get; set; }
     public decimal TotalAmount { get; set; }
-    public string? PaymentMethod { get; set; }
-    public string? DiscountCode { get; set; }
-    public OrderStatus Status { get; set; }
 
-    public int ShippingContactId { get; set; }
-    public ContactViewModel ShippingContact { get; set; } = null!;
-
-    public int? BillingContactId { get; set; }
-    public ContactViewModel? BillingContact { get; set; }
-
-    public string AppUserId { get; set; } = null!;
-    public string AppUserEmail { get; set; } = null!;
-
-    public int OrganizationId { get; set; }
-    public string? OrganizationName { get; set; }
-
-    public string? CourierService { get; set; }
-    public string? TrackingNumber { get; set; }
-    public string? Warehouse { get; set; }
-    public DateTime? EstimatedDeliveryDate { get; set; }
-    public DateTime? ProcessingStartedDate { get; set; }
-    public DateTime? PackagedDate { get; set; }
-    public DateTime? ShippedDate { get; set; }
-    public DateTime? DeliveredDate { get; set; }
-
-    public List<OrderItemViewModel> OrderItems { get; set; } = [];
+    public int ItemCount { get; set; }
 }
 
-public class CreateOrderViewModel
-{
-    public decimal TotalAmount { get; set; }
-    public string PaymentMethod { get; set; } = null!;
-    public string? DiscountCode { get; set; }
-    public OrderStatus Status { get; set; } = OrderStatus.OnHold;
-
-    public int ShippingContactId { get; set; }
-    public int? BillingContactId { get; set; }
-
-    public string AppUserId { get; set; } = null!;
-    public int OrganizationId { get; set; }
-
-    public string? CourierService { get; set; }
-    public string? TrackingNumber { get; set; }
-    public string? Warehouse { get; set; }
-    public DateTime? EstimatedDeliveryDate { get; set; }
-
-    public List<CreateOrderItemViewModel> OrderItems { get; set; } = [];
-}
-
-public class UpdateOrderViewModel
+public class OrderDetailsViewModel
 {
     public int Id { get; set; }
+    public string OrderNumber { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+    public DateTime OrderDate { get; set; }
+    public decimal SubtotalAmount { get; set; }
     public decimal TotalAmount { get; set; }
-    public string? PaymentMethod { get; set; }
-    public string? DiscountCode { get; set; }
-    public OrderStatus Status { get; set; }
-
-    public int ShippingContactId { get; set; }
-    public int? BillingContactId { get; set; }
-
+    public decimal DiscountAmount { get; set; }
+    public int? DiscountPercentage { get; set; }
+    public string ShippingContact { get; set; } = string.Empty;
     public string? CourierService { get; set; }
     public string? TrackingNumber { get; set; }
     public string? Warehouse { get; set; }
     public DateTime? EstimatedDeliveryDate { get; set; }
-    public DateTime? ProcessingStartedDate { get; set; }
-    public DateTime? PackagedDate { get; set; }
     public DateTime? ShippedDate { get; set; }
-    public DateTime? DeliveredDate { get; set; }
+    public List<OrderItemViewModel> OrderItems { get; set; } = new();
+    public List<OrderHistoryItemViewModel> History { get; set; } = new();
+    public List<string> Categories { get; set; } = new();
+}
 
-    public List<UpdateOrderItemViewModel> OrderItems { get; set; } = [];
+public class OrderItemViewModel
+{
+    public int Id { get; set; }
+    public string ProductName { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
+    public string? Color { get; set; }
+    public int Quantity { get; set; }
+    public decimal Price { get; set; }
+    public decimal Subtotal { get; set; }
+}
+
+public class OrderHistoryItemViewModel
+{
+    public string Event { get; set; } = string.Empty;
+    public DateTime Timestamp { get; set; }
+    public string? Details { get; set; }
+    public bool IsCompleted { get; set; }
 }
 
 

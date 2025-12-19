@@ -30,7 +30,8 @@ public static class BussinessLogicLayerServiceRegistration
         services.AddScoped<BasketManager>();
         services.AddScoped<IShopService, ShopManager>();
         services.AddScoped<INewsletterService, NewsletterManager>();
-
+        services.AddScoped<ICheckoutService, CheckoutManager>();
+        services.AddScoped<IDiscountService,DiscountManager>();
 
         return services;
     }

@@ -13,7 +13,6 @@ public class AppUser:IdentityUser
     public List<Wishlist> Wishlists { get; set; } = [];
     public List<Order> Orders { get; set; } = [];
     public List<Review> Reviews { get; set; } = [];
-    public List<Promocode> Promocodes { get; set; } = [];
 
 
 

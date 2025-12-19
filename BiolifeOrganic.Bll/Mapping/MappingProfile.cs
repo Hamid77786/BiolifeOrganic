@@ -3,8 +3,6 @@ using BiolifeOrganic.Bll.ViewModels.Category;
 using BiolifeOrganic.Bll.ViewModels.Comment;
 using BiolifeOrganic.Bll.ViewModels.Contact;
 using BiolifeOrganic.Bll.ViewModels.Logo;
-using BiolifeOrganic.Bll.ViewModels.Order;
-using BiolifeOrganic.Bll.ViewModels.OrderItem;
 using BiolifeOrganic.Bll.ViewModels.Organization;
 using BiolifeOrganic.Bll.ViewModels.Product;
 using BiolifeOrganic.Bll.ViewModels.ProductImage;
@@ -14,6 +12,7 @@ using BiolifeOrganic.Bll.ViewModels.WebContact;
 using BiolifeOrganic.Bll.ViewModels.Wishlist;
 using BiolifeOrganic.Bll.ViewModels.Basket;
 using BiolifeOrganic.Dll.DataContext.Entities;
+
 
 namespace BiolifeOrganic.Bll.Mapping;
 
@@ -37,12 +36,29 @@ public class MappingProfile:Profile
             .ForMember(dest => dest.CategoryIcon, opt =>
                 opt.Condition(src => src.CategoryIcon != null));
 
-            
-        
+
+
         CreateMap<Contact, ContactViewModel>()
             .ForMember(dest => dest.AppUserUserName,
-                       opt => opt.MapFrom(src => src.AppUser!.UserName));
-       
+                       opt => opt.MapFrom(src => src.AppUser!.UserName))
+            .ForMember(
+                dest => dest.FullName,
+                opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}")
+            );
+
+        CreateMap<ContactViewModel, Contact>()
+            .ForMember(
+                dest => dest.FirstName,
+                opt => opt.MapFrom(src => src.FirstName)
+            )
+            .ForMember(
+                dest => dest.LastName,
+                opt => opt.MapFrom(src => src.LastName)
+            );
+
+
+
+
         CreateMap<CreateContactViewModel, Contact>();
         CreateMap<UpdateContactViewModel, Contact>().ReverseMap();
 
@@ -56,40 +72,10 @@ public class MappingProfile:Profile
        CreateMap<UpdateLogoViewModel, Logo>()
             .ForMember(dest => dest.LogoUrl, opt => opt.Ignore());
 
-        CreateMap<Order, OrderViewModel>()
-            .ForMember(dest => dest.AppUserEmail,
-                opt => opt.MapFrom(src => src.AppUser.Email))
-            .ForMember(dest => dest.OrganizationName,
-                opt => opt.MapFrom(src => src.Organization != null ? src.Organization.Name : null))
-            .ReverseMap();
-
-        CreateMap<CreateOrderViewModel, Order>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.OrderNumber, opt => opt.Ignore())
-            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
-
-        CreateMap<UpdateOrderViewModel, Order>()
-           .ForMember(dest => dest.OrderNumber, opt => opt.Ignore()) 
-           .ForMember(dest => dest.AppUserId, opt => opt.Ignore()) 
-           .ForMember(dest => dest.OrganizationId, opt => opt.Ignore())
-           .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
-
-        CreateMap<OrderItem, OrderItemViewModel>()
-                .ForMember(dest => dest.Subtotal, opt => opt.MapFrom(src => src.Subtotal));
-
         
+
        
-        CreateMap<UpdateOrderItemViewModel, OrderItem>()
-            .ForMember(dest => dest.OrderId, opt => opt.Ignore())
-            .ForMember(dest => dest.Order, opt => opt.Ignore())
-            .ForMember(dest => dest.Product, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-
-        
-        CreateMap<OrderItem, UpdateOrderItemViewModel>();
+       
 
         CreateMap<Organization, OrganizationViewModel>().ReverseMap();
         CreateMap<CreateOrganizationViewModel, Organization>()

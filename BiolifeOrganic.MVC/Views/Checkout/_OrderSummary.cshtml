@@ -1,0 +1,81 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Basket
+@using BiolifeOrganic.Bll.ViewModels.CheckOut
+@model CheckoutViewModel
+
+<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 sm-padding-top-48px sm-margin-bottom-0 xs-margin-bottom-15px">
+    <div class="order-summary sm-margin-bottom-80px">
+        <div class="title-block">
+            <h3 class="title">Order Summary</h3>
+            <a asp-controller="basket" asp-action="index" class="link-forward">Edit cart</a>
+        </div>
+
+        <div class="cart-list-box short-type">
+            <span class="number">Total Count:(@Model.TotalCount)</span>
+                <ul class="cart-list">
+                    @foreach(var item in Model.CartItems)
+                    {
+                        <li class="cart-elem">
+                            <div class="cart-item">
+                                <div class="product-thumb">
+                                    <a class="prd-thumb" asp-controller="shop" asp-action="detail" asp-route-id="@item.ProductId">
+                                        <figure><img src="~/images/products/@item.ImageUrl" width="113" height="113" alt="shop-cart"></figure>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <a class="pr-name">@item.ProductName</a>
+                                    <span class="txt-quantity">Count of item:@item.Quantity</span>
+                                </div>
+                                <div class="price price-contain">
+                                    <ins><span class="price-amount"><span class="currencySymbol">₼</span>@item.Price =<span class="currencySymbol"> ₼</span>@item.Subtotal</span></ins>
+                                </div>
+
+                            </div>
+                        </li>
+                    }
+
+                    
+
+
+                </ul>
+                <ul class="subtotal">
+                    <li>
+                        <div class="subtotal-line">
+                            <b class="stt-name">Subtotal</b>
+                            <span class="stt-price"> ₼@Model.TotalAmount</span>
+                        </div>
+                    </li>
+                    
+                    @if (Model.DiscountedPrice > 0)
+                    {
+                        <li>
+                            <div class="subtotal-line">
+                                <b class="stt-name">Discount (@Model.DiscountedPrice %)</b>
+                                <span class="stt-price">₼@(Model.TotalAmount - Model.SubtotalAfterDiscount)</span>
+                            </div>
+                        </li>
+                    }
+                    <li>
+                        <input type="text" id="discountCode" placeholder="Enter discount code" />
+                        <button type="button" onclick="applyDiscount()">Apply</button>
+                        <span id="discountMessage"></span>
+
+                    </li>
+
+                    
+                    
+                    
+                    <li>
+                        <div class="subtotal-line">
+                            <b class="stt-name">total:</b>
+                            <span class="stt-price"> ₼@Model.Total</span>
+                        </div>
+                    </li>
+                </ul>
+        </div>
+        
+
+       
+    </div>
+</div>
+
+

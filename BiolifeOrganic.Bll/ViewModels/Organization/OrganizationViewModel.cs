@@ -6,7 +6,7 @@ public class OrganizationViewModel
 {
     public int Id { get; set; }
     public string? Name { get; set; }
-    public List<OrderViewModel> Orders { get; set; } = [];
+    public List<OrderListViewModel> Orders { get; set; } = [];
 
 }
 public class CreateOrganizationViewModel

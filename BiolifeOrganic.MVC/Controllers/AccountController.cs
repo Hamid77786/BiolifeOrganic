@@ -17,13 +17,15 @@ namespace BiolifeOrganic.MVC.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailService _emailService;
         private readonly FileService _fileService;
-        public AccountController(FileService fileService, UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,IEmailService emailService)
+        private readonly IDiscountService _discountService;
+        public AccountController(IDiscountService discountService,FileService fileService, UserManager<AppUser> userManager,SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager,IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _emailService = emailService;
             _fileService = fileService;
+            _discountService = discountService;
 
         }
         public IActionResult Register()
@@ -65,6 +67,9 @@ namespace BiolifeOrganic.MVC.Controllers
             }
             await _userManager.AddToRoleAsync(user, "User");
 
+            await _discountService.AssignWelcomeDiscountAsync(user.Id);
+
+
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
             var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account",
@@ -73,6 +78,7 @@ namespace BiolifeOrganic.MVC.Controllers
             await _emailService.SendEmailAsync(user.Email!,
                    "Confirm your email",
                    $"<p>Thank you for registering! Please confirm your email by clicking the link below:</p>" +
+                   $"<p>Congratulations,you received a discount upon registration for your first purchase.</p>" +
                    $"<a href='{confirmationLink}'>Confirm Email</a>");
 
 

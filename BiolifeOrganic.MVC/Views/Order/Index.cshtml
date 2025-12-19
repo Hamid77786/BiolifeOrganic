@@ -1,0 +1,19 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Order
+@model List<OrderListViewModel>
+<ul>
+    @foreach(var item in Model)
+    {
+    
+        <li>
+            <p>@item.ItemCount</p>
+            <p>@item.TotalAmount</p>
+            <p>@item.OrderDate</p>
+            <p>@item.OrderNumber</p>
+            <p>@item.Status</p>
+
+
+            
+        </li>
+       
+    }
+</ul>

@@ -23,12 +23,10 @@ public static class DataAccessLayerServiceRegistration
         services.AddScoped<ICategoryRepository,CategoryRepository>();
         services.AddScoped<IContactRepository,ContactRepository>();
         services.AddScoped<ILogoRepository, LogoRepository>();
-        services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<IProductImageRepository, ProductImageRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<IPromocodeRepository, PromocodeRepository>();
         services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<ISliderRepository, SliderRepository>();
         services.AddScoped<IWebContactRepository, WebContactRepository>();

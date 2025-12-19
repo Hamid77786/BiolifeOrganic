@@ -4,6 +4,7 @@ using BiolifeOrganic.Dll.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BiolifeOrganic.Dll.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251216210847_FixOrderEntity")]
+    partial class FixOrderEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,53 +263,6 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Discount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("MaxUsageCount")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("OnlyForNewUsers")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UsedCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Discounts");
-                });
-
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Logo", b =>
                 {
                     b.Property<int>("Id")
@@ -369,14 +325,8 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Property<DateTime?>("DeliveredDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("DiscountAmount")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("DiscountCode")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("DiscountPercentage")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("EstimatedDeliveryDate")
                         .HasColumnType("datetime2");
@@ -394,7 +344,7 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Property<int?>("OrganizationContactId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrganizationId")
+                    b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("OrganizationId1")
@@ -416,12 +366,8 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Property<int>("ShippingContactId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("SubTotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -610,6 +556,47 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.ToTable("ProductImages");
                 });
 
+            modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Promocode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Discount")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Promocodes");
+                });
+
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Review", b =>
                 {
                     b.Property<int>("Id")
@@ -691,46 +678,6 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sliders");
-                });
-
-            modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.UserDiscount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DiscountId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UsedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DiscountId");
-
-                    b.HasIndex("AppUserId", "DiscountId")
-                        .IsUnique();
-
-                    b.ToTable("UserDiscounts");
                 });
 
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.WebContact", b =>
@@ -977,7 +924,8 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.Organization", null)
                         .WithMany("Orders")
@@ -1041,6 +989,16 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Promocode", b =>
+                {
+                    b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.AppUser", "AppUser")
+                        .WithMany("Promocodes")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Review", b =>
                 {
                     b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.AppUser", "AppUser")
@@ -1057,25 +1015,6 @@ namespace BiolifeOrganic.Dll.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.UserDiscount", b =>
-                {
-                    b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BiolifeOrganic.Dll.DataContext.Entities.Discount", "Discount")
-                        .WithMany("UserDiscounts")
-                        .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Discount");
                 });
 
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Wishlist", b =>
@@ -1153,6 +1092,8 @@ namespace BiolifeOrganic.Dll.Migrations
 
                     b.Navigation("Orders");
 
+                    b.Navigation("Promocodes");
+
                     b.Navigation("Reviews");
 
                     b.Navigation("Wishlists");
@@ -1161,11 +1102,6 @@ namespace BiolifeOrganic.Dll.Migrations
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Discount", b =>
-                {
-                    b.Navigation("UserDiscounts");
                 });
 
             modelBuilder.Entity("BiolifeOrganic.Dll.DataContext.Entities.Order", b =>
