@@ -46,7 +46,7 @@ public class OrderController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        return View(order);
+        return PartialView("_OrderItemDetails", order);
     }
 
     [HttpPost]

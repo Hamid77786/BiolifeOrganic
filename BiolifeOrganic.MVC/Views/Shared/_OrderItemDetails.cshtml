@@ -1,0 +1,48 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Order
+@model OrderDetailsViewModel
+
+<div class="order-details-box" style="padding:10px; background-color:#f9f9f9; border:1px solid #ddd;">
+    <h5>Order Details - @Model.OrderNumber</h5>
+    <p><strong>Order Date:</strong> @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+
+    <table class="table table-bordered" style="margin-top:10px;">
+        <thead>
+            <tr style="background-color:#eee;">
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price<span class="currencySymbol"> ₼</span></td>
+                    <td>@(item.Quantity * item.Price)<span class="currencySymbol"> ₼</span></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-right"><strong>Subtotal:</strong></td>
+                <td>@Model.SubtotalAmount<span class="currencySymbol"> ₼</span></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right"><strong>Discount Amount:</strong></td>
+                <td>@Model.DiscountAmount<span class="currencySymbol"> ₼</span></td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                <td>@Model.TotalAmount<span class="currencySymbol"> ₼</span></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    @if (!string.IsNullOrEmpty(Model.DiscountCode))
+    {
+        <p><strong>Discount Code Applied:</strong> @Model.DiscountCode</p>
+    }
+</div>

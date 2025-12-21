@@ -23,29 +23,26 @@ public class CheckoutViewModel
     public int? ShippingContactId { get; set; }
 
 
-    [Required(ErrorMessage = "Phone number is required")]
     [Phone(ErrorMessage = "Invalid phone number")]
     public string? PhoneNumber { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Email is required")]
     [EmailAddress(ErrorMessage = "Invalid email address")]
     public string? Email { get; set; } = string.Empty;
 
     public string? OrderNotes { get; set; }
 
-    [Required(ErrorMessage = "Please select a payment method")]
     public string PaymentMethod { get; set; } = "BankTransfer";
 
     public string? DiscountCode { get; set; }
 
-    public decimal TotalAmount { get; set; }
-    public decimal TotalCount { get; set; }
-    public decimal DiscountedPrice { get; set; } = 10;
-    public decimal SubtotalAfterDiscount => DiscountedPrice > 0
-    ? Math.Round(TotalAmount * (1 - DiscountedPrice / 100), 2)
-    : TotalAmount;
+    public decimal? TotalAmount { get; set; }
+    public decimal? TotalCount { get; set; }
+    public decimal? Subtotal {  get; set; }
+    public int? DiscountId { get; set; }
+    public decimal? DiscountPercent { get; set; }
+    public decimal? DiscountAmount {  get; set; }
+    
 
-    public decimal Total => SubtotalAfterDiscount;
 
     public bool IsGuest { get; set; } = false;
     public List<CartItemViewModel> CartItems { get; set; } = new();

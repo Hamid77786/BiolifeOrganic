@@ -41,16 +41,16 @@
                     <li>
                         <div class="subtotal-line">
                             <b class="stt-name">Subtotal</b>
-                            <span class="stt-price"> ₼@Model.TotalAmount</span>
+                            <span  class="stt-price"> ₼@Model.Subtotal</span>
                         </div>
                     </li>
                     
-                    @if (Model.DiscountedPrice > 0)
+                    @if (Model.DiscountAmount > 0)
                     {
                         <li>
                             <div class="subtotal-line">
-                                <b class="stt-name">Discount (@Model.DiscountedPrice %)</b>
-                                <span class="stt-price">₼@(Model.TotalAmount - Model.SubtotalAfterDiscount)</span>
+                                <b  class="stt-name">Discount (@Model.DiscountPercent %)</b>
+                                <span  class="stt-price">₼@(Model.DiscountAmount)</span>
                             </div>
                         </li>
                     }
@@ -67,10 +67,12 @@
                     <li>
                         <div class="subtotal-line">
                             <b class="stt-name">total:</b>
-                            <span class="stt-price"> ₼@Model.Total</span>
+                            <span id="totalAmount" class="stt-price"> @Model.TotalAmount</span>
                         </div>
                     </li>
+                
                 </ul>
+                   
         </div>
         
 

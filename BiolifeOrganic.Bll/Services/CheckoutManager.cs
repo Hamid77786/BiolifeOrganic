@@ -43,6 +43,7 @@ public class CheckoutManager:ICheckoutService
 
         var model = new CheckoutViewModel
         {
+            Subtotal = cartItems.Sum(c => c.Subtotal),
             CartItems = cartItems,
             TotalAmount = cartItems.Sum(x => x.Subtotal),
             TotalCount = cartItems.Sum(x => x.Quantity),
@@ -93,6 +94,7 @@ public class CheckoutManager:ICheckoutService
             ImageUrl = i.ProductImageUrl,
             Quantity = i.Quantity,
             Price = i.Price
+            
         }).ToList();
 
        
@@ -102,6 +104,10 @@ public class CheckoutManager:ICheckoutService
         if (!model.IsGuest)
         {
             userId = _userManager.GetUserId(user);
+
+            if (string.IsNullOrEmpty(userId))
+                return new CheckoutResult { Error = "User not authenticated" };
+
 
             var contacts = await _contactService.GetUserAddressesAsync(userId!);
             var defaultContact = contacts.FirstOrDefault(c => c.IsDefault);

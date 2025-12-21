@@ -9,5 +9,5 @@ public interface ICheckoutService
 {
     Task<CheckoutViewModel?> BuildCheckoutViewModelAsync(ClaimsPrincipal user);
     Task<CheckoutResult> ProcessCheckoutAsync(ClaimsPrincipal user, CheckoutViewModel model);
+
 }
-   

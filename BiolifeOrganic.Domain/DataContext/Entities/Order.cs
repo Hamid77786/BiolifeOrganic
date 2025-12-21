@@ -9,7 +9,7 @@ public class Order : TimeStample
     public decimal TotalAmount { get; set; }
 
     public string? DiscountCode { get; set; }
-    public int? DiscountPercentage { get; set; }
+    public decimal DiscountPercentage { get; set; }
     public string PaymentMethod { get; set; } = null!;
 
     public OrderStatus Status { get; set; }

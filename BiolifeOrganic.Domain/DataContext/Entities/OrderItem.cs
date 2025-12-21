@@ -9,9 +9,9 @@ public class OrderItem : TimeStample
     public string? Color { get; set; }
     public int Quantity { get; set; }
     public decimal Price { get; set; }
+    public decimal Subtotal { get; set; }
     
-    [NotMapped]
-    public decimal Subtotal => Quantity * Price;
+    
     public int OrderId { get; set; }
     public Order Order { get; set; } = null!;
 

@@ -1,19 +1,164 @@
 ﻿@using BiolifeOrganic.Bll.ViewModels.Order
 @model List<OrderListViewModel>
-<ul>
-    @foreach(var item in Model)
-    {
-    
-        <li>
-            <p>@item.ItemCount</p>
-            <p>@item.TotalAmount</p>
-            <p>@item.OrderDate</p>
-            <p>@item.OrderNumber</p>
-            <p>@item.Status</p>
 
 
+<div class="page-contain shopping-cart">
+
+
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="shopping-cart-container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <h3 class="box-title">Your orders:</h3>
+                        <table class="shop_table cart-form">
+                            <thead>
+                                <tr>
+                                    <th class="product-price">Order number</th>
+                                    <th class="product-price">Order date</th>
+                                    <th class="product-price">Quantity</th>
+                                    <th class="product-price">SubTotal</th>
+                                    <th class="product-price">Discount Amount</th>
+                                    <th class="product-price">Discount Percent</th>
+                                    <th class="product-price">Discount Code</th>
+                                    <th class="product-price">Total</th>
+                                    <th class="product-price">Order Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model == null || !Model.Any())
+                                {
+                                    <tr>
+                                        <td colspan="9">No orders</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="cart_item">
+                                            <td class="product-price">
+                                                <a href="javascript:void(0);" class="order-toggle" data-order-id="@item.Id">
+                                                    @item.OrderNumber
+                                                </a>
+                                            </td>
+                                            <td class="product-price">
+                                                @item.OrderDate.ToString("dd/MM/yyyy")
+                                            </td>
+                                            <td class="product-price">
+                                                @item.ItemCount
+                                            </td>
+                                            <td class="product-price">
+                                                @item.SubtotalAmount
+                                            </td>
+                                            <td class="product-price">
+                                                @item.DiscountAmount
+                                            </td>
+                                            <td class="product-price">
+                                                @(item.DiscountPercentage.HasValue ? item.DiscountPercentage.Value.ToString() : "0")
+                                            </td>
+                                            <td class="product-price">
+                                                @(item.DiscountCode??"Not")
+                                            </td>
+                                            <td class="product-price">
+                                                @item.TotalAmount
+                                            </td>
+                                            <td class="product-price">
+                                                @item.Status
+                                            </td>
+                                        </tr>
+
+                                        <tr class="order-details" id="details-@item.Id" style="display:none;">
+                                            <td colspan="9">
+                                                <div class="details-container"></div>
+                                            </td>
+                                        </tr>
+                                    }
+                                               
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                               
+                                               
+                                                    
+                                                
+                                                
+                                               
+
+
+                                }
+
+                               
+                                   
+
+                                
+                                
+                                
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                        
+                        
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                
+                
+                
+                
+               
             
-        </li>
-       
-    }
-</ul>
+            
+            
+
+        
+        
+        
+    
+    
+    
+
+
+
+
+
+
+
+
+
+                                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

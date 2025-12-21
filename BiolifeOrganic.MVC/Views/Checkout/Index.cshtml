@@ -17,9 +17,10 @@
                 <!-- Левая часть: форма оформления заказа -->
                 <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                     <div class="checkout-progress-wrap">
-                        <ul class="steps">
+                        <form asp-controller="checkout" asp-action="index" id="form1" method="post">
+
+                            <ul class="steps">
                             
-                            <form asp-controller="checkout" asp-action="index"  id="form1"  method="post" >
 
                                 <!-- STEP 1 - Shipping -->
                                 <li class="step">
@@ -31,51 +32,66 @@
                                             <p class="txt-desc">Enter your shipping details</p>
                                             <div class="form-row">
                                                 <label for="shippingPhone">LastName *</label>
-                                                <input asp-for="LastName" type="text" name="LastName" id="shippingLastName" placeholder="LastName" required>
+                                                <input asp-for="LastName" type="text"  id="shippingLastName" placeholder="LastName" required>
                                                 <span asp-validation-for="LastName" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingPhone">FirstName *</label>
-                                                <input asp-for="FirstName" type="text" name="FirstName" id="shippingFirstName" placeholder="FirstName" required>
+                                                <input asp-for="FirstName" type="text"  id="shippingFirstName" placeholder="FirstName" required>
                                                 <span asp-validation-for="FirstName" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingPhone">Phone *</label>
-                                                <input asp-for="PhoneNumber" type="text" name="PhoneNumber" id="shippingPhone" placeholder="Phone number" required>
+                                                <input asp-for="PhoneNumber" type="text"  id="shippingPhone" placeholder="Phone number" required>
                                                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingPhone">Email *</label>
-                                                <input asp-for="Email" type="text" name="Email" id="shippingEmail" placeholder="Email" required>
-                                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                                <input asp-for="Email" type="text" id="shippingEmail" placeholder="Email">
+                                                <span asp-validation-for="Email" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingCountry">Country *</label>
-                                                <input asp-for="Country" type="text" name="Country" id="shippingCountry" placeholder="Country" required>
+                                                <input asp-for="Country" type="text"  id="shippingCountry" placeholder="Country" required>
                                                 <span asp-validation-for="Country" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingCity">City *</label>
-                                                <input asp-for="City" type="text" name="City" id="shippingCity" placeholder="City" required>
+                                                <input asp-for="City" type="text"  id="shippingCity" placeholder="City" required>
                                                 <span asp-validation-for="City" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingAddress">Address Line *</label>
-                                                <input asp-for="Address" type="text" name="Address" id="shippingAddress" placeholder="Street, house/apartment" required>
+                                                <input asp-for="Address" type="text"  id="shippingAddress" placeholder="Street, house/apartment" required>
                                                 <span asp-validation-for="Address" class="text-danger"></span>
                                             </div>
                                             <div class="form-row">
                                                 <label for="shippingPostalCode">Postal Code *</label>
-                                                <input asp-for="PostalCode" type="text" name="shippingPostalCode" id="shippingPostalCode" placeholder="Postal code" required>
+                                                <input asp-for="PostalCode" type="text"  id="shippingPostalCode" placeholder="Postal code" required>
                                             </div>
                                                  
                                         </div>
                                     </div>
                                 </li>
+                            </ul>
+
+                                        <input type="hidden" asp-for="PaymentMethod" value="BankTransfer" />
+                                        <input type="hidden" asp-for="IsGuest" value="false" />
+
+                                        <input type="hidden" id="DiscountCode" name="DiscountCode"/>
+                                        <input type="hidden" id="DiscountId" name="DiscountId"/>
+                                        <input type="hidden" id="DiscountPercent" name="DiscountPercent"/>
+                                        <input type="hidden" id="TotalAmountHidden" value="@Model.TotalAmount" />
+                               
+                           
+
+
                                         <button type="submit" class="btn">Submit Order</button>
 
 
-                            </form>
+                        </form>
+
+
                                                    
                                                     
                                
@@ -88,7 +104,6 @@
 
                             
 
-                        </ul>
                     </div>
                 </div>
                 <!-- Правая часть: Order Summary -->

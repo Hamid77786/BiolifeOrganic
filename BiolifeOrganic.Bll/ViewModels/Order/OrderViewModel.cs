@@ -11,6 +11,8 @@ public class OrderListViewModel
     public decimal SubtotalAmount { get; set; }      
     public decimal DiscountAmount { get; set; }
     public decimal TotalAmount { get; set; }
+    public decimal? DiscountPercentage { get; set; }
+    public string? DiscountCode { get; set; }
 
     public int ItemCount { get; set; }
 }
@@ -24,7 +26,8 @@ public class OrderDetailsViewModel
     public decimal SubtotalAmount { get; set; }
     public decimal TotalAmount { get; set; }
     public decimal DiscountAmount { get; set; }
-    public int? DiscountPercentage { get; set; }
+    public decimal DiscountPercentage { get; set; }
+    public string? DiscountCode { get; set; }
     public string ShippingContact { get; set; } = string.Empty;
     public string? CourierService { get; set; }
     public string? TrackingNumber { get; set; }

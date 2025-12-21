@@ -37,7 +37,12 @@ public class OrderManager : IOrderService
             OrderDate = o.CreatedAt,
             Status = o.Status.ToString(),
             TotalAmount = o.TotalAmount,
-            ItemCount = o.OrderItems.Count
+            ItemCount = o.OrderItems.Count,
+            DiscountAmount = o.DiscountAmount,
+            SubtotalAmount = o.SubTotalAmount,
+            DiscountCode = o.DiscountCode,
+            DiscountPercentage = o.DiscountPercentage,
+
         }).ToList();
     }
     public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId)
@@ -47,7 +52,7 @@ public class OrderManager : IOrderService
 
         var subtotal = order.OrderItems.Sum(i => i.Price * i.Quantity);
 
-        var discountAmount = subtotal - order.TotalAmount;
+        var discountAmount = order.TotalAmount - subtotal;
 
         var viewModel = new OrderDetailsViewModel
         {
@@ -90,7 +95,11 @@ public class OrderManager : IOrderService
         if (basket == null || !basket.Items.Any())
             throw new Exception("Basket is empty");
 
-        decimal totalAmount = basket.Items.Sum(x => x.Price * x.Quantity);
+        decimal subtotal = basket.Items.Sum(x => x.Price * x.Quantity);
+
+        decimal discountPercent = 0;
+        decimal discountAmount = 0;
+        decimal totalAmount = subtotal;
 
         DiscountValidationResult? discount = null;
 
@@ -99,13 +108,28 @@ public class OrderManager : IOrderService
             discount = await _discountService.ValidateAsync(
                 model.DiscountCode,
                 userId,
-                totalAmount);
+                subtotal);
 
-            if (!discount.IsValid)
-                throw new Exception(discount.Error);
+            if (discount.IsValid)
+            {
+                discountPercent = discount.Percentage;
+                discountAmount = Math.Round(subtotal * discountPercent / 100m, 2);
+                totalAmount = subtotal - discountAmount;
 
-            totalAmount *= (1 - discount.Percentage / 100m);
+                model.DiscountPercent = discountPercent;
+                model.DiscountAmount = discountAmount;
+                model.TotalAmount = totalAmount;
+                model.DiscountId = discount.DiscountId;
+            }
+            else
+            {
+                model.DiscountCode = null;
+            }
         }
+
+
+
+
 
         Contact shippingContact;
 
@@ -134,13 +158,31 @@ public class OrderManager : IOrderService
             await _contactRepository.CreateAsync(shippingContact);
         }
 
-        string orderNumber = $"ORD-{DateTime.UtcNow:yyyyMMdd}-{Random.Shared.Next(1000, 9999)}";
+        string orderNumber = $"ORD-{Random.Shared.Next(1000, 9999)}";
+
+        if (discount != null)
+        {
+            model.DiscountPercent = discountPercent;
+            model.DiscountAmount = discountAmount;
+            model.TotalAmount = totalAmount;
+        }
+        else
+        {
+            model.DiscountPercent = 0;
+            model.DiscountAmount = 0;
+            model.TotalAmount = subtotal;
+        }
+
 
         var order = new Order
         {
             AppUserId = userId,
             GuestEmail = model.IsGuest ? model.Email : null,
             OrderNumber = orderNumber,
+            SubTotalAmount = subtotal,
+            DiscountPercentage = discountPercent,
+            DiscountAmount = discountAmount,
+            DiscountCode = model.DiscountCode,
             TotalAmount = totalAmount,
             PaymentMethod = model.PaymentMethod,
             Status = OrderStatus.OnHold,
@@ -152,7 +194,8 @@ public class OrderManager : IOrderService
                 ProductName = item.ProductName!,
                 ImageUrl = item.ProductImageUrl,
                 Quantity = item.Quantity,
-                Price = item.Price
+                Price = item.Price,
+                Subtotal = item.Price * item.Quantity
             }).ToList()
         };
 

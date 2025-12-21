@@ -1,6 +1,7 @@
 ﻿function applyDiscount() {
     var code = document.getElementById('discountCode').value;
-    var total = parseFloat('@Model.TotalAmount');
+
+    var total = parseFloat(document.getElementById('TotalAmountHidden').value) || 0;
 
     fetch('/Checkout/ApplyDiscount', {
         method: 'POST',
@@ -12,10 +13,16 @@
             if (!data.success) {
                 document.getElementById('discountMessage').innerText = data.message;
             } else {
-                
                 var discountedTotal = total * (1 - data.percentage / 100);
-                document.querySelector('.stt-price').innerText = '₼' + discountedTotal.toFixed(2);
+
+                document.getElementById('totalAmount').innerText = '₼' + discountedTotal.toFixed(2);
                 document.getElementById('discountMessage').innerText = 'Discount applied: ' + data.percentage + '%';
+
+                document.getElementById('DiscountCode').value = code;
+                document.getElementById('DiscountPercent').value = data.percentage;
+                document.getElementById('DiscountId').value = data.discountId;
+                document.getElementById('TotalAmountHidden').value = discountedTotal.toFixed(2);
             }
         });
 }
+

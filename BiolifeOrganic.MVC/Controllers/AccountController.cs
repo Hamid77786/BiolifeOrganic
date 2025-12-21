@@ -67,7 +67,6 @@ namespace BiolifeOrganic.MVC.Controllers
             }
             await _userManager.AddToRoleAsync(user, "User");
 
-            await _discountService.AssignWelcomeDiscountAsync(user.Id);
 
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -78,7 +77,6 @@ namespace BiolifeOrganic.MVC.Controllers
             await _emailService.SendEmailAsync(user.Email!,
                    "Confirm your email",
                    $"<p>Thank you for registering! Please confirm your email by clicking the link below:</p>" +
-                   $"<p>Congratulations,you received a discount upon registration for your first purchase.</p>" +
                    $"<a href='{confirmationLink}'>Confirm Email</a>");
 
 
@@ -100,8 +98,12 @@ namespace BiolifeOrganic.MVC.Controllers
             if (result.Succeeded)
             {
                 TempData["SuccessMessage"] = "Email confirmed. Please log in.";
+                TempData["SuccessMessage"] = "You received upon for your first purchase.Code:WELCOME15.";
                 return RedirectToAction(nameof(Login));
             }
+
+            await _discountService.AssignWelcomeDiscountAsync(user.Id);
+
 
             TempData["ErrorMessage"] = "Email confirmation failed.";
             return RedirectToAction("Index", "Home");
