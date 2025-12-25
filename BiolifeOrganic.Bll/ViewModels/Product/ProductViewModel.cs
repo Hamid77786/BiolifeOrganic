@@ -50,16 +50,14 @@ public class CreateProductViewModel
     public string? Description { get; set; }
     public string? AdditionalInformation { get; set; }
 
-    public IFormFile ImageFile { get; set; } = null!;
-    public string? ImageUrl { get; set; }
+    public IFormFile? ImageFile { get; set; }
     public List<IFormFile> ProductImages { get; set; } = [];
 
-    public int QuantityAvailable { get; set; }
     public int Stock { get; set; }
 
-    public bool IsBestSeller { get; set; }
     public bool IsAvailable { get; set; }
-    public bool IsRated { get; set; }
+    public bool IsBestSeller { get; set; }
+
     public bool IsOnSale { get; set; }
 
     public decimal? DiscountPercent { get; set; }
@@ -82,10 +80,11 @@ public class UpdateProductViewModel
     public string? AdditionalInformation { get; set; }
 
     public string? ExistingImageUrl { get; set; }
-    public IFormFile NewImageFile { get; set; } = null!;
+    public IFormFile? NewImageFile { get; set; }
 
-    public List<string>? ExistingProductImages { get; set; }
+    public List<string> ExistingProductImages { get; set; } = [];
     public List<IFormFile>? NewProductImages { get; set; }
+    public List<string>? ImagesToDelete { get; set; }
 
     public int QuantityAvailable { get; set; }
     public int Stock { get; set; }

@@ -85,7 +85,6 @@ public class OrderManager : IOrderService
                 $"{order.ShippingContact.Address}, {order.ShippingContact.City}, {order.ShippingContact.Country}";
         }
 
-        viewModel.History = BuildOrderHistory(order);
 
         return viewModel;
     }
@@ -209,64 +208,7 @@ public class OrderManager : IOrderService
         return order.Id;
     }
 
-    public async Task<bool> CancelOrderAsync(int orderId, string userId)
-    {
-        var order = await _orderRepository.GetAsync(o => o.Id == orderId && o.AppUserId == userId);
-
-        if (order == null)
-            return false;
-
-        if (order.Status == OrderStatus.Shipped || order.Status == OrderStatus.InProgress || order.Status == OrderStatus.Completed)
-            return false;
-
-        order.Status = OrderStatus.Cancelled;
-        await _orderRepository.UpdateAsync(order);
-        return true;
-    }
-    private List<OrderHistoryItemViewModel> BuildOrderHistory(Order order)
-    {
-        var history = new List<OrderHistoryItemViewModel>();
-
-        history.Add(new OrderHistoryItemViewModel
-        {
-            Event = "Order Placed",
-            Timestamp = order.CreatedAt,
-            IsCompleted = true
-        });
-
-        if (order.PackagedDate.HasValue)
-        {
-            history.Add(new OrderHistoryItemViewModel
-            {
-                Event = "Product Packaging",
-                Timestamp = order.PackagedDate.Value,
-                IsCompleted = true
-            });
-        }
-
-        if (order.ShippedDate.HasValue)
-        {
-            history.Add(new OrderHistoryItemViewModel
-            {
-                Event = "Product Shipped",
-                Timestamp = order.ShippedDate.Value,
-                Details = $"Courier Service: {order.CourierService}\nTracking Number: {order.TrackingNumber}\nWarehouse: {order.Warehouse}",
-                IsCompleted = true
-            });
-        }
-
-        if (order.EstimatedDeliveryDate.HasValue)
-        {
-            history.Add(new OrderHistoryItemViewModel
-            {
-                Event = "Estimated Delivery",
-                Timestamp = order.EstimatedDeliveryDate.Value,
-                IsCompleted = order.Status == OrderStatus.Completed
-            });
-        }
-
-        return history.OrderBy(h => h.Timestamp).ToList();
-    }
+   
     public async Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusViewModel model)
     {
         var order = await _orderRepository.GetAsync(o => o.Id == model.Id);
@@ -312,17 +254,7 @@ public class OrderManager : IOrderService
         await _orderRepository.UpdateAsync(order);
         return true;
     }
-    public async Task<bool> SoftDeleteOrderAsync(int orderId)
-    {
-        var order = await _orderRepository.GetAsync(o => o.Id == orderId);
-
-        if (order == null)
-            return false;
-
-        order.IsDeleted = true;
-        await _orderRepository.UpdateAsync(order);
-        return true;
-    }
+    
     public async Task<bool> HasOrdersAsync(string userId)
     {
         return await _orderRepository.AnyAsync(o =>

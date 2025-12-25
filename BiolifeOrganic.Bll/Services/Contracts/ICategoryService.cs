@@ -7,7 +7,7 @@ namespace BiolifeOrganic.Bll.Services.Contracts;
 
 public interface ICategoryService : ICrudService<Category, CategoryViewModel, CreateCategoryViewModel, UpdateCategoryViewModel>
 {
-    
+    Task<List<SelectListItem>> GetCategorySelectListItemsAsync();
 
 }
 

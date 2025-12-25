@@ -1,0 +1,21 @@
+﻿@using BiolifeOrganic.Dll.DataContext.Entities
+@model Category
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update category</h4>
+
+            <form asp-controller="category" asp-action="update" method="post" class="forms-sample">
+                <div class="form-group">
+                    <label>Category name</label>
+                    <input asp-for="Name" type="text" class="form-control" placeholder="Category">
+                    <span asp-validation-for="Name"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <a asp-controller="category" asp-action="index" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+</div>

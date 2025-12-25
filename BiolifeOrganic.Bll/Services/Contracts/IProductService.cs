@@ -10,5 +10,6 @@ public interface IProductService : ICrudService<Product, ProductViewModel, Creat
        string? priceFilter = null,
        string? availabilityFilter = null
    );
+   Task<ProductViewModel?> GetByIdWithDetailsAsync(int id);
 }
 

@@ -35,7 +35,6 @@ public class OrderDetailsViewModel
     public DateTime? EstimatedDeliveryDate { get; set; }
     public DateTime? ShippedDate { get; set; }
     public List<OrderItemViewModel> OrderItems { get; set; } = new();
-    public List<OrderHistoryItemViewModel> History { get; set; } = new();
     public List<string> Categories { get; set; } = new();
 }
 
@@ -50,12 +49,5 @@ public class OrderItemViewModel
     public decimal Subtotal { get; set; }
 }
 
-public class OrderHistoryItemViewModel
-{
-    public string Event { get; set; } = string.Empty;
-    public DateTime Timestamp { get; set; }
-    public string? Details { get; set; }
-    public bool IsCompleted { get; set; }
-}
 
 

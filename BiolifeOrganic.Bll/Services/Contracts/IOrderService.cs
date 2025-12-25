@@ -9,10 +9,8 @@ public interface IOrderService
 {
     Task<List<OrderListViewModel>> GetUserOrdersAsync(string userId);
     Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId);
-    Task<bool> CancelOrderAsync(int orderId, string userId);
     Task<int> PlaceOrderAsync(string userId, CheckoutViewModel model);
     Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusViewModel model);
-    Task<bool> SoftDeleteOrderAsync(int orderId);
     Task<bool> HasOrdersAsync(string userId);
 
 

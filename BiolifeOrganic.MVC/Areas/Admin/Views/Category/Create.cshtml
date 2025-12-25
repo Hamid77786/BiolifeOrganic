@@ -1,0 +1,26 @@
+﻿@using BiolifeOrganic.Dll.DataContext.Entities
+@model Category
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Add category</h4>
+            
+            <form asp-controller="category" asp-action="create" method="post" class="forms-sample" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label >Category name</label>
+                    <input asp-for="Name" type="text" class="form-control"  placeholder="Category">
+                    <span asp-validation-for="Name"></span>
+                </div>
+                <div class="form-group">
+                    <label >Category image</label>
+                    <input asp-for="ImageFile" type="text" class="form-control"  placeholder="image" accept="image/*">
+                    <span asp-validation-for="ImageFile"></span>
+                </div>
+               
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                <a asp-controller="category" asp-action="index" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+</div>

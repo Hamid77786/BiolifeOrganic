@@ -1,0 +1,59 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Product
+@using BiolifeOrganic.Dll.DataContext.Entities
+@model List<ProductViewModel>
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Products</h4>
+                <a class="btn btn-primary" asp-controller="Product" asp-action="create">
+                    Add
+                </a>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model ?? [])
+                            {
+                                <tr>
+                                    <td><img src="~/images/products/@item.ImageUrl" width="100" height="100" /></td>
+                                    <td>@item.Name</td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-controller="product" asp-action="details" asp-route-id="@item.Id">Details</a>
+                                        <a class="btn btn-warning" asp-controller="product" asp-action="update" asp-route-id="@item.Id">Update</a>
+                                        <a class="btn btn-danger" onclick="deleteProduct(@item.Id,this)">Delete</a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function deleteProduct(id,element){
+        fetch(`/Admin/Product/Delete/${id}`,{
+           method:`Post`}).
+           then(response=>response.text()).
+           then(data=>{
+               element.parentNode.parentNode.remove();
+           })
+           .catch(err => {
+            console.error(err);
+            alert('Error for deleting!');
+
+        });
+    }
+</script>

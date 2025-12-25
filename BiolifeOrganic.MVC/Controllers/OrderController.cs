@@ -4,7 +4,6 @@ using BiolifeOrganic.Dll.DataContext.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BiolifeOrganic.MVC.Controllers;
 
@@ -49,27 +48,7 @@ public class OrderController : Controller
         return PartialView("_OrderItemDetails", order);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Cancel(int id)
-    {
-        var user = await _userManager.GetUserAsync(User);
-        if (user == null)
-            return RedirectToAction("Login", "Account");
-
-        var result = await _orderService.CancelOrderAsync(id, user.Id);
-
-        if (result)
-        {
-            TempData["SuccessMessage"] = "Order cancelled successfully.";
-        }
-        else
-        {
-            TempData["ErrorMessage"] = "Unable to cancel order. Order may already be shipped or completed.";
-        }
-
-        return RedirectToAction(nameof(Index));
-    }
+    
 
 
 }

@@ -1,355 +1,204 @@
-﻿    <!-- Main Content -->
-    <section class="content">
-        <div class="">
-            <div class="block-header">
-                <div class="row">
-                    <div class="col-lg-7 col-md-6 col-sm-12">
-                        <h2>Dashboard</h2>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Aero</a></li>
-                            <li class="breadcrumb-item active">Dashboard 1</li>
-                        </ul>
-                        <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
-                    </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12">
-                        <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
-                    </div>
+﻿
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="d-flex justify-content-between flex-wrap">
+            <div class="d-flex align-items-end flex-wrap">
+                <div class="mr-md-3 mr-xl-5">
+                    <h2>Welcome back,</h2>
+                    <p class="mb-md-0">Your analytics dashboard template.</p>
+                </div>
+                <div class="d-flex">
+                    <i class="mdi mdi-home text-muted hover-cursor"></i>
+                    <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Dashboard&nbsp;/&nbsp;</p>
+                    <p class="text-primary mb-0 hover-cursor">Analytics</p>
                 </div>
             </div>
-            <div class="container-fluid">
-                <div class="row clearfix">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card widget_2 big_icon traffic">
-                            <div class="body">
-                                <h6>Traffic</h6>
-                                <h2>20 <small class="info">of 1Tb</small></h2>
-                                <small>2% higher than last month</small>
-                                <div class="progress">
-                                    <div class="progress-bar l-amber" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card widget_2 big_icon sales">
-                            <div class="body">
-                                <h6>Sales</h6>
-                                <h2>12% <small class="info">of 100</small></h2>
-                                <small>6% higher than last month</small>
-                                <div class="progress">
-                                    <div class="progress-bar l-blue" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100" style="width: 38%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card widget_2 big_icon email">
-                            <div class="body">
-                                <h6>Email</h6>
-                                <h2>39 <small class="info">of 100</small></h2>
-                                <small>Total Registered email</small>
-                                <div class="progress">
-                                    <div class="progress-bar l-purple" role="progressbar" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100" style="width: 39%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <div class="card widget_2 big_icon domains">
-                            <div class="body">
-                                <h6>Domains</h6>
-                                <h2>8 <small class="info">of 10</small></h2>
-                                <small>Total Registered Domain</small>
-                                <div class="progress">
-                                    <div class="progress-bar l-green" role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" style="width: 89%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="d-flex justify-content-between align-items-end flex-wrap">
+                <button type="button" class="btn btn-light bg-white btn-icon mr-3 d-none d-md-block ">
+                    <i class="mdi mdi-download text-muted"></i>
+                </button>
+                <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
+                    <i class="mdi mdi-clock-outline text-muted"></i>
+                </button>
+                <button type="button" class="btn btn-light bg-white btn-icon mr-3 mt-2 mt-xl-0">
+                    <i class="mdi mdi-plus text-muted"></i>
+                </button>
+                <button class="btn btn-primary mt-2 mt-xl-0">Generate report</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="proBanner">
+    <div class="col-md-12 grid-margin">
+        <div class="card bg-gradient-primary border-0">
+            <div class="card-body py-3 px-4 d-flex align-items-center justify-content-between flex-wrap">
+                <p class="mb-0 text-white font-weight-medium">Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!                  </p>
+                <div class="d-flex">
+                    <a href="https://www.bootstrapdash.com/product/majestic-admin-pro?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class="btn btn-outline-light mr-2 bg-gradient-danger border-0">Check Pro Version</a>
+                    <button id="bannerClose" class="btn border-0 p-0 ml-auto">
+                        <i class="mdi mdi-close text-white"></i>
+                    </button>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong><i class="zmdi zmdi-chart"></i> Sales</strong> Report</h2>
-                                <ul class="header-dropdown">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                        <ul class="dropdown-menu dropdown-menu-right slideUp">
-                                            <li><a href="javascript:void(0);">Edit</a></li>
-                                            <li><a href="javascript:void(0);">Delete</a></li>
-                                            <li><a href="javascript:void(0);">Report</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="remove">
-                                        <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body mb-2">
-                                <div class="row clearfix">
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <div class="state_w1 mb-1 mt-1">
-                                            <div class="d-flex justify-content-between">
-                                                <div>
-                                                    <h5>2,365</h5>
-                                                    <span><i class="zmdi zmdi-balance"></i> Revenue</span>
-                                                </div>
-                                                <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#868e96">5,2,3,7,6,4,8,1</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <div class="state_w1 mb-1 mt-1">
-                                            <div class="d-flex justify-content-between">
-                                                <div>
-                                                    <h5>365</h5>
-                                                    <span><i class="zmdi zmdi-turning-sign"></i> Returns</span>
-                                                </div>
-                                                <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#2bcbba">8,2,6,5,1,4,4,3</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <div class="state_w1 mb-1 mt-1">
-                                            <div class="d-flex justify-content-between">
-                                                <div>
-                                                    <h5>65</h5>
-                                                    <span><i class="zmdi zmdi-alert-circle-o"></i> Queries</span>
-                                                </div>
-                                                <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#82c885">4,4,3,9,2,1,5,7</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-6 col-sm-6">
-                                        <div class="state_w1 mb-1 mt-1">
-                                            <div class="d-flex justify-content-between">
-                                                <div>
-                                                    <h5>2,055</h5>
-                                                    <span><i class="zmdi zmdi-print"></i> Invoices</span>
-                                                </div>
-                                                <div class="sparkline" data-type="bar" data-width="97%" data-height="55px" data-bar-Width="3" data-bar-Spacing="5" data-bar-Color="#45aaf2">7,5,3,8,4,6,2,9</div>
-                                            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body dashboard-tabs p-0">
+                <ul class="nav nav-tabs px-4" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="sales-tab" data-toggle="tab" href="#sales" role="tab" aria-controls="sales" aria-selected="false">Sales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="purchases-tab" data-toggle="tab" href="#purchases" role="tab" aria-controls="purchases" aria-selected="false">Purchases</a>
+                    </li>
+                </ul>
+                <div class="tab-content py-0 px-0">
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="d-flex flex-wrap justify-content-xl-between">
+                            <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-calendar-heart icon-lg mr-3 text-primary"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Start date</small>
+                                    <div class="dropdown">
+                                        <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <h5 class="mb-0 d-inline-block">26 Jul 2018</h5>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkA">
+                                            <a class="dropdown-item" href="#">12 Aug 2018</a>
+                                            <a class="dropdown-item" href="#">22 Sep 2018</a>
+                                            <a class="dropdown-item" href="#">21 Oct 2018</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="body">
-                                <div id="chart-area-spline-sracked" class="c3_chart d_sales"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card mcard_4">
-                            <div class="body">
-                                <ul class="header-dropdown list-unstyled">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-menu"></i> </a>
-                                        <ul class="dropdown-menu slideUp">
-                                            <li><a href="javascript:void(0);">Edit</a></li>
-                                            <li><a href="javascript:void(0);">Delete</a></li>
-                                            <li><a href="javascript:void(0);">Report</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div class="img">
-                                    <img src="~/admin/images/lg/avatar1.jpg" class="rounded-circle" alt="profile-image">
-                                </div>
-                                <div class="user">
-                                    <h5 class="mt-3 mb-1">Eliana Smith</h5>
-                                    <small class="text-muted">UI/UX Desiger</small>
-                                </div>
-                                <ul class="list-unstyled social-links">
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-dribbble"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-behance"></i></a></li>
-                                    <li><a href="javascript:void(0);"><i class="zmdi zmdi-pinterest"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card w_data_1">
-                            <div class="body">
-                                <div class="w_icon pink"><i class="zmdi zmdi-bug"></i></div>
-                                <h4 class="mt-3 mb-0">12.1k</h4>
-                                <span class="text-muted">Bugs Fixed</span>
-                                <div class="w_description text-success">
-                                    <i class="zmdi zmdi-trending-up"></i>
-                                    <span>15.5%</span>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-currency-usd mr-3 icon-lg text-danger"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Revenue</small>
+                                    <h5 class="mr-2 mb-0">$577545</h5>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card w_data_1">
-                            <div class="body">
-                                <div class="w_icon cyan"><i class="zmdi zmdi-ticket-star"></i></div>
-                                <h4 class="mt-3 mb-1">01.8k</h4>
-                                <span class="text-muted">Submitted Tickers</span>
-                                <div class="w_description text-success">
-                                    <i class="zmdi zmdi-trending-up"></i>
-                                    <span>95.5%</span>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-eye mr-3 icon-lg text-success"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Total views</small>
+                                    <h5 class="mr-2 mb-0">9833550</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-download mr-3 icon-lg text-warning"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Downloads</small>
+                                    <h5 class="mr-2 mb-0">2233783</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-flag mr-3 icon-lg text-danger"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Flagged</small>
+                                    <h5 class="mr-2 mb-0">3497843</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="body">
-                                <div class="chat-widget">
-                                    <ul class="list-unstyled">
-                                        <li class="left">
-                                            <img src="~/admin/images/xs/avatar3.jpg" class="rounded-circle" alt="">
-                                            <ul class="list-unstyled chat_info">
-                                                <li><small>Frank 11:00AM</small></li>
-                                                <li><span class="message bg-blue">Hello, Michael</span></li>
-                                                <li><span class="message bg-blue">How are you!</span></li>
-                                            </ul>
-                                        </li>
-                                        <li class="right">
-                                            <ul class="list-unstyled chat_info">
-                                                <li><small>11:10AM</small></li>
-                                                <li><span class="message">Hello, Frank</span></li>
-                                            </ul>
-                                        </li>
-                                        <li class="right">
-                                            <ul class="list-unstyled chat_info">
-                                                <li><small>11:11AM</small></li>
-                                                <li><span class="message">I'm fine what about you?</span></li>
-                                            </ul>
-                                        </li>
-                                        <li class="left">
-                                            <img src="~/admin/images/xs/avatar2.jpg" class="rounded-circle" alt="">
-                                            <ul class="list-unstyled chat_info">
-                                                <li><small>Gary 11:13AM</small></li>
-                                                <li><span class="message bg-indigo">Hello, Michael and Frank</span></li>
-                                            </ul>
-                                        </li>
-                                        <li class="left">
-                                            <img src="~/admin/images/xs/avatar5.jpg" class="rounded-circle" alt="">
-                                            <ul class="list-unstyled chat_info">
-                                                <li><small>Hossein 11:14AM</small></li>
-                                                <li><span class="message bg-amber">Hello, team</span></li>
-                                                <li><span class="message bg-amber">Please let me know your requirements.</span></li>
-                                                <li><span class="message bg-amber">How would like to connect with us?</span></li>
-                                            </ul>
-                                        </li>
-                                        <li class="right">
-                                            <ul class="list-unstyled chat_info">
-                                                <li><small>11:15AM</small></li>
-                                                <li><span class="message">Hello, Hossein</span></li>
-                                                <li><span class="message">Meeting on conference room at 12:00PM</span></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="input-group mt-3">
-                                    <div class="input-group-prepend">
-                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add</button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);">Tim Hank</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Hossein Shams</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">John Smith</a>
+                    <div class="tab-pane fade" id="sales" role="tabpanel" aria-labelledby="sales-tab">
+                        <div class="d-flex flex-wrap justify-content-xl-between">
+                            <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-calendar-heart icon-lg mr-3 text-primary"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Start date</small>
+                                    <div class="dropdown">
+                                        <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <h5 class="mb-0 d-inline-block">26 Jul 2018</h5>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkA">
+                                            <a class="dropdown-item" href="#">12 Aug 2018</a>
+                                            <a class="dropdown-item" href="#">22 Sep 2018</a>
+                                            <a class="dropdown-item" href="#">21 Oct 2018</a>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Enter text here..." aria-label="Text input with dropdown button">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="zmdi zmdi-mail-send"></i></span>
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-download mr-3 icon-lg text-warning"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Downloads</small>
+                                    <h5 class="mr-2 mb-0">2233783</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-eye mr-3 icon-lg text-success"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Total views</small>
+                                    <h5 class="mr-2 mb-0">9833550</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-currency-usd mr-3 icon-lg text-danger"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Revenue</small>
+                                    <h5 class="mr-2 mb-0">$577545</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-flag mr-3 icon-lg text-danger"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Flagged</small>
+                                    <h5 class="mr-2 mb-0">3497843</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-md-12 col-lg-8">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Visitors</strong> Statistics</h2>
-                                <ul class="header-dropdown">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                        <ul class="dropdown-menu dropdown-menu-right slideUp">
-                                            <li><a href="javascript:void(0);">Action</a></li>
-                                            <li><a href="javascript:void(0);">Another action</a></li>
-                                            <li><a href="javascript:void(0);">Something else</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="remove">
-                                        <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body">
-                                <div id="world-map-markers" class="jvector-map"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Distribution</strong></h2>
-                                <ul class="header-dropdown">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                        <ul class="dropdown-menu dropdown-menu-right slideUp">
-                                            <li><a href="javascript:void(0);">Edit</a></li>
-                                            <li><a href="javascript:void(0);">Delete</a></li>
-                                            <li><a href="javascript:void(0);">Report</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="remove">
-                                        <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body text-center">
-                                <div id="chart-pie" class="c3_chart d_distribution"></div>
-                                <button class="btn btn-primary mt-4 mb-4">View More</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Traffic</strong> Source</h2>
-                                <ul class="header-dropdown">
-                                    <li class="dropdown">
-                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                                        <ul class="dropdown-menu dropdown-menu-right slideUp">
-                                            <li><a href="javascript:void(0);">Edit</a></li>
-                                            <li><a href="javascript:void(0);">Delete</a></li>
-                                            <li><a href="javascript:void(0);">Report</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="remove">
-                                        <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="body">
-                                <div class="row">
-                                    <div class="col-lg-8 col-md-6 col-sm-12">
-                                        <div id="chart-area-step" class="c3_chart d_traffic"></div>
-                                    </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12">
-                                        <span> More than 30% percent of users come from direct links. Check details page for more information.</span>
-                                        <div class="progress mt-4">
-                                            <div class="progress-bar l-amber" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;"></div>
-                                        </div>
-                                        <div class="d-flex bd-highlight mt-4">
-                                            <div class="flex-fill bd-highlight">
-                                                <h5 class="mb-0">21,521 <i class="zmdi zmdi-long-arrow-up"></i></h5>
-                                                <small>Today</small>
-                                            </div>
-                                            <div class="flex-fill bd-highlight">
-                                                <h5 class="mb-0">%12.35 <i class="zmdi zmdi-long-arrow-down"></i></h5>
-                                                <small>Last month %</small>
-                                            </div>
+                    <div class="tab-pane fade" id="purchases" role="tabpanel" aria-labelledby="purchases-tab">
+                        <div class="d-flex flex-wrap justify-content-xl-between">
+                            <div class="d-none d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-calendar-heart icon-lg mr-3 text-primary"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Start date</small>
+                                    <div class="dropdown">
+                                        <a class="btn btn-secondary dropdown-toggle p-0 bg-transparent border-0 text-dark shadow-none font-weight-medium" href="#" role="button" id="dropdownMenuLinkA" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <h5 class="mb-0 d-inline-block">26 Jul 2018</h5>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLinkA">
+                                            <a class="dropdown-item" href="#">12 Aug 2018</a>
+                                            <a class="dropdown-item" href="#">22 Sep 2018</a>
+                                            <a class="dropdown-item" href="#">21 Oct 2018</a>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-currency-usd mr-3 icon-lg text-danger"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Revenue</small>
+                                    <h5 class="mr-2 mb-0">$577545</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-eye mr-3 icon-lg text-success"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Total views</small>
+                                    <h5 class="mr-2 mb-0">9833550</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-download mr-3 icon-lg text-warning"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Downloads</small>
+                                    <h5 class="mr-2 mb-0">2233783</h5>
+                                </div>
+                            </div>
+                            <div class="d-flex py-3 border-md-right flex-grow-1 align-items-center justify-content-center p-3 item">
+                                <i class="mdi mdi-flag mr-3 icon-lg text-danger"></i>
+                                <div class="d-flex flex-column justify-content-around">
+                                    <small class="mb-1 text-muted">Flagged</small>
+                                    <h5 class="mr-2 mb-0">3497843</h5>
                                 </div>
                             </div>
                         </div>
@@ -357,7 +206,118 @@
                 </div>
             </div>
         </div>
-    </section>
-
-
-
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Cash deposits</p>
+                <p class="mb-4">To start a blog, think of a topic about and first brainstorm party is ways to write details</p>
+                <div id="cash-deposits-chart-legend" class="d-flex justify-content-center pt-3"></div>
+                <canvas id="cash-deposits-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Total sales</p>
+                <h1>$ 28835</h1>
+                <h4>Gross sales over the years</h4>
+                <p class="text-muted">Today, many people rely on computers to do homework, work, and create or store useful information. Therefore, it is important </p>
+                <div id="total-sales-chart-legend"></div>
+            </div>
+            <canvas id="total-sales-chart"></canvas>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Recent Purchases</p>
+                <div class="table-responsive">
+                    <table id="recent-purchases-listing" class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status report</th>
+                                <th>Office</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Gross amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jeremy Ortega</td>
+                                <td>Levelled up</td>
+                                <td>Catalinaborough</td>
+                                <td>$790</td>
+                                <td>06 Jan 2018</td>
+                                <td>$2274253</td>
+                            </tr>
+                            <tr>
+                                <td>Alvin Fisher</td>
+                                <td>Ui design completed</td>
+                                <td>East Mayra</td>
+                                <td>$23230</td>
+                                <td>18 Jul 2018</td>
+                                <td>$83127</td>
+                            </tr>
+                            <tr>
+                                <td>Emily Cunningham</td>
+                                <td>support</td>
+                                <td>Makennaton</td>
+                                <td>$939</td>
+                                <td>16 Jul 2018</td>
+                                <td>$29177</td>
+                            </tr>
+                            <tr>
+                                <td>Minnie Farmer</td>
+                                <td>support</td>
+                                <td>Agustinaborough</td>
+                                <td>$30</td>
+                                <td>30 Apr 2018</td>
+                                <td>$44617</td>
+                            </tr>
+                            <tr>
+                                <td>Betty Hunt</td>
+                                <td>Ui design not completed</td>
+                                <td>Lake Sandrafort</td>
+                                <td>$571</td>
+                                <td>25 Jun 2018</td>
+                                <td>$78952</td>
+                            </tr>
+                            <tr>
+                                <td>Myrtie Lambert</td>
+                                <td>Ui design completed</td>
+                                <td>Cassinbury</td>
+                                <td>$36</td>
+                                <td>05 Nov 2018</td>
+                                <td>$36422</td>
+                            </tr>
+                            <tr>
+                                <td>Jacob Kennedy</td>
+                                <td>New project</td>
+                                <td>Cletaborough</td>
+                                <td>$314</td>
+                                <td>12 Jul 2018</td>
+                                <td>$34167</td>
+                            </tr>
+                            <tr>
+                                <td>Ernest Wade</td>
+                                <td>Levelled up</td>
+                                <td>West Fidelmouth</td>
+                                <td>$484</td>
+                                <td>08 Sep 2018</td>
+                                <td>$50862</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

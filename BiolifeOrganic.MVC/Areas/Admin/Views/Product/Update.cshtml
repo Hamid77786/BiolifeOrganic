@@ -1,0 +1,128 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Product
+@model UpdateProductViewModel
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Product</h4>
+
+            <form asp-area="Admin"
+                  asp-controller="Product"
+                  asp-action="Update"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="forms-sample">
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Price</label>
+                    <input asp-for="OriginalPrice" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Additional information</label>
+                    <textarea asp-for="AdditionalInformation" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Main image</label><br />
+                    @if (!string.IsNullOrEmpty(Model.ExistingImageUrl))
+                    {
+                        <img src="~/images/products/@Model.ExistingImageUrl"
+                             width="120"
+                             class="mb-2" />
+                    }
+                    <input asp-for="NewImageFile" type="file" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Add new gallery images</label>
+                    <input asp-for="NewProductImages" type="file" multiple class="form-control" />
+                </div>
+
+                @if (Model.ExistingProductImages != null && Model.ExistingProductImages.Any())
+                {
+                    <div class="form-group">
+                        <label>Existing images</label>
+                        <div class="d-flex flex-wrap">
+                            @foreach (var img in Model.ExistingProductImages)
+                            {
+                                <div class="mr-2 text-center">
+                                    <img src="~/images/products/@img" width="100" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select asp-for="CategoryId"
+                            asp-items="Model.CategorySelectListItems"
+                            class="form-control">
+                    </select>
+                </div>
+
+                <div class="form-check">
+                    <input asp-for="IsAvailable" class="form-check-input" />
+                    <label class="form-check-label">Available</label>
+                </div>
+
+                <div class="form-check">
+                    <input asp-for="IsBestSeller" class="form-check-input" />
+                    <label class="form-check-label">Best seller</label>
+                </div>
+
+                <div class="form-check">
+                    <input asp-for="IsOnSale" class="form-check-input" />
+                    <label class="form-check-label">On sale</label>
+                </div>
+                <div class="form-group mt-3">
+                    <label>Discount %</label>
+                    <input asp-for="DiscountPercent" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Sale start</label>
+                    <input asp-for="SaleStartDate" type="datetime-local" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Sale end</label>
+                    <input asp-for="SaleEndDate" type="datetime-local" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Stock</label>
+                    <input asp-for="Stock" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2 mt-3">Update</button>
+                <a asp-action="Index" class="btn btn-light mt-3">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+    document.querySelector('input[name="OriginalPrice"]').addEventListener('input', function () {
+        if (this.value < 0) this.value = 0;
+    });
+    document.querySelector('input[name="DiscountPercent"]').addEventListener('input', function () {
+        if (this.value < 0) this.value = 0;
+    });
+    document.querySelector('input[name="Stock"]').addEventListener('input', function () {
+        if (this.value < 0) this.value = 0;
+    });
+
+
+</script>
+

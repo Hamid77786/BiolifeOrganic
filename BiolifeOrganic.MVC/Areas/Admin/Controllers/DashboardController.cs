@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BiolifeOrganic.MVC.Areas.Admin.Controllers;
 
-[Authorize(Roles ="Admin")]
-[Area ("Admin")]
-public class DashboardController : Controller
+
+public class DashboardController : AdminController
 {
    
    public IActionResult Index()

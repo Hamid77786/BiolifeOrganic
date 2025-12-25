@@ -62,14 +62,7 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
         return query;
     }
 
-    public async Task<List<ProductViewModel>> GetAllWithDetailsAsync()
-    {
-        var products = await Repository.GetAllAsync(
-                include: source => source.Include(p => p.Category!)
-            );
-
-        return Mapper.Map<List<ProductViewModel>>(products);
-    }
+   
 
     public async Task<ProductViewModel?> GetByIdWithDetailsAsync(int id)
     {
@@ -86,174 +79,167 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
 
 
 
-    public async Task<List<ProductViewModel>> GetRelatedProductsAsync(int categoryId, int id)
+
+
+    public async Task<CreateProductViewModel> GetCreateProductViewModelAsync()
     {
-        var products = await _productRepository.GetProductsByCategoryAsync(categoryId, id);
+        var createProductViewModel = new CreateProductViewModel();
 
-        var relatedProductsViewModel = _mapper.Map<List<ProductViewModel>>(products);
+        createProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
 
-        return relatedProductsViewModel;
+        return createProductViewModel;
     }
 
-    //public async Task<CreateProductViewModel> GetCreateProductViewModelAsync()
+
+    public override async Task CreateAsync(CreateProductViewModel model)
+    {
+        var coverImageName = await _fileService.SaveFileAsync(model.ImageFile!, "wwwroot/images/products");
+
+        var imageNames = new List<string>();
+        if (model.ProductImages != null && model.ProductImages.Any())
+        {
+            foreach (var file in model.ProductImages)
+            {
+                var imageName = await _fileService.SaveFileAsync(model.ImageFile!, "wwwroot/images/products");
+                imageNames.Add(imageName);
+            }
+        }
+
+
+
+        var product = new Product
+        {
+            Name = model.Name,
+            Description = model.Description,
+            AdditionalInformation = model.AdditionalInformation,
+            OriginalPrice = model.OriginalPrice,
+            QuantityAvailable = model.Stock,
+            CategoryId = model.CategoryId,
+            ImageUrl = coverImageName,
+            IsBestSeller = false,
+            SaleStartDate = null,
+            SaleEndDate = null,
+
+
+            ProductImages = new List<ProductImage>
+            {
+                new ProductImage
+                {
+                    ImageUrl = coverImageName,
+                    IsMain = true,
+                    IsSecondary = false
+                }
+            },
+
+
+        };
+
+        if (imageNames.Any())
+        {
+            foreach (var imageName in imageNames)
+            {
+                product.ProductImages.Add(new ProductImage
+                {
+                    ImageUrl = imageName,
+                    IsMain = false,
+                    IsSecondary = false
+                });
+            }
+        }
+
+        await _productRepository.CreateAsync(product);
+    }
+
+    //public async Task<UpdateProductViewModel> GetUpdateViewModelAsync(int id)
     //{
-    //    var createProductViewModel = new CreateProductViewModel();
+    //    var product = await Repository.GetAsync(
+    //        predicate: p => p.Id == id,
+    //        include: source => source
+    //            .Include(p => p.ProductImages!)
+    //            .Include(p => p.Category!)
+    //    );
 
-    //    createProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
+    //    if (product == null) return null!;
 
-    //    return createProductViewModel;
+    //    var updateProductViewModel = Mapper.Map<UpdateProductViewModel>(product);
+    //    updateProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
+
+    //    if (product.ProductImages != null && product.ProductImages.Any())
+    //    {
+    //        updateProductViewModel.ExistingProductImages = product.ProductImages
+    //            .Select(i => i.ImageUrl ?? string.Empty) // Ensure null values are replaced with an empty string
+    //            .ToList();
+    //    }
+
+    //    return updateProductViewModel;
     //}
 
 
-//    public override async Task CreateAsync(CreateProductViewModel model)
-//    {
-//        var coverImageName = await _fileService.SaveFileAsync(model.ImageFile);
 
-//        var imageNames = new List<string>();
-//        if (model.ProductImages != null && model.ProductImages.Any())
-//        {
-//            foreach (var file in model.ProductImages)
-//            {
-//                var imageName = await _fileService.SaveFileAsync(file);
-//                imageNames.Add(imageName);
-//            }
-//        }
+    //    public override async Task<bool> UpdateAsync(int id, UpdateProductViewModel model)
+    //    {
+    //        var product = await Repository.GetAsync(
+    //            predicate: p => p.Id == id,
+    //            include: source => source
+    //                .Include(p => p.ProductImages!)
+    //        );
 
-       
+    //        if (product == null)
+    //            return false;
 
-//        var product = new Product
-//        {
-//            Name = model.Name,
-//            Description = model.Description,
-//            AdditionalInformation = model.AdditionalInformation,
-//            OriginalPrice = model.OriginalPrice,
-//            QuantityAvailable = model.Stock,
-//            CategoryId = model.CategoryId,
-//            ImageUrl = coverImageName,
-//            IsBestSeller = false,
-//            SaleStartDate = null,
-//            SaleEndDate = null,
+    //        product.Name = model.Name!;
+    //        product.Description = model.Description;
+    //        product.AdditionalInformation = model.AdditionalInformation;
+    //        product.OriginalPrice = model.OriginalPrice;
+    //        product.QuantityAvailable = model.Stock;
+    //        product.CategoryId = model.CategoryId;
 
+    //        if (model.NewImageFile != null && model.NewImageFile.Length > 0)
+    //        {
+    //            if (!string.IsNullOrEmpty(product.ImageUrl))
+    //            {
+    //                _fileService.DeleteFile(product.ImageUrl);
+    //            }
 
-//            ProductImages = new List<ProductImage>
-//            {
-//                new ProductImage
-//                {
-//                    ImageUrl = coverImageName,
-//                    IsMain = true,
-//                    IsSecondary = false
-//                }
-//            },
+    //            var oldCoverImage = product.ProductImages!.FirstOrDefault(i => i.IsMain);
+    //            if (oldCoverImage != null)
+    //            {
+    //                product.ProductImages!.Remove(oldCoverImage);
+    //            }
 
-            
-//        };
+    //            var newCoverImageName = await _fileService.SaveFileAsync(model.NewImageFile);
+    //            product.ImageUrl = newCoverImageName;
 
-//        if (imageNames.Any())
-//        {
-//            foreach (var imageName in imageNames)
-//            {
-//                product.ProductImages.Add(new ProductImage
-//                {
-//                    ImageUrl = imageName,
-//                    IsMain = false,
-//                    IsSecondary = false
-//                });
-//            }
-//        }
+    //            product.ProductImages!.Add(new ProductImage
+    //            {
+    //                ImageUrl = newCoverImageName,
+    //                IsMain = true,
+    //                IsSecondary= false,
+    //                ProductId = product.Id
+    //            });
+    //        }
 
-//        await _repository.CreateAsync(product);
-//    }
-   
-//    //public async Task<UpdateProductViewModel> GetUpdateViewModelAsync(int id)
-//    //{
-//    //    var product = await Repository.GetAsync(
-//    //        predicate: p => p.Id == id,
-//    //        include: source => source
-//    //            .Include(p => p.ProductImages!)
-//    //            .Include(p => p.Category!)
-//    //    );
+    //        if (model.NewProductImages != null && model.NewProductImages.Any())
+    //        {
+    //            foreach (var file in model.NewProductImages)
+    //            {
+    //                if (file != null && file.Length > 0)
+    //                {
+    //                    var imageName = await _fileService.SaveFileAsync(file);
+    //                    product.ProductImages!.Add(new ProductImage
+    //                    {
+    //                        ImageUrl = imageName,
+    //                        IsMain = false,
+    //                        IsSecondary = false,
+    //                        ProductId = product.Id
+    //                    });
+    //                }
+    //            }
+    //        }
 
-//    //    if (product == null) return null!;
-
-//    //    var updateProductViewModel = Mapper.Map<UpdateProductViewModel>(product);
-//    //    updateProductViewModel.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
-
-//    //    if (product.ProductImages != null && product.ProductImages.Any())
-//    //    {
-//    //        updateProductViewModel.ExistingProductImages = product.ProductImages
-//    //            .Select(i => i.ImageUrl ?? string.Empty) // Ensure null values are replaced with an empty string
-//    //            .ToList();
-//    //    }
-
-//    //    return updateProductViewModel;
-//    //}
+    //        await Repository.UpdateAsync(product);
+    //        return true;
+    //    }
 
 
-
-//    public override async Task<bool> UpdateAsync(int id, UpdateProductViewModel model)
-//    {
-//        var product = await Repository.GetAsync(
-//            predicate: p => p.Id == id,
-//            include: source => source
-//                .Include(p => p.ProductImages!)
-//        );
-
-//        if (product == null)
-//            return false;
-
-//        product.Name = model.Name!;
-//        product.Description = model.Description;
-//        product.AdditionalInformation = model.AdditionalInformation;
-//        product.OriginalPrice = model.OriginalPrice;
-//        product.QuantityAvailable = model.Stock;
-//        product.CategoryId = model.CategoryId;
-
-//        if (model.NewImageFile != null && model.NewImageFile.Length > 0)
-//        {
-//            if (!string.IsNullOrEmpty(product.ImageUrl))
-//            {
-//                _fileService.DeleteFile(product.ImageUrl);
-//            }
-
-//            var oldCoverImage = product.ProductImages!.FirstOrDefault(i => i.IsMain);
-//            if (oldCoverImage != null)
-//            {
-//                product.ProductImages!.Remove(oldCoverImage);
-//            }
-
-//            var newCoverImageName = await _fileService.SaveFileAsync(model.NewImageFile);
-//            product.ImageUrl = newCoverImageName;
-
-//            product.ProductImages!.Add(new ProductImage
-//            {
-//                ImageUrl = newCoverImageName,
-//                IsMain = true,
-//                IsSecondary= false,
-//                ProductId = product.Id
-//            });
-//        }
-
-//        if (model.NewProductImages != null && model.NewProductImages.Any())
-//        {
-//            foreach (var file in model.NewProductImages)
-//            {
-//                if (file != null && file.Length > 0)
-//                {
-//                    var imageName = await _fileService.SaveFileAsync(file);
-//                    product.ProductImages!.Add(new ProductImage
-//                    {
-//                        ImageUrl = imageName,
-//                        IsMain = false,
-//                        IsSecondary = false,
-//                        ProductId = product.Id
-//                    });
-//                }
-//            }
-//        }
-
-//        await Repository.UpdateAsync(product);
-//        return true;
-//    }
-
- 
 }
