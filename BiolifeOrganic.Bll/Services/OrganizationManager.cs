@@ -8,7 +8,7 @@ namespace BiolifeOrganic.Bll.Services;
 
 public class OrganizationManager : CrudManager<Organization, OrganizationViewModel, CreateOrganizationViewModel, UpdateOrganizationViewModel>, IOrganizationService
 {
-    public OrganizationManager(IOrganizationRepository respository, IMapper mapper) : base(respository, mapper)
+    public OrganizationManager(IOrganizationRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

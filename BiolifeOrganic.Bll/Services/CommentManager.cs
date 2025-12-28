@@ -8,7 +8,7 @@ namespace BiolifeOrganic.Bll.Services;
 
 public class CommentManager : CrudManager<Comment, CommentViewModel, CreateCommentViewModel, UpdateCommentViewModel>, ICommentService
 {
-    public CommentManager(ICommentRepository respository, IMapper mapper) : base(respository, mapper)
+    public CommentManager(ICommentRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

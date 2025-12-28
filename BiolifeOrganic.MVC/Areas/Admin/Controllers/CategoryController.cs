@@ -1,22 +1,25 @@
-﻿using BiolifeOrganic.Dll.DataContext;
-using BiolifeOrganic.Dll.DataContext.Entities;
+﻿using BiolifeOrganic.Bll.Services;
+using BiolifeOrganic.Bll.Services.Contracts;
+using BiolifeOrganic.Bll.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BiolifeOrganic.MVC.Areas.Admin.Controllers;
 
-
 public class CategoryController : AdminController
 {
-    private readonly AppDbContext _dbContext;
-    public CategoryController(AppDbContext dbContext)
+    private readonly ICategoryService _categoryService;
+    private readonly FileService _fileService;
+
+    public CategoryController(ICategoryService categoryService, FileService fileService)
     {
-        _dbContext = dbContext;
+        _categoryService = categoryService;
+        _fileService = fileService;
     }
+
     public async Task<IActionResult> Index()
     {
-        var categories = await _dbContext.Categories.ToListAsync();
-        
+        var categories = await _categoryService.GetAllCategoriesAsync();
+       
         return View(categories);
     }
 
@@ -27,82 +30,96 @@ public class CategoryController : AdminController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-
-    public async Task<IActionResult> Create(Category category)
+    public async Task<IActionResult> Create(CreateCategoryViewModel model)
     {
         if (!ModelState.IsValid)
+            return View(model);
+
+        if (model.ImageFile != null)
         {
-            return View();
+            if (!_fileService.IsImageFile(model.ImageFile))
+            {
+                ModelState.AddModelError("ImageFile", "File must be an image!");
+                return View(model);
+            }
+
+            if (model.ImageFile.Length > 1024 * 1024)
+            {
+                ModelState.AddModelError("ImageFile", "Image file size must be 1MB max!");
+                return View(model);
+            }
+
+            model.ImageUrl = _fileService.GetFileUrl("images/categories", await _fileService.SaveFileAsync(model.ImageFile, "wwwroot/images/categories"));
         }
 
-        if (!category.ImageFile!.ContentType.Contains("image")) 
-        {
-            ModelState.AddModelError("ImageFile", "Image must be choose!");
-            return View();
-        }
-
-        if(category.ImageFile.Length > 1024 * 1024)
-        {
-            ModelState.AddModelError("ImageFile", "Image file size must be 1mb !");
-            return View();
-        }
-
-        var existCategory = await _dbContext.Categories.FirstOrDefaultAsync(c => c.Name == category.Name);
-
-        if (existCategory != null)
-        {
-            ModelState.AddModelError("Name", "That category name is already exist!");
-            return View();
-        }
-
-        _dbContext.Categories.Add(category);
-        await _dbContext.SaveChangesAsync();
-
-        return RedirectToAction("Index");
+        await _categoryService.CreateAsync(model);
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Update(int id)
     {
-        var category = await _dbContext.Categories.FindAsync(id);
+        var category = await _categoryService.GetByIdAsync(id);
         if (category == null) return NotFound();
 
-        return View(category);
+        var updateModel = new UpdateCategoryViewModel
+        {
+            Id = category.Id,
+            Name = category.Name,
+            ImageUrl = category.ImageUrl,
+            CategoryIcon = category.CategoryIcon
+        };
+
+        return View(updateModel);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Update(int id, Category category)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Update(int id, UpdateCategoryViewModel model)
     {
-        if (!ModelState.IsValid) return View(category);
+        if (!ModelState.IsValid)
+            return View(model);
 
-        var existCategory = await _dbContext.Categories.FindAsync(id);
-        if (existCategory == null) return BadRequest();
-
-        var hasName = await _dbContext.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.Name == category.Name);
-
-        if (hasName != null)
+        if (model.ImageFile != null)
         {
-            ModelState.AddModelError("Name", "That category name is already exist!");
-            return View(category);
+            if (!_fileService.IsImageFile(model.ImageFile))
+            {
+                ModelState.AddModelError("ImageFile", "File must be an image!");
+                return View(model);
+            }
+
+            if (model.ImageFile.Length > 1024 * 1024)
+            {
+                ModelState.AddModelError("ImageFile", "Image file size must be 1MB max!");
+                return View(model);
+            }
+
+            model.ImageUrl = _fileService.GetFileUrl("images/categories", await _fileService.SaveFileAsync(model.ImageFile, "wwwroot/images/categories"));
         }
 
-        existCategory.Name = category.Name;
+        var result = await _categoryService.UpdateAsync(id, model);
+        if (!result)
+            return BadRequest();
 
-        _dbContext.Categories.Update(existCategory);
-
-        await _dbContext.SaveChangesAsync();
-
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var category = await _dbContext.Categories.FindAsync(id);
+        var result = await _categoryService.DeleteAsync(id);
+        if (!result) return NotFound();
+
+        return Ok();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var category = await _categoryService.GetCategoryWithProductsAsync(id);
+        
         if (category == null) return NotFound();
 
-        _dbContext.Categories.Remove(category);
-         await _dbContext.SaveChangesAsync();
-
-        return NoContent();
+        return View(category);
     }
+
 }

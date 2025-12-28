@@ -1,0 +1,71 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.WebContact
+@model UpdateWebContactViewModel
+
+<div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Web Contact</h4>
+
+            <form asp-area="Admin"
+                  asp-controller="WebContact"
+                  asp-action="Update"
+                  asp-route-id="@Model.Id"
+                  method="post"
+                  class="forms-sample">
+
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input asp-for="EmailAgree" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Address</label>
+                    <input asp-for="Address" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Schedule</label>
+                    <input asp-for="Schedule" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Type</label>
+                    <select asp-for="ContactOption" class="form-control">
+                        <option value="Web" selected="@Model.ContactOption == BiolifeOrganic.Dll.DataContext.Entities.ContactOption.Web">Web</option>
+                        <option value="Transport" selected="@Model.ContactOption == BiolifeOrganic.Dll.DataContext.Entities.ContactOption.Transport">Transport</option>
+                    </select>
+                </div>
+                <div class="form-check mb-3">
+                    <input asp-for="IsDefault"
+                           type="checkbox"
+                           class="form-check-input"
+                           id="isDefaultCheckbox" />
+
+                    <label class="form-check-label" for="isDefaultCheckbox">
+                        Set as Default
+                    </label>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary mr-2 mt-3">Update</button>
+                <a asp-action="Index" class="btn btn-light mt-3">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelector('input[name="EmailAgree"]').addEventListener('input', function () {
+        if(this.value.length > 100) this.value = this.value.substring(0,100);
+    });
+    document.querySelector('input[name="PhoneNumber"]').addEventListener('input', function () {
+        if(this.value.length > 20) this.value = this.value.substring(0,20);
+    });
+</script>

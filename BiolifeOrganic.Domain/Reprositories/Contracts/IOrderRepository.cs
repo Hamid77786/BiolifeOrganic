@@ -11,6 +11,7 @@ public interface IOrderRepository : IRepository<Order>
     Task<List<Order>> GetAllOrdersWithUserAsync();
     Task<Order?> GetOrderByIdWithDetailsAsync(int orderId);
     Task<bool> AnyAsync(Expression<Func<Order, bool>> predicate);
+    Task<bool> HasOrdersAsync(string userId);
 
 }
 

@@ -3,30 +3,29 @@
 
 @if (Model == null || !Model.Any())
 {
-    
-       
-  
-    
+
+
+
+
     <div>
         <h4>
             Your basket is empty!
         </h4>
         <p class="btn-control">
-            
+
             <a asp-controller="shop" asp-action="index" class="btn view-cart">Go to Shop</a>
-                    
+
         </p>
 
     </div>
-    
+
 }
 else
 {  
-    
-        @foreach (var item in Model)
-        {
-
-            <div>
+    @foreach(var item in Model)
+    {
+        <li>
+            <div class="minicart-item">
 
                 <div class="thumb">
                     <a asp-controller="shop" asp-action="detail" asp-route-id="@item.ProductId"><img src="~/images/products/@item.ProductImageUrl" width="90" height="90"></a>
@@ -60,16 +59,24 @@ else
                         <i class="fa fa-trash-o"></i>
                     </a>
                 </div>
-                
-                <p class="btn-control">
-
-                    <a asp-controller="basket" asp-action="index" class="btn view-cart">view cart</a>
-                    <a asp-controller="checkout" asp-action="index" class="btn">checkout</a>
-                </p>
-
 
             </div>
-        }
+        </li>
+
+
+    }
+     
+               
+           
+
+        
+            
+
+                
+               
+
+
+           
        
        
        

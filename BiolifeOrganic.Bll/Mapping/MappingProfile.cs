@@ -12,6 +12,7 @@ using BiolifeOrganic.Bll.ViewModels.WebContact;
 using BiolifeOrganic.Bll.ViewModels.Wishlist;
 using BiolifeOrganic.Bll.ViewModels.Basket;
 using BiolifeOrganic.Dll.DataContext.Entities;
+using BiolifeOrganic.Bll.ViewModels.Discount;
 
 
 namespace BiolifeOrganic.Bll.Mapping;
@@ -63,91 +64,90 @@ public class MappingProfile:Profile
         CreateMap<UpdateContactViewModel, Contact>().ReverseMap();
 
 
-       CreateMap<LogoViewModel, Logo>().ReverseMap();
-       CreateMap<CreateLogoViewModel, Logo>().ReverseMap();
       
-       CreateMap<CreateLogoViewModel, Logo>()
-              .ForMember(dest => dest.LogoUrl, opt => opt.Ignore());
-       
-       CreateMap<UpdateLogoViewModel, Logo>()
-            .ForMember(dest => dest.LogoUrl, opt => opt.Ignore());
+
+        CreateMap<Product, ProductViewModel>()
+                .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+                .ForMember(dest => dest.CategoryName,
+                    opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
+                .ForMember(dest => dest.ReviewCount,
+                    opt => opt.MapFrom(src => src.Reviews.Count))
+                .ForMember(dest => dest.AverageStars,
+                    opt => opt.MapFrom(src =>
+                        src.Reviews.Any()
+                            ? Math.Round(src.Reviews.Average(r => r.Stars), 1)
+                            : 0))
+                .ForMember(dest => dest.DiscountedPrice,
+                    opt => opt.MapFrom(src => src.DiscountedPrice));
+
+        CreateMap<CreateProductViewModel, Product>()
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.Reviews, opt => opt.Ignore())
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
+            .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
+            .ForMember(dest => dest.DiscountedPrice, opt => opt.Ignore());
+
+        CreateMap<Product, UpdateProductViewModel>()
+            .ForMember(dest => dest.ExistingImageUrl,
+                opt => opt.MapFrom(src => src.ImageUrl))
+            .ForMember(dest => dest.ExistingProductImages,
+                opt => opt.MapFrom(src =>
+                    src.ProductImages.Select(pi => new ProductImageViewModel
+                    {
+                        Id = pi.Id,
+                        ImageUrl = pi.ImageUrl,
+                        ProductId = src.Id
+                    }).ToList()))
+            .ForMember(dest => dest.NewImageFile, opt => opt.Ignore())
+            .ForMember(dest => dest.NewProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.ImagesToDelete, opt => opt.Ignore());
+
+        CreateMap<UpdateProductViewModel, Product>()
+            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.Reviews, opt => opt.Ignore())
+            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
+            .ForMember(dest => dest.DiscountedPrice, opt => opt.Ignore());
+
+        CreateMap<CreateLogoViewModel, Logo>()
+           .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.LogoUrl))
+           .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 
         
+        CreateMap<UpdateLogoViewModel, Logo>()
+            .ForMember(dest => dest.LogoUrl, opt => opt.MapFrom(src => src.ExistingLogoUrl))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 
-       
-       
+        
+        CreateMap<Logo, LogoViewModel>();
+
+        CreateMap<Discount, DiscountViewModel>();
+
+        CreateMap<CreateDiscountViewModel, Discount>();
+
+        CreateMap<UpdateDiscountViewModel, Discount>()
+            .ForMember(d => d.UserDiscounts, opt => opt.Ignore());
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         CreateMap<Organization, OrganizationViewModel>().ReverseMap();
         CreateMap<CreateOrganizationViewModel, Organization>()
             .ForMember(dest => dest.Id, opt => opt.Ignore());
         CreateMap<UpdateOrganizationViewModel, Organization>();
 
-        CreateMap<Product, ProductViewModel>()
-               .ForMember(dest => dest.CategoryName,
-                   opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
-               .ForMember(dest => dest.ProductImages,
-                   opt => opt.MapFrom(src => src.ProductImages.Select(pi => pi.ImageUrl).ToList()))
-               .ForMember(dest => dest.DiscountedPrice,
-                   opt => opt.MapFrom(src => src.DiscountedPrice));
-
-       
-         CreateMap<UpdateProductViewModel, Product>()
-            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
-            .ForMember(dest => dest.Category, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
-            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId != 0 ? src.CategoryId : 0))
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-        CreateMap<UpdateProductViewModel, Product>()
-            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
-            .ForMember(dest => dest.Category, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
-            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId != 0 ? src.CategoryId : 0))
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-        CreateMap<UpdateProductViewModel, Product>()
-            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
-            .ForMember(dest => dest.Category, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
-            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId != 0 ? src.CategoryId : 0))
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-        CreateMap<CreateProductViewModel, Product>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()) 
-            .ForMember(dest => dest.Category, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductImages, opt => opt.Ignore()) 
-            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
-            .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => false))
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore());
-
-       
-        CreateMap<UpdateProductViewModel, Product>()
-            .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()) 
-            .ForMember(dest => dest.Category, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductImages, opt => opt.Ignore()) 
-            .ForMember(dest => dest.OrderItems, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedAt, opt => opt.Ignore())
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId !=0 ? src.CategoryId : 0))
-            .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-
         
-        CreateMap<Product, UpdateProductViewModel>()
-            .ForMember(dest => dest.ExistingImageUrl,
-                opt => opt.MapFrom(src => src.ImageUrl))
-            .ForMember(dest => dest.NewImageFile, opt => opt.Ignore())
-            .ForMember(dest => dest.ExistingProductImages,
-                opt => opt.MapFrom(src => src.ProductImages.Select(pi => pi.ImageUrl).ToList()))
-            .ForMember(dest => dest.NewProductImages, opt => opt.Ignore());
-
         CreateMap<ProductImage, ProductImageViewModel>()
            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null));
 

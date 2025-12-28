@@ -1,10 +1,29 @@
-﻿@using BiolifeOrganic.Bll.ViewModels.Product
+﻿@using BiolifeOrganic.Bll.ViewModels.Category
+@using BiolifeOrganic.Bll.ViewModels.Product
 @using BiolifeOrganic.Dll.DataContext.Entities
 @model List<ProductViewModel>
+
+
 <div class="row">
     <div class="col-lg-6 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <input type="text" id="productSearch" class="form-control" placeholder="Search product..."
+                        oninput="searchProducts()" />
+                    </div>
+                    <div class="col-md-4">
+                        <select id="categoryFilter" class="form-control" onchange="searchProducts()">
+                            <option value="">All Categories</option>
+                            @foreach (var c in ViewBag.Categories as List<CategoryViewModel>)
+                            {
+                                <option value="@c.Id">@c.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
                 <h4 class="card-title">Products</h4>
                 <a class="btn btn-primary" asp-controller="Product" asp-action="create">
                     Add
@@ -19,7 +38,7 @@
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="productsBody">
                             @foreach (var item in Model ?? [])
                             {
                                 <tr>
@@ -41,19 +60,3 @@
         </div>
     </div>
 </div>
-<script>
-
-    function deleteProduct(id,element){
-        fetch(`/Admin/Product/Delete/${id}`,{
-           method:`Post`}).
-           then(response=>response.text()).
-           then(data=>{
-               element.parentNode.parentNode.remove();
-           })
-           .catch(err => {
-            console.error(err);
-            alert('Error for deleting!');
-
-        });
-    }
-</script>

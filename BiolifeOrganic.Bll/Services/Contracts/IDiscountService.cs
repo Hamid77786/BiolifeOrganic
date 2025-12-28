@@ -1,8 +1,9 @@
 ﻿using BiolifeOrganic.Bll.ViewModels.Discount;
+using BiolifeOrganic.Dll.DataContext.Entities;
 
 namespace BiolifeOrganic.Bll.Services.Contracts;
 
-public interface IDiscountService
+public interface IDiscountService : ICrudService<Discount, DiscountViewModel, CreateDiscountViewModel, UpdateDiscountViewModel>
 {
     Task<DiscountValidationResult> ValidateAsync(string code, string? userId, decimal totalAmount);
     Task MarkAsUsedAsync(int discountId, string userId);

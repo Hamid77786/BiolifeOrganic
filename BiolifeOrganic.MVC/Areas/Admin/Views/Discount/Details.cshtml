@@ -1,0 +1,44 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Discount
+@model DiscountViewModel
+
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Discount Details</h4>
+
+                <dl class="row">
+                    <dt class="col-sm-4">Code</dt>
+                    <dd class="col-sm-8">@Model.Code</dd>
+
+                    <dt class="col-sm-4">Percentage</dt>
+                    <dd class="col-sm-8">@Model.Percentage %</dd>
+
+                    <dt class="col-sm-4">Start Date</dt>
+                    <dd class="col-sm-8">@Model.StartDate.ToShortDateString()</dd>
+
+                    <dt class="col-sm-4">End Date</dt>
+                    <dd class="col-sm-8">@Model.EndDate.ToShortDateString()</dd>
+
+                    <dt class="col-sm-4">Only For New Users</dt>
+                    <dd class="col-sm-8">@Model.OnlyForNewUsers</dd>
+
+                    <dt class="col-sm-4">Only For Existing Users</dt>
+                    <dd class="col-sm-8">@Model.OnlyForExistingUsers</dd>
+
+                    <dt class="col-sm-4">Is Active</dt>
+                    <dd class="col-sm-8">@Model.IsActive</dd>
+
+                    <dt class="col-sm-4">Max Usage Count</dt>
+                    <dd class="col-sm-8">@Model.MaxUsageCount</dd>
+
+                    <dt class="col-sm-4">Used Count</dt>
+                    <dd class="col-sm-8">@Model.UsedCount</dd>
+                </dl>
+
+                <a class="btn btn-warning" asp-action="Update" asp-route-id="@Model.Id">Edit</a>
+                <a class="btn btn-primary" asp-action="Index">Back</a>
+            </div>
+        </div>
+    </div>
+</div>

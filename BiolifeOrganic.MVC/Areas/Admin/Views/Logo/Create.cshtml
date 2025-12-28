@@ -1,0 +1,16 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Logo
+@model CreateLogoViewModel
+
+<h4>Create Logo</h4>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label>Name</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label>Logo File</label>
+        <input asp-for="LogoFile" type="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

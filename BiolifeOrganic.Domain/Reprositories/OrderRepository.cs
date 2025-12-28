@@ -67,4 +67,8 @@ public class OrderRepository : EfCoreRepository<Order>, IOrderRepository
         return await _dbContext.Orders.AnyAsync(predicate);
     }
 
+    public async Task<bool> HasOrdersAsync(string userId)
+       => await _dbContext.Orders
+           .AnyAsync(o => o.AppUserId == userId && !o.IsDeleted);
+
 }

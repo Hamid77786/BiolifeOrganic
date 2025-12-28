@@ -1,0 +1,15 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Product
+@model List<ProductViewModel>
+
+@foreach (var item in Model ?? [])
+{
+        <tr>
+            <td><img src="~/images/products/@item.ImageUrl" width="100" height="100" /></td>
+            <td>@item.Name</td>
+            <td>
+                <a class="btn btn-primary" asp-controller="product" asp-action="details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-warning" asp-controller="product" asp-action="update" asp-route-id="@item.Id">Update</a>
+                <a class="btn btn-danger" onclick="deleteProduct(@item.Id,this)">Delete</a>
+            </td>
+        </tr>
+}

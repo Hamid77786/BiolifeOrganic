@@ -1,5 +1,6 @@
 ﻿using BiolifeOrganic.Bll.Services;
 using BiolifeOrganic.Bll.Services.Contracts;
+using BiolifeOrganic.Bll.ViewModels.Category;
 using BiolifeOrganic.Bll.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,16 @@ public class ProductController : AdminController
     public async Task<IActionResult> Index()
     {
         var products = await _productService.GetAllAsync();
+
+        var categories = await _categoryService.GetAllAsync(c => !c.IsDeleted);
+        ViewBag.Categories = categories
+            .Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Name = c.Name
+            })
+            .ToList();
+
 
         return View(products);
     }
@@ -66,7 +77,7 @@ public class ProductController : AdminController
             Description = product.Description,
             AdditionalInformation = product.AdditionalInformation,
             ExistingImageUrl = product.ImageUrl,
-            QuantityAvailable = product.QuantityAvailable,
+            Stock = product.QuantityAvailable,
             IsAvailable = product.IsAvailable,
             IsBestSeller = product.IsBestSeller,
             IsRated = product.IsRated,
@@ -94,21 +105,62 @@ public class ProductController : AdminController
                 await _categoryService.GetCategorySelectListItemsAsync();
             return View(model);
         }
+        try
+        {
+            var result = await _productService.UpdateProductAsync(id, model);
 
-        var result = await _productService.UpdateAsync(id, model);
-        if (!result)
-            return NotFound();
+            if (!result)
+                return NotFound();
 
-        return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception ex)
+        {
+            
+            ModelState.AddModelError("", "Error updating product: " + ex.Message);
+            model.CategorySelectListItems = await _categoryService.GetCategorySelectListItemsAsync();
+            return View(model);
+        }
+
+
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var product = await _productService.GetByIdWithDetailsAsync(id);
+
+        return View(product);
+    }
+
+    
 
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var result = await _productService.DeleteAsync(id);
+        var result = await _productService.DeleteProductAndImagesAsync(id);
         if (!result)
             return NotFound();
 
         return Ok();
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Search(string? text, int? categoryId)
+    {
+        var products = await _productService.GetAllAsync(p =>
+            (string.IsNullOrEmpty(text) || p.Name.Contains(text)) &&
+            (!categoryId.HasValue || p.CategoryId == categoryId.Value)
+        );
+
+        var result = products.Select(p => new ProductViewModel
+        {
+            Id = p.Id,
+            Name = p.Name,
+            ImageUrl = p.ImageUrl
+        }).ToList();
+
+        return PartialView("_ProductTableBody", result);
+    }
+
 }

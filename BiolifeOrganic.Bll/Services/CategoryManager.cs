@@ -5,28 +5,45 @@ using BiolifeOrganic.Bll.ViewModels.Category;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace BiolifeOrganic.Bll.Services
 {
     public class CategoryManager : CrudManager<Category, CategoryViewModel, CreateCategoryViewModel, UpdateCategoryViewModel>, ICategoryService
     {
-        private readonly FileService _fileService;
-        public CategoryManager(ICategoryRepository respository, IMapper mapper,FileService fileService) : base(respository, mapper)
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
+        public CategoryManager(ICategoryRepository repository, IMapper mapper) : base(repository, mapper)
         {
-            _fileService = fileService;
+            _categoryRepository = repository;
+            _mapper = mapper;
+            
         }
 
-       
-
-        public override async Task CreateAsync(CreateCategoryViewModel createViewModel)
+        public async Task<CategoryViewModel?> GetCategoryWithProductsAsync(int id)
         {
-            if (createViewModel.ImageFile != null)
-            {
-                createViewModel.ImageUrl = await _fileService.GenerateFile(createViewModel.ImageFile, FilePathConstants.CategoryImagePath);
-            }
-            await base.CreateAsync(createViewModel);
+            var category = await _categoryRepository.GetAsync(
+                c => c.Id == id,
+                include: q => q.Include(c => c.Products)
+            );
+            
+            if (category == null) return null;
+
+            var categoryViewModel = _mapper.Map<CategoryViewModel>(category);
+
+            return categoryViewModel;
         }
 
+        public async Task<List<CategoryViewModel>> GetAllCategoriesAsync()
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+
+            if (categories == null) return new List<CategoryViewModel>();
+
+            var categoryViewModels = _mapper.Map<List<CategoryViewModel>>(categories);
+
+            return categoryViewModels;
+        }
         public async Task<List<SelectListItem>> GetCategorySelectListItemsAsync()
         {
             var categories = await GetAllAsync(predicate: x => !x.IsDeleted);
@@ -38,28 +55,18 @@ namespace BiolifeOrganic.Bll.Services
             }).ToList();
         }
 
-        public override async Task<bool> UpdateAsync(int id, UpdateCategoryViewModel model)
-        {
-            if (model.ImageFile != null)
-            {
-                var oldImageName = model.ImageUrl;
 
-                model.ImageUrl = await _fileService.GenerateFile(
-                    model.ImageFile,
-                    FilePathConstants.CategoryImagePath
-                );
 
-                if (!string.IsNullOrEmpty(oldImageName))
-                {
-                    var oldFilePath = Path.Combine(FilePathConstants.CategoryImagePath, oldImageName);
-                    if (System.IO.File.Exists(oldFilePath))
-                    {
-                        System.IO.File.Delete(oldFilePath);
-                    }
-                }
-            }
+           
 
-            return await base.UpdateAsync(id, model);
-        }
+
+
+
+
+
+
+
+
+      
     }
 }

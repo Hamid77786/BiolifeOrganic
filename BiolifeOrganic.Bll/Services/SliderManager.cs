@@ -8,7 +8,7 @@ namespace BiolifeOrganic.Bll.Services;
 
 public class SliderManager : CrudManager<Slider, SliderViewModel, CreateSliderViewModel, UpdateSliderViewModel>, ISliderService
 {
-    public SliderManager(ISliderRepository respository, IMapper mapper) : base(respository, mapper)
+    public SliderManager(ISliderRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

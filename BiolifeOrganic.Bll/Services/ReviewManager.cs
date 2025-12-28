@@ -13,7 +13,7 @@ namespace BiolifeOrganic.Bll.Services;
 public class ReviewManager : CrudManager<Review, ReviewViewModel, CreateReviewViewModel, UpdateReviewViewModel>, IReviewService
 {
     private readonly AppDbContext _dbContext;
-    public ReviewManager(AppDbContext dbContext ,IReviewRepository respository, IMapper mapper) : base(respository, mapper)
+    public ReviewManager(AppDbContext dbContext ,IReviewRepository repository, IMapper mapper) : base(repository, mapper)
     {
         _dbContext = dbContext;
        

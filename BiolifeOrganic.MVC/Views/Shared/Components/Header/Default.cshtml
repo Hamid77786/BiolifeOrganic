@@ -8,11 +8,10 @@
         <div class="container">
             <div class="top-bar left">
                 <ul class="horizontal-menu">
-                    @foreach(var contact in Model.WebContacts)
-                    {
-                        <li><a asp-controller="contact" asp-action="index"><i class="fa fa-envelope" aria-hidden="true"></i>@contact.EmailAgree</a></li>
+                    
+                        <li><a asp-controller="contact" asp-action="index"><i class="fa fa-envelope" aria-hidden="true"></i>@Model.WebContacts!.EmailAgree</a></li>
 
-                    }
+                   
                 </ul>
             </div>
             <div class="top-bar right">
@@ -93,7 +92,7 @@
                 @foreach(var log in Model.Logos)
                 {
                     <div class="col-lg-3 col-md-2 col-md-6 col-xs-6">
-                        <a asp-controller="home" asp-action="index" class="biolife-logo"><img src="~/images/@log.Name" alt="biolife logo" width="135" height="34"></a>
+                        <a asp-controller="home" asp-action="index" class="biolife-logo"><img src="~/images/logos/@log.LogoUrl" alt="biolife logo" width="135" height="34"></a>
                     </div>
                 }
 
@@ -152,8 +151,15 @@
                                             
                                           
                                         </ul>
+                                        <p class="btn-control">
+
+                                            <a asp-controller="basket" asp-action="index" class="btn view-cart">view cart</a>
+                                            <a asp-controller="checkout" asp-action="index" class="btn">checkout</a>
+                                        </p>
+                                       
                                        
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -192,11 +198,11 @@
 
                     </div>
                     <div class="live-info">
-                        @foreach(var wc in Model.WebContacts)
-                        {
-                            <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">@wc.PhoneNumber</b></p>
-                            <p class="working-time">@wc.Schedule</p>
-                        }
+                        
+                       
+                            <p class="telephone"><i class="fa fa-phone" aria-hidden="true"></i><b class="phone-number">@Model.WebContacts!.PhoneNumber</b></p>
+                            <p class="working-time">@Model.WebContacts.Schedule</p>
+                       
                         
                     </div>
                 </div>

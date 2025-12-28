@@ -1,48 +1,34 @@
-﻿using BiolifeOrganic.Bll.Services.Contracts;
+﻿
+using AutoMapper;
+using BiolifeOrganic.Bll.Services.Contracts;
+using BiolifeOrganic.Bll.Services;
 using BiolifeOrganic.Bll.ViewModels.Discount;
-using BiolifeOrganic.Dll.DataContext;
 using BiolifeOrganic.Dll.DataContext.Entities;
-using Microsoft.EntityFrameworkCore;
+using BiolifeOrganic.Dll.DataContext;
+using BiolifeOrganic.Dll.Reprositories.Contracts;
 
-namespace BiolifeOrganic.Bll.Services;
 
-public class DiscountManager : IDiscountService
+
+public class DiscountManager : CrudManager<Discount, DiscountViewModel, CreateDiscountViewModel, UpdateDiscountViewModel>, IDiscountService
 {
+    private readonly IDiscountRepository _discountRepository;
+    private readonly IUserDiscountRepository _userDiscountRepository;
+    private readonly IOrderRepository _orderRepository;
     private readonly AppDbContext _context;
 
-    public DiscountManager(AppDbContext context)
+    public DiscountManager(
+        IDiscountRepository discountRepository,
+        IUserDiscountRepository userDiscountRepository,
+        IOrderRepository orderRepository,
+        AppDbContext context,
+        IMapper mapper)
+        : base(discountRepository, mapper)
     {
+        _discountRepository = discountRepository;
+        _userDiscountRepository = userDiscountRepository;
+        _orderRepository = orderRepository;
         _context = context;
     }
-
-    public async Task MarkAsUsedAsync(int discountId, string userId)
-    {
-        var existing = await _context.UserDiscounts
-            .FirstOrDefaultAsync(x => x.AppUserId == userId && x.DiscountId == discountId);
-
-        if (existing != null)
-        {
-            existing.IsUsed = true;
-            existing.UsedAt = DateTime.UtcNow;
-        }
-        else
-        {
-            _context.UserDiscounts.Add(new UserDiscount
-            {
-                AppUserId = userId,
-                DiscountId = discountId,
-                IsUsed = true,
-                UsedAt = DateTime.UtcNow
-            });
-        }
-
-        var discount = await _context.Discounts.FindAsync(discountId);
-        if (discount != null)
-            discount.UsedCount++;
-
-        await _context.SaveChangesAsync();
-    }
-
 
     private DiscountValidationResult Invalid(string error)
         => new() { IsValid = false, Error = error };
@@ -52,40 +38,26 @@ public class DiscountManager : IDiscountService
         if (string.IsNullOrWhiteSpace(code))
             return Invalid("No discount code provided");
 
-        var now = DateTime.UtcNow;
-
-        var discount = await _context.Discounts
-            .FirstOrDefaultAsync(x =>
-                x.Code == code &&
-                x.IsActive &&
-                x.StartDate <= now &&
-                x.EndDate >= now);
+        var discount = await _discountRepository
+            .GetValidByCodeAsync(code, DateTime.UtcNow);
 
         if (discount == null)
             return Invalid("Invalid discount code");
 
-        if (discount.MaxUsageCount.HasValue && discount.UsedCount >= discount.MaxUsageCount)
+        if (discount.MaxUsageCount.HasValue &&
+            discount.UsedCount >= discount.MaxUsageCount)
             return Invalid("Discount limit reached");
 
         if (!string.IsNullOrEmpty(userId))
         {
             if (discount.OnlyForNewUsers)
             {
-                var userDiscount = await _context.UserDiscounts
-                    .FirstOrDefaultAsync(x => x.AppUserId == userId && x.DiscountId == discount.Id);
-
-                if (userDiscount != null && userDiscount.IsUsed)
-                    return Invalid("Discount already used");
-
-                bool hasOrders = await _context.Orders
-                    .AnyAsync(o => o.AppUserId == userId && !o.IsDeleted);
-
-                if (hasOrders)
+                if (await _orderRepository.HasOrdersAsync(userId))
                     return Invalid("Discount only for new users");
 
-                if (userDiscount == null)
+                if (!await _userDiscountRepository.ExistsAsync(userId, discount.Id))
                 {
-                    _context.UserDiscounts.Add(new UserDiscount
+                    await _userDiscountRepository.AddAsync(new UserDiscount
                     {
                         AppUserId = userId,
                         DiscountId = discount.Id,
@@ -96,14 +68,10 @@ public class DiscountManager : IDiscountService
                 }
             }
 
-            if (discount.OnlyForExistingUsers)
+            if (discount.OnlyForExistingUsers &&
+                !await _orderRepository.HasOrdersAsync(userId))
             {
-                bool hasOrders = await _context.Orders
-                    .AnyAsync(o => o.AppUserId == userId && !o.IsDeleted);
-
-                if (!hasOrders)
-                    return Invalid("Discount only for existing users");
-
+                return Invalid("Discount only for existing users");
             }
         }
 
@@ -115,28 +83,25 @@ public class DiscountManager : IDiscountService
         };
     }
 
+    public async Task MarkAsUsedAsync(int discountId, string userId)
+    {
+        await _userDiscountRepository.MarkAsUsedAsync(userId, discountId);
+        await _discountRepository.IncrementUsedCountAsync(discountId);
+        await _context.SaveChangesAsync();
+    }
 
-
-
-    
     public async Task AssignWelcomeDiscountAsync(string userId)
     {
-        var discount = await _context.Discounts.FirstOrDefaultAsync(x =>
-            x.Code == "WELCOME15" &&
-            x.IsActive &&
-            x.StartDate <= DateTime.UtcNow &&
-            x.EndDate >= DateTime.UtcNow);
+        var discount = await _discountRepository
+            .GetValidByCodeAsync("WELCOME15", DateTime.UtcNow);
 
         if (discount == null)
             return;
 
-        bool alreadyAssigned = await _context.UserDiscounts
-            .AnyAsync(x => x.AppUserId == userId && x.DiscountId == discount.Id);
-
-        if (alreadyAssigned)
+        if (await _userDiscountRepository.ExistsAsync(userId, discount.Id))
             return;
 
-        _context.UserDiscounts.Add(new UserDiscount
+        await _userDiscountRepository.AddAsync(new UserDiscount
         {
             AppUserId = userId,
             DiscountId = discount.Id,
@@ -145,5 +110,5 @@ public class DiscountManager : IDiscountService
 
         await _context.SaveChangesAsync();
     }
-
 }
+

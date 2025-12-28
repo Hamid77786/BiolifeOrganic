@@ -25,7 +25,7 @@ public class HeaderManager : IHeaderService
     {
         var categories = await _categoryService.GetAllAsync(c => c.IsDeleted == false);
         var logos = await _logoService.GetAllAsync();
-        var webContacts = await _webContactService.GetAllAsync(c => c.IsDefault == true);
+        var webContacts = (await _webContactService.GetAllAsync(c => c.IsDefault == true)).FirstOrDefault();
         var basketItems = await _basketManager.GetBasketAsync();
         var wishlistItems = await _wishlistService.GetAllAsync();
 
@@ -37,7 +37,7 @@ public class HeaderManager : IHeaderService
         {
             Categories = categories.ToList(),
             Logos = logos.ToList(),
-            WebContacts = webContacts.ToList(),
+            WebContacts = webContacts,
             Items = basketItems.Items,
             WishItems = wishlistItemViewModels
         };

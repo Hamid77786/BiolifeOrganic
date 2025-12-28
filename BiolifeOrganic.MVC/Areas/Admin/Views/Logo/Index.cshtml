@@ -1,0 +1,64 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Logo
+@model List<LogoViewModel>
+
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Logos</h4>
+                <a class="btn btn-primary mb-3" asp-controller="Logo" asp-action="Create">Add New Logo</a>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logosBody">
+                            @foreach (var logo in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(logo.LogoUrl))
+                                        {
+                                            <img src="~/images/logos/@logo.LogoUrl" width="100" height="100" />
+                                        }
+                                    </td>
+                                    <td>@logo.Name</td>
+                                    <td>
+                                        <a class="btn btn-warning" asp-action="Update" asp-route-id="@logo.Id">Update</a>
+                                        <button class="btn btn-danger" onclick="deleteLogo(@logo.Id, this)">Delete</button>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteLogo(id, element) {
+        if (!confirm("Are you sure you want to delete this logo?")) return;
+
+        fetch(`/Admin/Logo/Delete/${id}`, {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Delete failed");
+           
+            element.closest('tr').remove();
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Error deleting logo!');
+        });
+    }
+</script>
+
+

@@ -8,7 +8,7 @@ namespace BiolifeOrganic.Bll.Services;
 
 public class LogoManager : CrudManager<Logo, LogoViewModel, CreateLogoViewModel, UpdateLogoViewModel>, ILogoService
 {
-    public LogoManager(ILogoRepository respository, IMapper mapper) : base(respository, mapper)
+    public LogoManager(ILogoRepository repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

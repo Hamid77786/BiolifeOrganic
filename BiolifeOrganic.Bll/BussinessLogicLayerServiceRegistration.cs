@@ -27,11 +27,13 @@ public static class BussinessLogicLayerServiceRegistration
         services.AddScoped<IEmailService, EmailManager>();
         services.AddScoped<ISearchService, SearchManager>();
         services.AddScoped<IHeaderService, HeaderManager>();
+        services.AddScoped<IFooterService, FooterManager>();
         services.AddScoped<BasketManager>();
         services.AddScoped<IShopService, ShopManager>();
         services.AddScoped<INewsletterService, NewsletterManager>();
         services.AddScoped<ICheckoutService, CheckoutManager>();
         services.AddScoped<IDiscountService,DiscountManager>();
+        services.AddScoped<IUserDiscountService, UserDiscountManager>();
 
         return services;
     }

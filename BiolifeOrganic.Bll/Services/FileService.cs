@@ -54,19 +54,18 @@ public class FileService
         return $"{webPath}/{fileName}";
     }
 
+    public void DeleteFile(string folder, string fileName)
+{
+    if (string.IsNullOrEmpty(fileName))
+        return;
+
+    var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+    var filePath = Path.Combine(wwwrootPath, folder, fileName);
+
+    if (File.Exists(filePath))
+        File.Delete(filePath);
+}
 
 
-    public void DeleteFile(string fileName)
-    {
-        if (string.IsNullOrEmpty(fileName))
-            return;
-
-        var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-        var filePath = Path.Combine(wwwrootPath, "images", "products", fileName);
-
-        if (File.Exists(filePath))
-        {
-            File.Delete(filePath);
-        }
-    }
+   
 }

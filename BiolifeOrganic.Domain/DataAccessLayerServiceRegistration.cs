@@ -34,6 +34,8 @@ public static class DataAccessLayerServiceRegistration
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<INewsletterSubscriberRepository, NewsletterSubscriberRepository>();
         services.AddScoped<IAdminContactRepository, AdminContactRepository>();
+        services.AddScoped<IDiscountRepository, DiscountRepository>();
+        services.AddScoped<IUserDiscountRepository, UserDiscountRepository>();
 
 
 

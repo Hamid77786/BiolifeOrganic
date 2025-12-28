@@ -3,13 +3,10 @@ using BiolifeOrganic.Dll.DataContext.Entities;
 
 namespace BiolifeOrganic.Bll.Services.Contracts;
 
-public interface IProductService : ICrudService<Product, ProductViewModel, CreateProductViewModel, UpdateProductViewModel>
+public interface IProductService:ICrudService<Product,ProductViewModel,CreateProductViewModel,UpdateProductViewModel>
 {
-
-    IQueryable<Product> GetProductsQuery(
-       string? priceFilter = null,
-       string? availabilityFilter = null
-   );
-   Task<ProductViewModel?> GetByIdWithDetailsAsync(int id);
+    IQueryable<Product> GetProductsQuery(string? priceFilter = null, string? availabilityFilter = null);
+    Task<ProductViewModel?> GetByIdWithDetailsAsync(int id);
+    Task<bool> DeleteProductAndImagesAsync(int id);
+    Task<bool> UpdateProductAsync(int id, UpdateProductViewModel model);
 }
-

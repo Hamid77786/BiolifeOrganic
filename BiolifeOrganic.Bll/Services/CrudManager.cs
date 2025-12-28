@@ -13,9 +13,9 @@ where TEntity : Entity
     protected readonly IRepository<TEntity> Repository;
     protected readonly IMapper Mapper;
 
-    public CrudManager(IRepository<TEntity> respository, IMapper mapper)
+    public CrudManager(IRepository<TEntity> repository, IMapper mapper)
     {
-        Repository = respository;
+        Repository = repository;
         Mapper = mapper;
     }
 

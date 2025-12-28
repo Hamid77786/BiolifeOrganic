@@ -16,19 +16,15 @@ public class WishlistManager : CrudManager<Wishlist, WishlistViewModel, CreateWi
     private readonly IMapper _mapper;
     private readonly AppDbContext _dbContext;
 
-    public WishlistManager(AppDbContext dbContext,IWishlistRepository respository,IProductRepository productRepository, IMapper mapper) : base(respository, mapper)
+    public WishlistManager(AppDbContext dbContext,IWishlistRepository repository,IProductRepository productRepository, IMapper mapper) : base(repository, mapper)
     {
-        _wishlistRepository = respository;
+        _wishlistRepository = repository;
         _productRepository = productRepository;
         _mapper = mapper;
         _dbContext = dbContext;
     }
 
-    public async Task AddAsync(string userId, int productId)
-    {
-        await _wishlistRepository.AddAsync(userId, productId);
-
-    }
+   
 
    
 
@@ -42,21 +38,8 @@ public class WishlistManager : CrudManager<Wishlist, WishlistViewModel, CreateWi
         return items.Count;
     }
 
-    public async Task<bool> IsProductInWishlistAsync(int productId, string? userId)
-    {
-        var item = await Repository.GetAsync(
-               predicate: w => w.ProductId == productId && w.AppUserId == userId && !w.IsDeleted,
-               AsNoTracking: true
-           );
 
-        return item != null;
-    }
-
-    public async Task RemoveAsync(string userId, int productId)
-    {
-        await _wishlistRepository.RemoveAsync(userId, productId);
-
-    }
+   
 
     public async Task<bool> RemoveFromWishlistAsync(int productId, string? userId)
     {

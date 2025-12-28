@@ -12,7 +12,7 @@ namespace BiolifeOrganic.Bll.ViewModels.Header;
 public class HeaderViewModel
 {
     public List<CategoryViewModel> Categories { get; set; } = [];
-    public List<WebContactViewModel> WebContacts { get; set; } = [];
+    public WebContactViewModel? WebContacts { get; set; }
     public List<LogoViewModel> Logos { get; set; } = [];
     public List<BasketItemViewModel> Items { get; set; } = [];
     public List<WishlistItemViewModel> WishItems { get; set; } = [];

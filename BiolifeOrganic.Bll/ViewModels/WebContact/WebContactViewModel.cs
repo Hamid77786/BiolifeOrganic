@@ -9,6 +9,7 @@ public class WebContactViewModel
     public string? PhoneNumber { get; set; }
     public string? Address { get; set; }
     public string? Schedule { get; set; }
+    public bool IsDefault { get; set; }
     public ContactOption ContactOption { get; set; }
 }
 public class CreateWebContactViewModel
@@ -17,6 +18,7 @@ public class CreateWebContactViewModel
     public string? PhoneNumber { get; set; }
     public string? Address { get; set; }
     public string? Schedule { get; set; }
+    public bool IsDefault { get; set; }
     public ContactOption ContactOption { get; set; }
 }
 public class UpdateWebContactViewModel
@@ -26,6 +28,7 @@ public class UpdateWebContactViewModel
     public string? PhoneNumber { get; set; }
     public string? Address { get; set; }
     public string? Schedule { get; set; }
+    public bool IsDefault { get; set; }
     public ContactOption ContactOption { get; set; }
 }
 

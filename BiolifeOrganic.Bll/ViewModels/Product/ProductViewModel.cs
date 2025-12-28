@@ -1,4 +1,5 @@
 ﻿using BiolifeOrganic.Bll.ViewModels.Category;
+using BiolifeOrganic.Bll.ViewModels.ProductImage;
 using BiolifeOrganic.Bll.ViewModels.Review;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,12 +12,12 @@ public class ProductViewModel
     public string? Name { get; set; }
     public decimal OriginalPrice { get; set; }
     public decimal DiscountedPrice { get; set; }
-
     public string? Description { get; set; }
     public string? AdditionalInformation { get; set; }
     public string? ImageUrl { get; set; }
 
     public int QuantityAvailable { get; set; }
+    public int Stock {  get; set; }
     public bool IsRelated {  get; set; }
     public bool IsInWishlist { get; set; }
     public bool IsBestSeller { get; set; }
@@ -35,7 +36,7 @@ public class ProductViewModel
     public string? CategoryName { get; set; }
     public List<ReviewViewModel> Reviews { get; set; } = [];
     public List<CategoryViewModel> Categories { get; set; } = [];
-    public List<string> ProductImages { get; set; } = [];
+    public List<ProductImageViewModel> ProductImages { get; set; } = [];
 
 }
 
@@ -82,11 +83,10 @@ public class UpdateProductViewModel
     public string? ExistingImageUrl { get; set; }
     public IFormFile? NewImageFile { get; set; }
 
-    public List<string> ExistingProductImages { get; set; } = [];
+    public List<ProductImageViewModel> ExistingProductImages { get; set; } = [];
     public List<IFormFile>? NewProductImages { get; set; }
-    public List<string>? ImagesToDelete { get; set; }
+    public List<int>? ImagesToDelete { get; set; }
 
-    public int QuantityAvailable { get; set; }
     public int Stock { get; set; }
 
     public bool IsBestSeller { get; set; }
