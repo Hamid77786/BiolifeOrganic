@@ -19,13 +19,15 @@ public class OrderManager : IOrderService
     private readonly IContactRepository _contactRepository;
     private readonly IDiscountService _discountService;
     private readonly IUserService _userService;
-    public OrderManager(IUserService userService, IDiscountService discountService,BasketManager basketManager, IContactRepository contactRepository, IOrderRepository respository)
+    private readonly IMapper _mapper;
+    public OrderManager(IMapper mapper,IUserService userService, IDiscountService discountService,BasketManager basketManager, IContactRepository contactRepository, IOrderRepository respository)
     { 
         _basketManager = basketManager;
         _orderRepository = respository;
         _contactRepository = contactRepository;
         _discountService = discountService;
         _userService = userService;
+        _mapper = mapper;
     }
 
     public async Task<List<OrderListViewModel>> GetUserOrdersAsync(string userId)
@@ -219,60 +221,16 @@ public class OrderManager : IOrderService
 
         return order.Id;
     }
+    public async Task<OrderDetailsViewModel?> GetOrderDetailsForUserAsync(int orderId)
+    {
+        var order = await _orderRepository.GetOrderDetailsAsync(orderId);
+        return order == null ? null : _mapper.Map<OrderDetailsViewModel>(order);
+    }
 
    
-    public async Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusViewModel model)
-    {
-        var order = await _orderRepository.GetAsync(o => o.Id == model.Id);
-
-        if (order == null)
-            return false;
-
-        if (!Enum.TryParse<OrderStatus>(model.Status, out var status))
-            return false;
-        var oldStatus = order.Status;
-
-        order.Status = Enum.Parse<OrderStatus>(model.Status);
-
-
-        switch (order.Status)
-        {
-            case OrderStatus.Processing:
-                if (!order.ProcessingStartedDate.HasValue)
-                    order.ProcessingStartedDate = DateTime.UtcNow;
-                break;
-
-            case OrderStatus.InProgress:
-                if (!order.PackagedDate.HasValue)
-                    order.PackagedDate = DateTime.UtcNow;
-                break;
-
-            case OrderStatus.Shipped:
-                if (!order.ShippedDate.HasValue)
-                    order.ShippedDate = DateTime.UtcNow;
-
-                order.CourierService = model.CourierService;
-                order.TrackingNumber = model.TrackingNumber;
-                order.Warehouse = model.Warehouse;
-                order.EstimatedDeliveryDate = model.EstimatedDeliveryDate ?? DateTime.UtcNow.AddDays(3);
-                break;
-
-            case OrderStatus.Completed:
-                if (!order.DeliveredDate.HasValue)
-                    order.DeliveredDate = DateTime.UtcNow;
-                break;
-        }
-
-        await _orderRepository.UpdateAsync(order);
-        return true;
-    }
     
-    public async Task<bool> HasOrdersAsync(string userId)
-    {
-        return await _orderRepository.AnyAsync(o =>
-            o.AppUserId == userId &&
-            !o.IsDeleted);
-    }
+
+
 
 
 

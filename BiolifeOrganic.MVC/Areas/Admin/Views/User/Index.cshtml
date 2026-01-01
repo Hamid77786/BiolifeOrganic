@@ -8,75 +8,63 @@
                 <h4 class="card-title">Users</h4>
 
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Photo</th>
-                                <th>Full Name</th>
+                                <th>User Name</th>
                                 <th>Email</th>
                                 <th>Orders</th>
                                 <th>Wishlist</th>
                                 <th>Discounts</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            @foreach (var user in Model ?? [])
+                            @foreach (var user in Model ?? new List<UserViewModel>())
                             {
                                 <tr>
                                     <td>
                                         <img src="~/images/profiles/@(user.ProfileImagePath ?? "default.png")"
-                                             width="50" height="50"
-                                             style="border-radius:50%" />
+                                             width="50" height="50" style="border-radius:50%" />
                                     </td>
-
                                     <td>@user.UserName</td>
                                     <td>@user.Email</td>
-
                                     <td>@user.OrdersCount</td>
                                     <td>@user.WishlistCount</td>
                                     <td>@user.UserDiscountsCount</td>
-
                                     <td>
-                                        @if (user.IsBlocked)
-                                        {
-                                            <span class="badge badge-danger">Blocked</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-success">Active</span>
-                                        }
+                                        <span class="badge @(user.IsBlocked ? "badge-danger" : "badge-success")">
+                                            @(user.IsBlocked ? "Blocked" : "Active")
+                                        </span>
                                     </td>
-
                                     <td>
-                                        <a class="btn btn-info btn-sm"
+                                        <a class="btn btn-info btn-sm mb-1"
                                            asp-controller="User"
                                            asp-action="Details"
                                            asp-route-id="@user.Id">
                                             Details
                                         </a>
 
-                                        @if (user.IsBlocked)
-                                        {
-                                            <button class="btn btn-success btn-sm"
-                                                    onclick="toggleBlock('@user.Id', this)">
-                                                Unblock
-                                            </button>
-                                        }
-                                        else
-                                        {
-                                            <button class="btn btn-warning btn-sm"
-                                                    onclick="toggleBlock('@user.Id', this)">
-                                                Block
-                                            </button>
-                                        }
+                                        <button class="btn btn-sm mb-1 @(user.IsBlocked ? "btn-success" : "btn-warning")"
+                                                onclick="toggleBlock('@user.Id')">
+                                            @(user.IsBlocked ? "Unblock" : "Block")
+                                        </button>
+
+                                        <button class="btn btn-danger btn-sm mb-1"
+                                                onclick="deleteUser('@user.Id', '@user.UserName')">
+                                            Delete
+                                        </button>
+
+                                        <button class="btn btn-secondary btn-sm mb-1"
+                                                onclick="toggleAdmin('@user.Id')">
+                                            @(user.IsAdmin ? "Revoke Admin" : "Make Admin")
+                                        </button>
                                     </td>
                                 </tr>
                             }
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -85,14 +73,32 @@
 </div>
 
 <script>
-    function toggleBlock(userId, element) {
-        fetch(`/Admin/User/ToggleBlock/${userId}`, {
-            method: 'POST'
-        })
-        .then(() => location.reload())
-        .catch(err => {
-            console.error(err);
-            alert('Error!');
-        });
+    function toggleBlock(userId) {
+        fetch(`/Admin/User/ToggleBlock/${userId}`, { method: 'POST' })
+            .then(() => location.reload())
+            .catch(err => {
+                console.error(err);
+                alert('Error toggling block status!');
+            });
+    }
+
+    function deleteUser(userId, userName) {
+        if (!confirm(`Are you sure you want to delete user "${userName}" and all their data?`)) return;
+
+        fetch(`/Admin/User/Delete/${userId}`, { method: 'POST' })
+            .then(() => location.reload())
+            .catch(err => {
+                console.error(err);
+                alert('Error deleting user!');
+            });
+    }
+
+    function toggleAdmin(userId) {
+        fetch(`/Admin/User/ToggleAdminRole/${userId}`, { method: 'POST' })
+            .then(() => location.reload())
+            .catch(err => {
+                console.error(err);
+                alert('Error toggling admin role!');
+            });
     }
 </script>

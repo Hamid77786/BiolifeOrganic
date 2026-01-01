@@ -10,8 +10,7 @@ public interface IOrderService
     Task<List<OrderListViewModel>> GetUserOrdersAsync(string userId);
     Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId);
     Task<int> PlaceOrderAsync(string userId, CheckoutViewModel model);
-    Task<bool> UpdateOrderStatusAsync(UpdateOrderStatusViewModel model);
-    Task<bool> HasOrdersAsync(string userId);
+    Task<OrderDetailsViewModel?> GetOrderDetailsForUserAsync(int orderId);
 
 
 }

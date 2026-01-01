@@ -46,41 +46,26 @@ public class AppDbContext: IdentityDbContext<AppUser>
         .HasConversion<string>();
 
         builder.Entity<Order>()
-            .HasOne(o => o.ShippingContact)
-            .WithMany()
-            .HasForeignKey(o => o.ShippingContactId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Entity<Order>()
-            .HasOne(o => o.BillingContact)
-            .WithMany()
-            .HasForeignKey(o => o.BillingContactId)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder.Entity<Order>()
             .HasOne(o => o.Organization)
             .WithMany()
             .HasForeignKey(o => o.OrganizationId)
             .OnDelete(DeleteBehavior.NoAction);
-
-
+       
         builder.Entity<Product>()
             .HasOne(p => p.Category)
             .WithMany(c => c.Products)
             .HasForeignKey(p => p.CategoryId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Product>()
-           .Property(p => p.OriginalPrice)
-           .HasPrecision(18, 2);
-
+        builder.Entity<Product>()
+            .Property(p => p.OriginalPrice)
+            .HasPrecision(18, 2);
+       
         builder.Entity<ProductImage>()
             .HasOne(pi => pi.Product)
             .WithMany(p => p.ProductImages)
             .HasForeignKey(pi => pi.ProductId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        
 
         builder.Entity<Contact>()
             .HasOne(c => c.AppUser)
@@ -101,21 +86,28 @@ public class AppDbContext: IdentityDbContext<AppUser>
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<UserDiscount>()
-        .HasIndex(x => new { x.AppUserId, x.DiscountId })
-        .IsUnique();
+            .HasIndex(x => new { x.AppUserId, x.DiscountId })
+            .IsUnique();
 
         builder.Entity<UserDiscount>()
-         .HasOne(ud => ud.AppUser)
-         .WithMany(u => u.UserDiscounts)
-         .HasForeignKey(ud => ud.AppUserId)
-         .OnDelete(DeleteBehavior.Cascade);
-
-
-
+            .HasOne(ud => ud.AppUser)
+            .WithMany(u => u.UserDiscounts)
+            .HasForeignKey(ud => ud.AppUserId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
         base.OnModelCreating(builder);
+        
     }
+
+
+
+
+
+
+
+
+
 
         
         

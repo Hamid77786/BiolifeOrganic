@@ -1,0 +1,39 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Order
+@model OrderDetailsViewModel
+
+<h2>Order @Model.OrderNumber</h2>
+<p>Status: @Model.Status</p>
+<p>Date: @Model.OrderDate.ToString("dd/MM/yyyy")</p>
+<p>Total: @Model.TotalAmount ₼</p>
+
+<hr />
+
+<h4>Items (@Model.OrderItems.Count)</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Image</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="~/images/products/@item.ImageUrl" width="50" height="50" />
+                    }
+                </td>
+                <td>@item.Quantity</td>
+                <td>@item.Price ₼</td>
+                <td>@item.Subtotal.ToString("0.00") ₼</td>
+            </tr>
+        }
+    </tbody>
+</table>

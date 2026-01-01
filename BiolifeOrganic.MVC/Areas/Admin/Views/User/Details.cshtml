@@ -38,7 +38,14 @@
         @foreach (var order in Model.Orders)
         {
             <tr>
-                <td>@order.OrderNumber</td>
+                <td>
+                    <a asp-area="Admin"
+                       asp-controller="Order"
+                       asp-action="Details"
+                       asp-route-id="@order.Id">
+                        @order.OrderNumber
+                    </a>
+                </td>
                 <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@order.Status</td>
                 <td>@order.TotalAmount ₼</td>

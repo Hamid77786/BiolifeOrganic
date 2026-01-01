@@ -9,6 +9,7 @@ public interface IUserService
     Task<bool> IsAdminAsync(string userId);
     Task<List<UserViewModel>> GetAllUsersWithDetailsAsync();
     Task ToggleBlockAsync(string userId);
+    Task ToggleAdminRoleAsync(string userId);
     Task<UserDetailsViewModel?> GetUserDetailsAsync(string userId);
 
 

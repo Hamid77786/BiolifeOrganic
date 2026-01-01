@@ -16,6 +16,10 @@ using BiolifeOrganic.Bll.ViewModels.Discount;
 using BiolifeOrganic.Bll.ViewModels.User;
 using BiolifeOrganic.Bll.ViewModels.UserDiscount;
 using BiolifeOrganic.Bll.ViewModels.Order;
+using BiolifeOrganic.Dll.ReadModels.User;
+using BiolifeOrganic.Dll.ReadModels.Order;
+using BiolifeOrganic.Dll.ReadModels.Wislist;
+using BiolifeOrganic.Dll.ReadModels.UserDiscount;
 
 
 namespace BiolifeOrganic.Bll.Mapping;
@@ -148,6 +152,21 @@ public class MappingProfile:Profile
 
             .ForMember(dest => dest.IsAdmin,
                 opt => opt.Ignore());
+
+        CreateMap<UserRM, UserViewModel>();
+        CreateMap<UserDetailsRM, UserDetailsViewModel>();
+
+        CreateMap<OrderListRM, OrderListViewModel>();
+        CreateMap<OrderDetailsRM, OrderDetailsViewModel>();
+        CreateMap<OrderItemRM, OrderItemViewModel>();
+
+        CreateMap<WishlistRM, WishlistViewModel>();
+        CreateMap<WishlistItemRM, WishlistItemViewModel>();
+
+        CreateMap<UserDiscountRM, UserDiscountViewModel>();
+
+
+
 
         CreateMap<AppUser, UserDetailsViewModel>()
             .ForMember(d => d.Orders, opt => opt.Ignore())

@@ -3,7 +3,7 @@
 
 @if (Model?.Items != null && Model.Items.Any())
 {
-    <a asp-controller="basket">
+    <a asp-controller="basket" asp-action="index">
         <span class="icon-qty-combine">
             <i class="icon-cart-mini biolife-icon"></i>
             <span class="qty">@Model.TotalCount</span>
@@ -14,7 +14,7 @@
 }
 else
 {
-    <a asp-controller="basket">
+    <a asp-controller="basket" asp-action="index">
         <span class="icon-qty-combine">
             <i class="icon-cart-mini biolife-icon"></i>
             <span class="qty">0</span>

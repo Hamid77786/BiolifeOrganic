@@ -113,17 +113,12 @@ public class WishlistManager : CrudManager<Wishlist, WishlistViewModel, CreateWi
 
              orderBy: q => q.OrderByDescending(w => w.CreatedAt),
              AsNoTracking: true
-         );
+        );
+           var wishlistItems = Mapper.Map<List<WishlistItemViewModel>>(items);
 
-        var wishlistVm = new WishlistViewModel
-        {
-            AppUserId = userId,
-            AppUserName = items.FirstOrDefault()?.AppUser?.FullName,
-            Count = items.Count,
-            Items = Mapper.Map<List<WishlistItemViewModel>>(items)
-        };
+        return wishlistItems;
 
-        return Mapper.Map<List<WishlistItemViewModel>>(wishlistVm);
+
     }
     public async Task<List<int>> GetUserWishlistIdsAsync(string userId)
     {

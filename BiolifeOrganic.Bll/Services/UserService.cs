@@ -35,20 +35,7 @@ public class UserService:IUserService
         return user != null && await _userManager.IsInRoleAsync(user, "Admin");
     }
 
-    public async Task<List<UserViewModel>> GetAllUsersWithDetailsAsync()
-    {
-        var users = await _userRepository.GetAllUsersWithDetailsAsync();
-
-        var usersVm = _mapper.Map<List<UserViewModel>>(users);
-
-        foreach (var userVm in usersVm)
-        {
-            var user = users.First(u => u.Id == userVm.Id); 
-            userVm.IsAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-        }
-
-        return usersVm; 
-    }
+   
 
     public async Task ToggleBlockAsync(string userId)
     {
@@ -66,38 +53,37 @@ public class UserService:IUserService
         await _userManager.UpdateAsync(user);
     }
 
+    public async Task ToggleAdminRoleAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null) return;
+
+        const string adminRole = "Admin";
+
+        if (await _userManager.IsInRoleAsync(user, adminRole))
+        {
+            await _userManager.RemoveFromRoleAsync(user, adminRole);
+        }
+        else
+        {
+           await _userManager.AddToRoleAsync(user, adminRole);
+        }
+    }
+
+
+
+    public async Task<List<UserViewModel>> GetAllUsersWithDetailsAsync()
+    {
+        var users = await _userRepository.GetAllUsersForAdminAsync();
+        return _mapper.Map<List<UserViewModel>>(users);
+    }
+
     public async Task<UserDetailsViewModel?> GetUserDetailsAsync(string userId)
     {
-        var user = await _userRepository.GetUserWithDetailsAsync(userId);
-        if (user == null) return null;
-
-        var model = _mapper.Map<UserDetailsViewModel>(user);
-
-        model.Orders = _mapper.Map<List<OrderDetailsViewModel>>(user.Orders);
-
-        var wishlistItems = user.Wishlists
-        .Select(w => _mapper.Map<WishlistItemViewModel>(w))
-        .ToList();
-
-        model.Wishlists = new List<WishlistViewModel>
-        {
-            new WishlistViewModel
-            {
-                AppUserId = user.Id,
-                AppUserName = user.FullName ?? user.UserName,
-                Count = wishlistItems.Count,
-                Items = wishlistItems
-            }
-        };
-
-
-        model.Discounts = _mapper.Map<List<UserDiscountViewModel>>(user.UserDiscounts);
-
-        model.IsBlocked = user.LockoutEnd != null && user.LockoutEnd > DateTimeOffset.UtcNow;
-
-        return model;
-
+        var user = await _userRepository.GetUserDetailsAsync(userId);
+        return user == null ? null : _mapper.Map<UserDetailsViewModel>(user);
     }
+
 
 }
 
