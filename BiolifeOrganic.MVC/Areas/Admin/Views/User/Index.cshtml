@@ -1,0 +1,98 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.User
+@model List<UserViewModel>
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Users</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Orders</th>
+                                <th>Wishlist</th>
+                                <th>Discounts</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var user in Model ?? [])
+                            {
+                                <tr>
+                                    <td>
+                                        <img src="~/images/profiles/@(user.ProfileImagePath ?? "default.png")"
+                                             width="50" height="50"
+                                             style="border-radius:50%" />
+                                    </td>
+
+                                    <td>@user.UserName</td>
+                                    <td>@user.Email</td>
+
+                                    <td>@user.OrdersCount</td>
+                                    <td>@user.WishlistCount</td>
+                                    <td>@user.UserDiscountsCount</td>
+
+                                    <td>
+                                        @if (user.IsBlocked)
+                                        {
+                                            <span class="badge badge-danger">Blocked</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success">Active</span>
+                                        }
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-info btn-sm"
+                                           asp-controller="User"
+                                           asp-action="Details"
+                                           asp-route-id="@user.Id">
+                                            Details
+                                        </a>
+
+                                        @if (user.IsBlocked)
+                                        {
+                                            <button class="btn btn-success btn-sm"
+                                                    onclick="toggleBlock('@user.Id', this)">
+                                                Unblock
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-warning btn-sm"
+                                                    onclick="toggleBlock('@user.Id', this)">
+                                                Block
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleBlock(userId, element) {
+        fetch(`/Admin/User/ToggleBlock/${userId}`, {
+            method: 'POST'
+        })
+        .then(() => location.reload())
+        .catch(err => {
+            console.error(err);
+            alert('Error!');
+        });
+    }
+</script>

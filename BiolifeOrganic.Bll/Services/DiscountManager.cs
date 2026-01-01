@@ -50,29 +50,16 @@ public class DiscountManager : CrudManager<Discount, DiscountViewModel, CreateDi
 
         if (!string.IsNullOrEmpty(userId))
         {
-            if (discount.OnlyForNewUsers)
-            {
-                if (await _orderRepository.HasOrdersAsync(userId))
-                    return Invalid("Discount only for new users");
-
-                if (!await _userDiscountRepository.ExistsAsync(userId, discount.Id))
-                {
-                    await _userDiscountRepository.AddAsync(new UserDiscount
-                    {
-                        AppUserId = userId,
-                        DiscountId = discount.Id,
-                        IsUsed = false
-                    });
-
-                    await _context.SaveChangesAsync();
-                }
-            }
-
+           
             if (discount.OnlyForExistingUsers &&
                 !await _orderRepository.HasOrdersAsync(userId))
             {
                 return Invalid("Discount only for existing users");
             }
+
+            bool alreadyUsed = await _userDiscountRepository.ExistsAsync(userId, discount.Id);
+            if (alreadyUsed)
+                return Invalid("Discount already used");
         }
 
         return new DiscountValidationResult
@@ -85,7 +72,23 @@ public class DiscountManager : CrudManager<Discount, DiscountViewModel, CreateDi
 
     public async Task MarkAsUsedAsync(int discountId, string userId)
     {
-        await _userDiscountRepository.MarkAsUsedAsync(userId, discountId);
+        
+        bool exists = await _userDiscountRepository.ExistsAsync(userId, discountId);
+        if (!exists)
+        {
+            await _userDiscountRepository.AddAsync(new UserDiscount
+            {
+                AppUserId = userId,
+                DiscountId = discountId,
+                IsUsed = true,
+                UsedAt = DateTime.UtcNow
+            });
+        }
+        else
+        {
+            await _userDiscountRepository.MarkAsUsedAsync(userId, discountId);
+        }
+
         await _discountRepository.IncrementUsedCountAsync(discountId);
         await _context.SaveChangesAsync();
     }
@@ -110,5 +113,41 @@ public class DiscountManager : CrudManager<Discount, DiscountViewModel, CreateDi
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task AssignLoyaltyDiscountIfEligibleAsync(string userId)
+    {
+        int ordersCount = await _orderRepository.CountAsync(userId);
+
+        if (ordersCount >= 10)
+        {
+            var discount = await _discountRepository.GetValidByCodeAsync("LOYAL5", DateTime.UtcNow);
+            if (discount == null) return;
+
+            bool exists = await _userDiscountRepository.ExistsAsync(userId, discount.Id);
+            if (exists) return;
+
+            await _userDiscountRepository.AddAsync(new UserDiscount
+            {
+                AppUserId = userId,
+                DiscountId = discount.Id,
+                IsUsed = false
+            });
+
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<bool> HasUserDiscountAsync(string userId, string discountCode)
+    {
+        var discount = await _discountRepository.GetValidByCodeAsync(discountCode, DateTime.UtcNow);
+        if (discount == null)
+            return false;
+
+        return await _userDiscountRepository.ExistsAsync(userId, discount.Id);
+    }
+
+
 }
+
+
 

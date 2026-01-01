@@ -13,15 +13,11 @@ public class WishlistManager : CrudManager<Wishlist, WishlistViewModel, CreateWi
 {
     private readonly IWishlistRepository _wishlistRepository;
     private readonly IProductRepository _productRepository;
-    private readonly IMapper _mapper;
-    private readonly AppDbContext _dbContext;
 
-    public WishlistManager(AppDbContext dbContext,IWishlistRepository repository,IProductRepository productRepository, IMapper mapper) : base(repository, mapper)
+    public WishlistManager(IWishlistRepository repository,IProductRepository productRepository, IMapper mapper) : base(repository, mapper)
     {
         _wishlistRepository = repository;
         _productRepository = productRepository;
-        _mapper = mapper;
-        _dbContext = dbContext;
     }
 
    
@@ -119,14 +115,20 @@ public class WishlistManager : CrudManager<Wishlist, WishlistViewModel, CreateWi
              AsNoTracking: true
          );
 
-        return Mapper.Map<List<WishlistItemViewModel>>(items);
+        var wishlistVm = new WishlistViewModel
+        {
+            AppUserId = userId,
+            AppUserName = items.FirstOrDefault()?.AppUser?.FullName,
+            Count = items.Count,
+            Items = Mapper.Map<List<WishlistItemViewModel>>(items)
+        };
+
+        return Mapper.Map<List<WishlistItemViewModel>>(wishlistVm);
     }
     public async Task<List<int>> GetUserWishlistIdsAsync(string userId)
     {
-        return await _dbContext.Wishlists
-            .Where(x => x.AppUserId == userId)
-            .Select(x => x.ProductId)
-            .ToListAsync();
+        return await _wishlistRepository.GetUserWishlistIdsAsync(userId);
+        
     }
 
 

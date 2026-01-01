@@ -31,6 +31,11 @@ public class AppDbContext: IdentityDbContext<AppUser>
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Order>()
+           .HasOne(o => o.AppUser)
+           .WithMany(u => u.Orders)
+           .HasForeignKey(o => o.AppUserId)
+           .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Order>()
         .Property(o => o.TotalAmount)
@@ -40,21 +45,18 @@ public class AppDbContext: IdentityDbContext<AppUser>
         .Property(o => o.Status)
         .HasConversion<string>();
 
-        // ShippingContact — CASCADE
         builder.Entity<Order>()
             .HasOne(o => o.ShippingContact)
             .WithMany()
             .HasForeignKey(o => o.ShippingContactId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // BillingContact — NO ACTION
         builder.Entity<Order>()
             .HasOne(o => o.BillingContact)
             .WithMany()
             .HasForeignKey(o => o.BillingContactId)
             .OnDelete(DeleteBehavior.NoAction);
 
-        // Organization — NO ACTION
         builder.Entity<Order>()
             .HasOne(o => o.Organization)
             .WithMany()
@@ -101,6 +103,12 @@ public class AppDbContext: IdentityDbContext<AppUser>
         builder.Entity<UserDiscount>()
         .HasIndex(x => new { x.AppUserId, x.DiscountId })
         .IsUnique();
+
+        builder.Entity<UserDiscount>()
+         .HasOne(ud => ud.AppUser)
+         .WithMany(u => u.UserDiscounts)
+         .HasForeignKey(ud => ud.AppUserId)
+         .OnDelete(DeleteBehavior.Cascade);
 
 
 

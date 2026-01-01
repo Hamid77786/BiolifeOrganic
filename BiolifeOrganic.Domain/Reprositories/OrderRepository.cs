@@ -71,4 +71,13 @@ public class OrderRepository : EfCoreRepository<Order>, IOrderRepository
        => await _dbContext.Orders
            .AnyAsync(o => o.AppUserId == userId && !o.IsDeleted);
 
+    public async Task<int> CountAsync(string userId)
+    {
+        var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
+        return await _dbContext.Orders
+                     .Include(o => o.AppUser)
+                     .Where(o => o.AppUserId == userId && !o.IsDeleted && o.CreatedAt >= oneMonthAgo)
+                     .CountAsync();
+    }
+
 }

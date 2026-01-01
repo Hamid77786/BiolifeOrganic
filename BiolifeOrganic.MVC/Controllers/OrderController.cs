@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BiolifeOrganic.MVC.Controllers;
 
-[Authorize]
+[Authorize(Roles ="User")]
 
 public class OrderController : Controller
 {

@@ -8,6 +8,9 @@ public interface IDiscountService : ICrudService<Discount, DiscountViewModel, Cr
     Task<DiscountValidationResult> ValidateAsync(string code, string? userId, decimal totalAmount);
     Task MarkAsUsedAsync(int discountId, string userId);
     Task AssignWelcomeDiscountAsync(string userId);
+    Task AssignLoyaltyDiscountIfEligibleAsync(string userId);
+    Task<bool> HasUserDiscountAsync(string userId, string discountCode);
+
 
 
 

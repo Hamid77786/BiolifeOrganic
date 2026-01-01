@@ -36,6 +36,7 @@ public static class DataAccessLayerServiceRegistration
         services.AddScoped<IAdminContactRepository, AdminContactRepository>();
         services.AddScoped<IDiscountRepository, DiscountRepository>();
         services.AddScoped<IUserDiscountRepository, UserDiscountRepository>();
+        services.AddScoped<IAppUserRepository, AppUserRepository>();
 
 
 

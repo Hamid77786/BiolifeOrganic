@@ -34,6 +34,7 @@ public static class BussinessLogicLayerServiceRegistration
         services.AddScoped<ICheckoutService, CheckoutManager>();
         services.AddScoped<IDiscountService,DiscountManager>();
         services.AddScoped<IUserDiscountService, UserDiscountManager>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }

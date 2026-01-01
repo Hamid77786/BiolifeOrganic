@@ -9,6 +9,8 @@ using System.Security.Claims;
 
 namespace BiolifeOrganic.MVC.Controllers;
 
+[Authorize(Roles ="User")]
+
 public class CheckoutController : Controller
 {
     private readonly ICheckoutService _checkoutService;

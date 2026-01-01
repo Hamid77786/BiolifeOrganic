@@ -1,4 +1,5 @@
-﻿ @model HomeViewModel
+﻿ @using BiolifeOrganic.Bll.Helpers
+ @model HomeViewModel
 
 
 <!-- Page Contain -->
@@ -9,17 +10,19 @@
 
         <!--Block 01: Main slide-->
         <div class="main-slide block-slider">
-            <ul class="biolife-carousel nav-none-on-mobile" data-slick='{"arrows": true, "dots": false, "slidesMargin": 0, "slidesToShow": 1, "infinite": true, "speed": 800}'>
-                @foreach(var slider in Model.Sliders)
+            <ul class="biolife-carousel nav-none-on-mobile"
+                data-slick='{"arrows": true, "dots": false, "slidesMargin": 0, "slidesToShow": 1, "infinite": true, "speed": 800}'>
+                @foreach (var slider in Model.Sliders
+                .Where(x => x.IsActive)
+                .OrderBy(x => x.DisplayOrder))
                 {
-                    @Html.Raw(slider.HtmlContent)
+                    <text>
+                    <li>@Html.Raw(SliderHtmlBuilder.Build(slider))</li></text>
                 }
-
-                
-                
-
             </ul>
         </div>
+
+
 
 
         <!--Block 03: Product Tab-->
@@ -35,7 +38,7 @@
                             int index = 1;
                         }
                         <ul class="tabs md-margin-bottom-35-im xs-margin-bottom-40-im">
-                            @foreach (var cat in Model.Categories.Where(x => x.IsRelated))
+                            @foreach (var cat in Model.Categories)
                             {
                                 <li class="tab-element @(index == 1 ? "active" : "")">
                                     <a href="#tab_cat_@index" class="tab-link">
@@ -60,11 +63,11 @@
                         </ul>
                     </div>
                     @{
-                        index = 1; // ← сбрасываем, чтобы совпадало с вкладками
+                        index = 1; 
                     }
 
                     <div class="tab-content">
-                        @foreach (var cat in Model.Categories.Where(x => x.IsRelated))
+                        @foreach (var cat in Model.Categories)
                         {
                             <div id="tab_cat_@index" class="tab-contain @(index == 1 ? "active" : "")">
 
@@ -1731,154 +1734,8 @@
                                 }
                             }
 
-                             @*    <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-03.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">Passover Cauliflower</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-02.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">Hot Chili Peppers</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-22.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">Cherry Tomato Seeds</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-20.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-05.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">Organic Hass Avocado</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-06.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">Packham's Pears</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="product-item">
-                                    <div class="contain-product right-info-layout contain-product__right-info-layout">
-                                        <div class="product-thumb">
-                                            <a href="#" class="link-to-product">
-                                                <img src="~/images/products/p-20.jpg" alt="dd" width="270" height="270" class="product-thumnail">
-                                            </a>
-                                        </div>
-                                        <div class="info">
-                                            <b class="categories">Vegetables</b>
-                                            <h4 class="product-title"><a href="#" class="pr-name">National Fresh Fruit</a></h4>
-                                            <div class="price ">
-                                                <ins><span class="price-amount"><span class="currencySymbol"> ₼</span>85.00</span></ins>
-                                                <del><span class="price-amount"><span class="currencySymbol"> ₼</span>95.00</span></del>
-                                            </div>
-                                            <div class="rating">
-                                                <p class="star-rating"><span class="width-80percent"></span></p>
-                                                <span class="review-count">(05 Reviews)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li> *@
-                            </ul>
+                             
+                        </ul>
                             <div class="biolife-banner style-01 biolife-banner__style-01 xs-margin-top-80px-im sm-margin-top-30px-im">
                                 <div class="banner-contain">
                                     <a href="#" class="bn-link"></a>

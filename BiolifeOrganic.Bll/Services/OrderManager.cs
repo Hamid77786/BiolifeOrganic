@@ -6,6 +6,7 @@ using BiolifeOrganic.Bll.ViewModels.Order;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 using BiolifeOrganic.MVC.Views.Admin.Order;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -17,13 +18,14 @@ public class OrderManager : IOrderService
     private readonly IOrderRepository _orderRepository;
     private readonly IContactRepository _contactRepository;
     private readonly IDiscountService _discountService;
-
-    public OrderManager(IDiscountService discountService,BasketManager basketManager, IContactRepository contactRepository, IOrderRepository respository)
+    private readonly IUserService _userService;
+    public OrderManager(IUserService userService, IDiscountService discountService,BasketManager basketManager, IContactRepository contactRepository, IOrderRepository respository)
     { 
         _basketManager = basketManager;
         _orderRepository = respository;
         _contactRepository = contactRepository;
         _discountService = discountService;
+        _userService = userService;
     }
 
     public async Task<List<OrderListViewModel>> GetUserOrdersAsync(string userId)
@@ -90,6 +92,17 @@ public class OrderManager : IOrderService
     }
     public async Task<int> PlaceOrderAsync(string? userId, CheckoutViewModel model)
     {
+        if (userId != null)
+        {
+            if (await _userService.IsAdminAsync(userId))
+                throw new Exception("Admins are not allowed to place orders");
+
+            if (await _userService.IsBlockedAsync(userId))
+                throw new Exception("User account is blocked");
+        }
+
+
+
         var basket = await _basketManager.GetBasketAsync();
         if (basket == null || !basket.Items.Any())
             throw new Exception("Basket is empty");
@@ -126,13 +139,9 @@ public class OrderManager : IOrderService
             }
         }
 
-
-
-
-
         Contact shippingContact;
 
-        if (!model.IsGuest && model.ShippingContactId.HasValue)
+        if (userId != null && model.ShippingContactId.HasValue)
         {
             shippingContact = await _contactRepository.GetAsync(
                 c => c.Id == model.ShippingContactId.Value
@@ -150,8 +159,8 @@ public class OrderManager : IOrderService
                 PostalCode = model.PostalCode ?? "00000",
                 PhoneNumber = model.PhoneNumber,
                 Email = model.Email,
-                AppUserId = model.IsGuest ? null : userId,
-                IsDefault = !model.IsGuest && !model.ShippingContactId.HasValue
+                AppUserId = userId,
+                IsDefault = userId != null && !model.ShippingContactId.HasValue
             };
 
             await _contactRepository.CreateAsync(shippingContact);
@@ -172,11 +181,10 @@ public class OrderManager : IOrderService
             model.TotalAmount = subtotal;
         }
 
-
         var order = new Order
         {
             AppUserId = userId,
-            GuestEmail = model.IsGuest ? model.Email : null,
+            GuestEmail = userId == null ? model.Email : null,
             OrderNumber = orderNumber,
             SubTotalAmount = subtotal,
             DiscountPercentage = discountPercent,
@@ -201,7 +209,11 @@ public class OrderManager : IOrderService
         await _orderRepository.CreateAsync(order);
 
         if (discount != null && userId != null)
+        {
+            
             await _discountService.MarkAsUsedAsync(discount.DiscountId, userId);
+            
+        }
 
         _basketManager.RemoveAllFromBasket();
 
@@ -287,3 +299,5 @@ public class OrderManager : IOrderService
 
 
 }
+
+

@@ -54,7 +54,7 @@ public class CheckoutManager:ICheckoutService
         {
             var userId = _userManager.GetUserId(user);
 
-            if (!string.IsNullOrEmpty(userId))
+            if (userId != null)
             {
                 var contacts = await _contactService.GetUserAddressesAsync(userId);
                 var defaultContacts = contacts.FirstOrDefault(a => a.IsDefault);
@@ -101,42 +101,46 @@ public class CheckoutManager:ICheckoutService
 
         string? userId = null;
 
-        if (!model.IsGuest)
+        if (user.Identity?.IsAuthenticated == true)
         {
             userId = _userManager.GetUserId(user);
 
-            if (string.IsNullOrEmpty(userId))
-                return new CheckoutResult { Error = "User not authenticated" };
-
-
-            var contacts = await _contactService.GetUserAddressesAsync(userId!);
-            var defaultContact = contacts.FirstOrDefault(c => c.IsDefault);
-
-            if (defaultContact == null)
+            if (userId != null)
             {
-                model.ShippingContactId = await _contactService.CreateAddressAsync(
-                    userId,
-                    new CreateContactViewModel
-                    {
-                        FirstName = model.FirstName!,
-                        LastName = model.LastName!,
-                        Address = model.Address!,
-                        City = model.City!,
-                        Country = model.Country!,
-                        PostalCode = model.PostalCode ?? "00000",
-                        PhoneNumber = model.PhoneNumber!,
-                        Email = model.Email!,
-                        IsDefault = true
-                    });
+                 var contacts = await _contactService.GetUserAddressesAsync(userId!);
+                  var defaultContact = contacts.FirstOrDefault(c => c.IsDefault);
+
+                if (defaultContact == null)
+                {
+                    model.ShippingContactId = await _contactService.CreateAddressAsync(
+                        userId,
+                        new CreateContactViewModel
+                        {
+                            FirstName = model.FirstName!,
+                            LastName = model.LastName!,
+                            Address = model.Address!,
+                            City = model.City!,
+                            Country = model.Country!,
+                            PostalCode = model.PostalCode ?? "00000",
+                            PhoneNumber = model.PhoneNumber!,
+                            Email = model.Email!,
+                            IsDefault = true
+                        });
+                }
+                else
+                {
+                    model.ShippingContactId = defaultContact.Id;
+                }
             }
-            else
-            {
-                model.ShippingContactId = defaultContact.Id;
-            }
+
+
+
         }
 
-            
-            var orderId = await _orderService.PlaceOrderAsync(userId, model);
+
+        var orderId = await _orderService.PlaceOrderAsync(userId, model);
+
+
 
             return new CheckoutResult
             {

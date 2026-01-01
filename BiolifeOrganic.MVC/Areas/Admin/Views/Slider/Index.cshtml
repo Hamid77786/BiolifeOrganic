@@ -1,0 +1,57 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Slider
+@using BiolifeOrganic.Bll.Helpers
+
+@model List<SliderViewModel>
+
+
+<h2>Sliders</h2>
+<a class="btn btn-primary mb-3" asp-action="Create">Add Slider</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Preview</th>
+            <th>Order</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var slider in Model.OrderBy(x => x.DisplayOrder))
+        {
+            <tr>
+                <td style="max-width:400px">
+                    @Html.Raw(SliderHtmlBuilder.Build(slider))
+                </td>
+                <td>@slider.DisplayOrder</td>
+                <td>@slider.IsActive</td>
+                <td>
+                    <a class="btn btn-warning btn-sm"
+                       asp-action="Update"
+                       asp-route-id="@slider.Id">
+                        Edit
+                    </a>
+
+                    <button class="btn btn-danger btn-sm"
+                            onclick="deleteSlider(@slider.Id, this)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    async function deleteSlider(id, btn) {
+        if (!confirm("Are you sure?")) return;
+
+        const res = await fetch(`/Admin/Slider/Delete/${id}`, { method: 'POST' });
+        if(res.ok){
+            btn.closest('tr').remove();
+        } else {
+            alert('Delete failed!');
+        }
+    }
+</script>
+

@@ -32,6 +32,8 @@ public class UserDiscountRepository: EfCoreRepository<UserDiscount>,IUserDiscoun
         {
             entity.IsUsed = true;
             entity.UsedAt = DateTime.UtcNow;
+            _context.SaveChanges();
+
         }
     }
 

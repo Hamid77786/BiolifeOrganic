@@ -12,6 +12,7 @@ public interface IOrderRepository : IRepository<Order>
     Task<Order?> GetOrderByIdWithDetailsAsync(int orderId);
     Task<bool> AnyAsync(Expression<Func<Order, bool>> predicate);
     Task<bool> HasOrdersAsync(string userId);
+    Task<int> CountAsync(string userId);
 
 }
 

@@ -27,7 +27,10 @@ public class DiscountRepository : EfCoreRepository<Discount>, IDiscountRepositor
     {
         var discount = await _context.Discounts.FindAsync(discountId);
         if (discount != null)
-            discount.UsedCount++;
+        {
+            discount.UsedCount = (discount.UsedCount ?? 0) + 1;
+            await _context.SaveChangesAsync();
+        }
     }
 
 

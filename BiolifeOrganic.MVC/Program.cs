@@ -61,6 +61,7 @@ namespace BiolifeOrganic.MVC
 
                 string adminRole = "Admin";
                 string adminEmail = "gamidha@code.edu.az";
+                string adminName = "Hemid";
                 string adminPassword = "777123";
 
                 
@@ -72,7 +73,7 @@ namespace BiolifeOrganic.MVC
                 {
                     adminUser = new AppUser
                     {
-                        UserName = adminEmail,
+                        UserName = adminName,
                         Email = adminEmail,
                         EmailConfirmed = true
                     };

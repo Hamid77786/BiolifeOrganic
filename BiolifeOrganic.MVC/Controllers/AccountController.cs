@@ -97,12 +97,14 @@ namespace BiolifeOrganic.MVC.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
+                await _discountService.AssignWelcomeDiscountAsync(user.Id);
+
+
                 TempData["SuccessMessage"] = "Email confirmed. Please log in.";
                 TempData["SuccessMessage"] = "You received upon for your first purchase.Code:WELCOME15.";
                 return RedirectToAction(nameof(Login));
             }
 
-            await _discountService.AssignWelcomeDiscountAsync(user.Id);
 
 
             TempData["ErrorMessage"] = "Email confirmation failed.";
@@ -149,6 +151,15 @@ namespace BiolifeOrganic.MVC.Controllers
             {
                 return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
+
+            bool hasLoyalty = await _discountService.HasUserDiscountAsync(user.Id, "LOYAL5");
+            if (!hasLoyalty)
+            {
+                await _discountService.AssignLoyaltyDiscountIfEligibleAsync(user.Id);
+                TempData["SuccessMessage"] = "Congratulations! You've received a 5% discount for 10 orders per month. Code: LOYAL5";
+            }
+
+
 
             return RedirectToAction("Index", "Home");
         }

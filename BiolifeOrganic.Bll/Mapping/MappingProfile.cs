@@ -13,6 +13,9 @@ using BiolifeOrganic.Bll.ViewModels.Wishlist;
 using BiolifeOrganic.Bll.ViewModels.Basket;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Bll.ViewModels.Discount;
+using BiolifeOrganic.Bll.ViewModels.User;
+using BiolifeOrganic.Bll.ViewModels.UserDiscount;
+using BiolifeOrganic.Bll.ViewModels.Order;
 
 
 namespace BiolifeOrganic.Bll.Mapping;
@@ -129,6 +132,81 @@ public class MappingProfile:Profile
         CreateMap<UpdateDiscountViewModel, Discount>()
             .ForMember(d => d.UserDiscounts, opt => opt.Ignore());
 
+        CreateMap<AppUser, UserViewModel>()
+           .ForMember(dest => dest.OrdersCount,
+               opt => opt.MapFrom(src => src.Orders.Count))
+           .ForMember(dest => dest.WishlistCount,
+               opt => opt.MapFrom(src => src.Wishlists.Count))
+           .ForMember(dest => dest.UserDiscountsCount,
+               opt => opt.MapFrom(src => src.UserDiscounts.Count))
+            .ForMember(dest => dest.Email,
+                opt => opt.MapFrom(src => src.Email))
+             .ForMember(dest => dest.IsBlocked,
+                opt => opt.MapFrom(src =>
+                    src.LockoutEnd.HasValue &&
+                    src.LockoutEnd.Value > DateTimeOffset.UtcNow))
+
+            .ForMember(dest => dest.IsAdmin,
+                opt => opt.Ignore());
+
+        CreateMap<AppUser, UserDetailsViewModel>()
+            .ForMember(d => d.Orders, opt => opt.Ignore())
+            .ForMember(d => d.Wishlists, opt => opt.Ignore())
+            .ForMember(d => d.Discounts, opt => opt.Ignore())
+            .ForMember(dest => dest.Discounts, opt => opt.MapFrom(src => src.UserDiscounts))
+            .ForMember(dest => dest.IsBlocked, opt => opt.MapFrom(src => src.LockoutEnd != null && src.LockoutEnd > DateTimeOffset.UtcNow));
+
+        CreateMap<UserDiscount, UserDiscountViewModel>()
+            .ForMember(dest => dest.DiscountId, opt => opt.MapFrom(src => src.DiscountId))
+            .ForMember(dest => dest.DiscountName, opt => opt.MapFrom(src => src.Discount != null ? src.Discount.Code : string.Empty))
+            .ForMember(dest => dest.DiscountPercentage, opt => opt.MapFrom(src => src.Discount != null ? src.Discount.Percentage : 0))
+            .ForMember(dest => dest.IsUsed, opt => opt.MapFrom(src => src.IsUsed))
+            .ForMember(dest => dest.UsedAt, opt => opt.MapFrom(src => src.UsedAt));
+
+
+
+
+        CreateMap<Order, OrderDetailsViewModel>()
+            .ForMember(dest => dest.OrderDate, opt => opt.MapFrom(src => src.CreatedAt))
+            .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.TotalAmount))
+            .ForMember(dest => dest.SubtotalAmount, opt => opt.MapFrom(src => src.SubTotalAmount))
+            .ForMember(dest => dest.DiscountAmount, opt => opt.MapFrom(src => src.DiscountAmount))
+            .ForMember(dest => dest.DiscountCode, opt => opt.MapFrom(src => src.DiscountCode))
+            .ForMember(dest => dest.DiscountPercentage, opt => opt.MapFrom(src => src.DiscountPercentage))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems))
+            .ForMember(dest => dest.Categories, opt => opt.Ignore());
+
+        CreateMap<OrderItem, OrderItemViewModel>()
+           .ForMember(d => d.Subtotal,
+               o => o.MapFrom(s => s.Price * s.Quantity));
+
+        CreateMap<Wishlist, WishlistItemViewModel>()
+         .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+         .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
+         .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Product != null ? src.Product.ImageUrl : null))
+         .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product != null ? src.Product.DiscountedPrice : 0))
+         .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.Product != null && src.Product.QuantityAvailable > 0));
+
+
+        CreateMap<CreateWishlistViewModel, Wishlist>()
+          .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
+          .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+          .ForMember(dest => dest.AppUser, opt => opt.Ignore())
+          .ForMember(dest => dest.Product, opt => opt.Ignore());
+
+        CreateMap<UpdateWishlistViewModel, Wishlist>()
+           .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
+           .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+           .ForMember(dest => dest.AppUser, opt => opt.Ignore())
+           .ForMember(dest => dest.Product, opt => opt.Ignore());
+
+
+
+
+
+
+
 
 
 
@@ -185,45 +263,7 @@ public class MappingProfile:Profile
             .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         // Wishlist mappings
-        CreateMap<Wishlist, WishlistItemViewModel>()
-            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
-            .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
-            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Product != null ? src.Product.ImageUrl : null))
-            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product != null ? src.Product.DiscountedPrice : 0))
-            .ForMember(dest => dest.IsAvailable, opt => opt.MapFrom(src => src.Product != null && src.Product.QuantityAvailable > 0));
-
-        CreateMap<List<Wishlist>, WishlistViewModel>()
-            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.FirstOrDefault() != null ? src.First().AppUserId : null))
-            .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.FirstOrDefault() != null && src.First().AppUser != null ? src.First().AppUser!.FullName : null))
-            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count))
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src));
-
-        CreateMap<Wishlist, WishlistViewModel>()
-            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
-            .ForMember(dest => dest.AppUserName, opt => opt.MapFrom(src => src.AppUser != null ? src.AppUser.FullName : null))
-            .ForMember(dest => dest.Count, opt => opt.MapFrom(src => 1))
-            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => new List<WishlistItemViewModel> { 
-                new WishlistItemViewModel {
-                    ProductId = src.ProductId,
-                    ProductName = src.Product != null ? src.Product.Name : null,
-                    ImageUrl = src.Product != null ? src.Product.ImageUrl : null,
-                    Price = src.Product != null ? src.Product.DiscountedPrice : 0,
-                    IsAvailable = src.Product != null && src.Product.QuantityAvailable > 0
-                }
-            }));
-
-        CreateMap<CreateWishlistViewModel, Wishlist>()
-            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
-            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
-            .ForMember(dest => dest.AppUser, opt => opt.Ignore())
-            .ForMember(dest => dest.Product, opt => opt.Ignore());
-
-        CreateMap<UpdateWishlistViewModel, Wishlist>()
-            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
-            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
-            .ForMember(dest => dest.AppUser, opt => opt.Ignore())
-            .ForMember(dest => dest.Product, opt => opt.Ignore());
-
+        
 
         CreateMap<Review, ReviewViewModel>()
             .ForMember(d => d.AppUserName,
