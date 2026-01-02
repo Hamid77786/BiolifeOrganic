@@ -12,6 +12,7 @@ public class UserViewModel
     public string? ProfileImagePath { get; set; }
     public bool IsBlocked { get; set; }
     public bool IsAdmin { get; set; }
+    public DateTime? DeletedAt { get; set; }
 
     public int OrdersCount { get; set; }
     public int WishlistCount { get; set; }
@@ -23,6 +24,7 @@ public class UserDetailsViewModel
     public string Id { get; set; }= null!;
     public string? UserName { get; set; }
     public string? Email { get; set; }
+    public string? PhoneNumber { get; set; }
     public bool IsBlocked { get; set; }
 
     public List<OrderDetailsViewModel> Orders { get; set; } = [];

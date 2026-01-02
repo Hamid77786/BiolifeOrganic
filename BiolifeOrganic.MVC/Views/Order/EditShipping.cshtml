@@ -1,0 +1,91 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Contact
+@model UpdateContactViewModel
+
+<div class="page-contain shopping-cart">
+
+
+    <div id="main-content" class="main-content">
+        <div class="container">
+
+            <div class="shopping-cart-container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <h3 class="box-title">Edit Shipping Address</h3>
+                        <form asp-action="EditShipping" method="post">
+                            <input asp-for="OrderId" type="hidden" />
+                            <div class="form-group">
+                                <label asp-for="FirstName"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="LastName"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Company"></label>
+                                <input asp-for="Company" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Address"></label>
+                                <input asp-for="Address" class="form-control" />
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="City"></label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Country"></label>
+                                <input asp-for="Country" class="form-control" />
+                                <span asp-validation-for="Country" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PostalCode"></label>
+                                <input asp-for="PostalCode" class="form-control" />
+                                <span asp-validation-for="PostalCode" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber"></label>
+                                <input asp-for="PhoneNumber" class="form-control" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </form>
+
+                        @section Scripts {
+                            <partial name="_ValidationScriptsPartial" />
+                        }
+
+                    </div>
+                
+                </div>
+                   
+            
+            </div>
+                    
+        </div>
+                    
+    </div>
+                    
+</div>
+
+
+

@@ -1,0 +1,35 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Contact
+@model List<ContactViewModel>
+
+<h2>User Contacts</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Default</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contact in Model)
+        {
+            <tr>
+                <td>@contact.FirstName @contact.LastName</td>
+                <td>@contact.Phone</td>
+                <td>@contact.Address</td>
+                <td>@contact.City</td>
+                <td>@contact.Country</td>
+                <td>
+                    @if (contact.IsDefault)
+                    {
+                        <span class="badge bg-success">Default</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

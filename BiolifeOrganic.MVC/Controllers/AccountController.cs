@@ -6,6 +6,7 @@ using BiolifeOrganic.MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace BiolifeOrganic.MVC.Controllers
@@ -41,6 +42,15 @@ namespace BiolifeOrganic.MVC.Controllers
                 return View(model);
             }
 
+            var existingUser = await _userManager.Users
+                               .AnyAsync(u => u.PhoneNumber == model.PhoneNumber);
+
+            if (existingUser)
+            {
+                ModelState.AddModelError("PhoneNumber", "This phone number is already in use.");
+                return View(model);
+            }
+
             string? profileFileName = null;
 
             if (model.Photo != null && _fileService.IsImageFile(model.Photo))
@@ -52,7 +62,8 @@ namespace BiolifeOrganic.MVC.Controllers
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                ProfileImagePath = profileFileName 
+                ProfileImagePath = profileFileName,
+                PhoneNumber = model.PhoneNumber,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -65,6 +76,7 @@ namespace BiolifeOrganic.MVC.Controllers
                 }
                 return View(model);
             }
+
             await _userManager.AddToRoleAsync(user, "User");
 
 

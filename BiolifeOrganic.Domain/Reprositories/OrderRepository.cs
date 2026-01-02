@@ -1,5 +1,6 @@
 ﻿using BiolifeOrganic.Dll.DataContext;
 using BiolifeOrganic.Dll.DataContext.Entities;
+using BiolifeOrganic.Dll.ReadModels.Contact;
 using BiolifeOrganic.Dll.ReadModels.Order;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,20 @@ public class OrderRepository : EfCoreRepository<Order>, IOrderRepository
             .Include(o => o.ShippingContact)
             .FirstOrDefaultAsync(o => o.Id == orderId && o.AppUserId == userId);
     }
+
+    public async Task<Order?> GetOrderWithDetailsAsync(int orderId)
+    {
+        return await _dbContext.Orders
+            .Include(o => o.OrderItems)
+                .ThenInclude(i => i.Product)
+                .ThenInclude(i => i.Category)
+            .Include(o => o.ShippingContact)
+            .FirstOrDefaultAsync(o => o.Id == orderId);
+    }
+
+   
+
+
 
 
 
@@ -98,12 +113,21 @@ public class OrderRepository : EfCoreRepository<Order>, IOrderRepository
                 DiscountPercentage = o.DiscountPercentage,
                 DiscountCode = o.DiscountCode,
 
-                ShippingContact = o.ShippingContact.Address,
                 CourierService = o.CourierService,
                 TrackingNumber = o.TrackingNumber,
                 Warehouse = o.Warehouse,
                 EstimatedDeliveryDate = o.EstimatedDeliveryDate,
                 ShippedDate = o.ShippedDate,
+
+                ShippingContactId = o.ShippingContact.Id,
+                ShippingFirstName = o.ShippingContact.FirstName,
+                ShippingLastName = o.ShippingContact.LastName,
+                ShippingAddress = o.ShippingContact.Address,
+                ShippingCity = o.ShippingContact.City,
+                ShippingCountry = o.ShippingContact.Country,
+                ShippingPostalCode = o.ShippingContact.PostalCode,
+                ShippingPhone = o.ShippingContact.PhoneNumber,
+                ShippingEmail = o.ShippingContact.Email,
 
                 OrderItems = o.OrderItems.Select(i => new OrderItemRM
                 {
@@ -124,6 +148,61 @@ public class OrderRepository : EfCoreRepository<Order>, IOrderRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<ShippingContactRM?> GetShippingContactForEditAsync(int orderId, string userId)
+    {
+        return await _dbContext.Orders
+            .Where(o => o.Id == orderId
+                        && o.AppUserId == userId
+                        && o.Status == OrderStatus.OnHold)
+            .Select(o => new ShippingContactRM
+            {
+                OrderId = o.Id,
+                ContactId = o.ShippingContact.Id,
+                FirstName = o.ShippingContact.FirstName,
+                LastName = o.ShippingContact.LastName,
+                Company = o.ShippingContact.Company,
+                Address = o.ShippingContact.Address,
+                City = o.ShippingContact.City,
+                Country = o.ShippingContact.Country,
+                PostalCode = o.ShippingContact.PostalCode,
+                PhoneNumber = o.ShippingContact.PhoneNumber,
+                Email = o.ShippingContact.Email,
+                IsDefault = o.ShippingContact.IsDefault
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateShippingContactAsync(UpdateShippingContactRM model, string userId)
+    {
+        var order = await _dbContext.Orders
+            .Where(o => o.Id == model.OrderId
+                        && o.AppUserId == userId
+                        && o.Status == OrderStatus.OnHold)
+            .Include(o => o.ShippingContact)
+            .FirstOrDefaultAsync();
+
+        if (order == null)
+            throw new Exception("Order not found or cannot be edited");
+
+        var contact = order.ShippingContact;
+
+        contact.FirstName = model.FirstName;
+        contact.LastName = model.LastName;
+        contact.Company = model.Company;
+        contact.Address = model.Address;
+        contact.City = model.City;
+        contact.Country = model.Country;
+        contact.PostalCode = model.PostalCode;
+        contact.PhoneNumber = model.PhoneNumber;
+        contact.Email = model.Email;
+        contact.IsDefault = model.IsDefault;
+
+        await _dbContext.SaveChangesAsync();
+    }
+
+
+
 
 
 }

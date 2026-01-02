@@ -1,0 +1,49 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.User
+@model List<UserViewModel>
+
+<h2>Deleted Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Deleted At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@user.DeletedAt</td>
+                <td>
+                    <button class="btn btn-success btn-sm"
+                            onclick="restoreUser('@user.Id')">
+                        Restore
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function restoreUser(userId) {
+        if (!confirm("Restore this user?")) return;
+
+        fetch(`/Admin/User/Restore/${userId}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(response => {
+                if (response.success) {
+                    location.reload();
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch(() => alert("Restore failed"));
+    }
+</script>
+

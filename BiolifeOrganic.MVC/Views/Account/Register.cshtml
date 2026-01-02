@@ -36,6 +36,12 @@
 
                             </p>
                             <p class="form-row">
+                                <label asp-for="PhoneNumber">Phone Number:<span class="requite">*</span></label>
+                                <input asp-for="PhoneNumber" class="txt-input">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </p>
+
+                            <p class="form-row">
 
                                 <label asp-for="Password">Password:<span class="requite">*</span></label>
                                 <input asp-for="Password" class="txt-input">

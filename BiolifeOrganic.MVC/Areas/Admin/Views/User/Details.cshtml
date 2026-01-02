@@ -7,6 +7,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h2>@Model.UserName (@Model.Email)</h2>
+        <h3>Phone:@Model.PhoneNumber</h3>
         <p>
             Status:
             @if (Model.IsBlocked)
@@ -32,6 +33,7 @@
             <th>Date</th>
             <th>Status</th>
             <th>Total</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -49,6 +51,15 @@
                 <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
                 <td>@order.Status</td>
                 <td>@order.TotalAmount ₼</td>
+                <td>
+                    <a asp-area="Admin"
+                       asp-controller="Order"
+                       asp-action="EditAddress"
+                       asp-route-orderId="@order.Id"
+                       class="btn btn-sm btn-warning">
+                        Edit Address
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

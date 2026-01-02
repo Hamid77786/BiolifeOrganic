@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using BiolifeOrganic.Bll.Services.Contracts;
 using BiolifeOrganic.Bll.ViewModels.CheckOut;
+using BiolifeOrganic.Bll.ViewModels.Contact;
 using BiolifeOrganic.Bll.ViewModels.Discount;
 using BiolifeOrganic.Bll.ViewModels.Order;
 using BiolifeOrganic.Dll.DataContext.Entities;
+using BiolifeOrganic.Dll.ReadModels.Contact;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 using BiolifeOrganic.MVC.Views.Admin.Order;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +51,13 @@ public class OrderManager : IOrderService
 
         }).ToList();
     }
+   
+    public async Task<OrderDetailsViewModel?> GetOrderDetailsForAdminAsync(int orderId)
+    {
+        var order = await _orderRepository.GetOrderWithDetailsAsync(orderId);
+        return order == null ? null : _mapper.Map<OrderDetailsViewModel>(order);
+    }
+
     public async Task<OrderDetailsViewModel?> GetOrderDetailsAsync(int orderId, string userId)
     {
         var order = await _orderRepository.GetOrderWithDetailsAsync(orderId, userId);
@@ -85,9 +94,20 @@ public class OrderManager : IOrderService
 
         if (order.ShippingContact != null)
         {
-            viewModel.ShippingContact =
-                $"{order.ShippingContact.Address}, {order.ShippingContact.City}, {order.ShippingContact.Country}";
+            viewModel.ShippingContact = new ContactViewModel
+            {
+                Id = order.ShippingContact.Id,
+                FirstName = order.ShippingContact.FirstName,
+                LastName = order.ShippingContact.LastName,
+                Address = order.ShippingContact.Address,
+                City = order.ShippingContact.City,
+                Country = order.ShippingContact.Country,
+                PostalCode = order.ShippingContact.PostalCode,
+                Phone = order.ShippingContact.PhoneNumber,
+                Email = order.ShippingContact.Email
+            };
         }
+
 
 
         return viewModel;
@@ -227,8 +247,72 @@ public class OrderManager : IOrderService
         return order == null ? null : _mapper.Map<OrderDetailsViewModel>(order);
     }
 
-   
-    
+    public async Task<bool> DeleteUserOrderAsync(int orderId, string userId)
+    {
+        var order = await _orderRepository.GetAsync(
+            o => o.Id == orderId && o.AppUserId == userId,
+            include: q => q.Include(o => o.OrderItems)
+        );
+
+        if (order == null)
+            return false;
+
+        if (order.Status != OrderStatus.OnHold)
+            throw new Exception("You cannot delete this order");
+
+        await _orderRepository.DeleteAsync(order);
+        return true;
+    }
+
+    public async Task UpdateShippingAddressAsync(UpdateContactViewModel model, string userId)
+    {
+        var readModel = new UpdateShippingContactRM
+        {
+            OrderId = model.OrderId,
+            ContactId = model.Id,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Company = model.Company,
+            Address = model.Address,
+            City = model.City,
+            Country = model.Country,
+            PostalCode = model.PostalCode,
+            PhoneNumber = model.PhoneNumber,
+            Email = model.Email,
+            IsDefault = model.IsDefault
+        };
+
+        await _orderRepository.UpdateShippingContactAsync(readModel, userId);
+    }
+
+
+    public async Task<UpdateContactViewModel?> GetShippingContactForEditAsync(int orderId, string userId)
+    {
+        var contactRead = await _orderRepository.GetShippingContactForEditAsync(orderId, userId);
+
+        if (contactRead == null)
+            return null;
+
+        return new UpdateContactViewModel
+        {
+            OrderId = contactRead.OrderId,
+            Id = contactRead.ContactId,
+            FirstName = contactRead.FirstName,
+            LastName = contactRead.LastName,
+            Company = contactRead.Company,
+            Address = contactRead.Address,
+            City = contactRead.City,
+            Country = contactRead.Country,
+            PostalCode = contactRead.PostalCode,
+            PhoneNumber = contactRead.PhoneNumber,
+            Email = contactRead.Email,
+            IsDefault = contactRead.IsDefault
+        };
+    }
+
+
+
+
 
 
 

@@ -9,6 +9,10 @@ public class RegisterViewModel
     [DataType(DataType.EmailAddress)]
     public required string Email { get; set; }
 
+    [Phone]
+    [Display(Name = "Phone Number")]
+    public string? PhoneNumber { get; set; }
+
     [DataType(DataType.Password)]
     public required string Password { get; set; }
 

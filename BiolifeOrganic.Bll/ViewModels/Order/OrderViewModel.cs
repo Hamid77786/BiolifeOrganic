@@ -1,4 +1,6 @@
-﻿namespace BiolifeOrganic.Bll.ViewModels.Order;
+﻿using BiolifeOrganic.Bll.ViewModels.Contact;
+
+namespace BiolifeOrganic.Bll.ViewModels.Order;
 
 
 public class OrderListViewModel
@@ -28,7 +30,9 @@ public class OrderDetailsViewModel
     public decimal DiscountAmount { get; set; }
     public decimal DiscountPercentage { get; set; }
     public string? DiscountCode { get; set; }
-    public string ShippingContact { get; set; } = string.Empty;
+    public ContactViewModel? ShippingContact { get; set; } 
+    public ContactViewModel? BillingContact { get; set; }  
+
     public string? CourierService { get; set; }
     public string? TrackingNumber { get; set; }
     public string? Warehouse { get; set; }

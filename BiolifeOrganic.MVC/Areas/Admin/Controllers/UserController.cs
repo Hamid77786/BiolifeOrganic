@@ -1,4 +1,5 @@
 ﻿using BiolifeOrganic.Bll.Services.Contracts;
+using BiolifeOrganic.Bll.ViewModels.Contact;
 using BiolifeOrganic.Bll.ViewModels.User;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -9,11 +10,13 @@ namespace BiolifeOrganic.MVC.Areas.Admin.Controllers;
 public class UserController : AdminController
 {
     private readonly IUserService _userService;
+    private readonly IContactService _contactService;
     private readonly UserManager<AppUser> _userManager;
-    public UserController(UserManager<AppUser> userManager, IUserService userService)
+    public UserController(IContactService contactService,UserManager<AppUser> userManager, IUserService userService)
     {
         _userService = userService;
         _userManager = userManager;
+        _contactService = contactService;
     }
     public async Task<IActionResult> Index()
     {
@@ -49,18 +52,57 @@ public class UserController : AdminController
     [HttpPost]
     public async Task<IActionResult> Delete(string id)
     {
-        var user = await _userManager.FindByIdAsync(id);
-        if (user == null) return NotFound();
+        var currentUserId = _userManager.GetUserId(User);
+        if (currentUserId == null) return NotFound();
 
-        var result = await _userManager.DeleteAsync(user);
-        if (!result.Succeeded)
-            return BadRequest(result.Errors);
+        var result = await _userService.DeleteUserAsync(id, currentUserId);
 
-        return Ok();
+        return Json(new
+        {
+            success = result.Success,
+            errorMessage = result.ErrorMessage
+        });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Deleted()
+    {
+        var users = await _userService.GetDeletedUsersAsync();
+        return View(users);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Restore(string id)
+    {
+        var success = await _userService.RestoreUserAsync(id);
+
+        return Json(new
+        {
+            success,
+            message = success ? null : "Restore failed"
+        });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Contacts(string userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+            return BadRequest();
+
+        var contacts = await _contactService.GetUserAddressesAsync(userId);
+
+        ViewBag.UserId = userId;
+        return View(contacts);
     }
 
    
-    
+
+
+
+
+
+
+
 
 
 

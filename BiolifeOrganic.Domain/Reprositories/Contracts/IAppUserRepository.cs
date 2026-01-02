@@ -8,4 +8,6 @@ public interface IAppUserRepository
    
     Task<List<UserRM>> GetAllUsersForAdminAsync();
     Task<UserDetailsRM?> GetUserDetailsAsync(string userId);
+    Task<List<AppUser>> GetDeletedUsersAsync();
+
 }

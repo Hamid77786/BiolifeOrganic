@@ -20,6 +20,7 @@ using BiolifeOrganic.Dll.ReadModels.User;
 using BiolifeOrganic.Dll.ReadModels.Order;
 using BiolifeOrganic.Dll.ReadModels.Wislist;
 using BiolifeOrganic.Dll.ReadModels.UserDiscount;
+using BiolifeOrganic.Dll.ReadModels.Contact;
 
 
 namespace BiolifeOrganic.Bll.Mapping;
@@ -47,6 +48,8 @@ public class MappingProfile:Profile
 
 
         CreateMap<Contact, ContactViewModel>()
+            .ForMember(d => d.Phone,
+                o => o.MapFrom(s => s.PhoneNumber))
             .ForMember(dest => dest.AppUserUserName,
                        opt => opt.MapFrom(src => src.AppUser!.UserName))
             .ForMember(
@@ -64,11 +67,21 @@ public class MappingProfile:Profile
                 opt => opt.MapFrom(src => src.LastName)
             );
 
+        CreateMap<ShippingContactRM, UpdateContactViewModel>()
+          .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ContactId));
+
+        CreateMap<UpdateContactViewModel, UpdateShippingContactRM>()
+            .ForMember(dest => dest.ContactId, opt => opt.MapFrom(src => src.Id));
 
 
 
-        CreateMap<CreateContactViewModel, Contact>();
-        CreateMap<UpdateContactViewModel, Contact>().ReverseMap();
+
+        CreateMap<CreateContactViewModel, Contact>()
+        .ForMember(d => d.PhoneNumber,
+                o => o.MapFrom(s => s.PhoneNumber));
+        CreateMap<UpdateContactViewModel, Contact>()
+            .ForMember(d => d.PhoneNumber,
+                o => o.MapFrom(s => s.PhoneNumber)).ReverseMap();
 
 
       
@@ -157,7 +170,23 @@ public class MappingProfile:Profile
         CreateMap<UserDetailsRM, UserDetailsViewModel>();
 
         CreateMap<OrderListRM, OrderListViewModel>();
-        CreateMap<OrderDetailsRM, OrderDetailsViewModel>();
+
+        CreateMap<OrderDetailsRM, OrderDetailsViewModel>()
+            .ForMember(dest => dest.ShippingContact, opt => opt.MapFrom(src => new ContactViewModel
+            {
+                Id = src.ShippingContactId,
+                FirstName = src.ShippingFirstName,
+                LastName = src.ShippingLastName,
+                Address = src.ShippingAddress,
+                City = src.ShippingCity,
+                Country = src.ShippingCountry,
+                PostalCode = src.ShippingPostalCode,
+                Phone = src.ShippingPhone,
+                Email = src.ShippingEmail
+            }))
+            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
+
+
         CreateMap<OrderItemRM, OrderItemViewModel>();
 
         CreateMap<WishlistRM, WishlistViewModel>();

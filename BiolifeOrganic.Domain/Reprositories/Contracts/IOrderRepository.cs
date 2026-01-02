@@ -1,4 +1,5 @@
 ﻿using BiolifeOrganic.Dll.DataContext.Entities;
+using BiolifeOrganic.Dll.ReadModels.Contact;
 using BiolifeOrganic.Dll.ReadModels.Order;
 using System.Linq.Expressions;
 
@@ -13,6 +14,10 @@ public interface IOrderRepository : IRepository<Order>
     Task<int> CountAsync(string userId);
     Task<List<OrderListRM>> GetOrdersForUserAsync(string userId);
     Task<OrderDetailsRM?> GetOrderDetailsAsync(int orderId);
+    Task<Order?> GetOrderWithDetailsAsync(int orderId);
+    Task<ShippingContactRM?> GetShippingContactForEditAsync(int orderId, string userId);
+    Task UpdateShippingContactAsync(UpdateShippingContactRM model, string userId);
+
 
 }
 

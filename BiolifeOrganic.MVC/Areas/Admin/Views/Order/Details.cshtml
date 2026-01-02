@@ -7,6 +7,24 @@
 <p>Total: @Model.TotalAmount ₼</p>
 
 <hr />
+@if (@Model.ShippingContact !=null)
+{
+    <h4>Shipping Address</h4>
+    <a asp-area="Admin"
+       asp-controller="Order"
+       asp-action="EditAddress"
+       asp-route-orderId="@Model.Id"
+       class="btn btn-sm btn-warning">
+        Edit Address
+    </a>
+    <a class="btn btn-info btn-sm mb-1"
+       asp-controller="User"
+       asp-action="index"
+      >
+        Cancel
+    </a>
+}
+<hr />
 
 <h4>Items (@Model.OrderItems.Count)</h4>
 <table class="table table-bordered table-striped">

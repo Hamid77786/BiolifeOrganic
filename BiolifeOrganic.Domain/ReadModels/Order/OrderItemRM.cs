@@ -48,7 +48,17 @@ public class OrderDetailsRM
     public decimal DiscountPercentage { get; set; }
     public string? DiscountCode { get; set; }
 
-    public string ShippingContact { get; set; } = string.Empty;
+    public int ShippingContactId { get; set; }
+    public string ShippingFirstName { get; set; } = string.Empty;
+    public string ShippingLastName { get; set; } = string.Empty;
+    public string ShippingAddress { get; set; } = string.Empty;
+    public string ShippingCity { get; set; } = string.Empty;
+    public string ShippingCountry { get; set; } = string.Empty;
+    public string ShippingPostalCode { get; set; } = string.Empty;
+    public string ShippingPhone { get; set; } = string.Empty;
+    public string ShippingEmail { get; set; } = string.Empty;
+
+
     public string? CourierService { get; set; }
     public string? TrackingNumber { get; set; }
     public string? Warehouse { get; set; }

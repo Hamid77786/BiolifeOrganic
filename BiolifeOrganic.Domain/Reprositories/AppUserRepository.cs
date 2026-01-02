@@ -56,6 +56,7 @@ public class AppUserRepository:IAppUserRepository
                 Id = u.Id,
                 UserName = u.UserName,
                 Email = u.Email,
+                PhoneNumber = u.PhoneNumber,
                 IsBlocked = u.LockoutEnd != null && u.LockoutEnd > DateTimeOffset.UtcNow,
                 IsAdmin = _context.UserRoles
                     .Any(ur => ur.UserId == u.Id &&
@@ -72,12 +73,13 @@ public class AppUserRepository:IAppUserRepository
                     DiscountAmount = o.DiscountAmount,
                     DiscountPercentage = o.DiscountPercentage,
                     DiscountCode = o.DiscountCode,
-                    ShippingContact = o.ShippingContact.Address,
                     CourierService = o.CourierService,
                     TrackingNumber = o.TrackingNumber,
                     Warehouse = o.Warehouse,
                     EstimatedDeliveryDate = o.EstimatedDeliveryDate,
                     ShippedDate = o.ShippedDate,
+
+
 
                     OrderItems = o.OrderItems.Select(i => new OrderItemRM
                     {
@@ -123,5 +125,14 @@ public class AppUserRepository:IAppUserRepository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task<List<AppUser>> GetDeletedUsersAsync()
+    {
+        return await _context.Users
+            .IgnoreQueryFilters()     
+            .Where(u => u.IsDeleted)
+            .ToListAsync();
+    }
+
 
 }

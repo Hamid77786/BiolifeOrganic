@@ -95,6 +95,14 @@ public class AppDbContext: IdentityDbContext<AppUser>
             .HasForeignKey(ud => ud.AppUserId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Entity<AppUser>()
+        .HasIndex(u => u.PhoneNumber)
+        .IsUnique();
+
+        builder.Entity<AppUser>()
+        .HasQueryFilter(u => !u.IsDeleted);
+
+
 
         base.OnModelCreating(builder);
         

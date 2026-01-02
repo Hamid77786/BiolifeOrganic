@@ -7,6 +7,7 @@ using BiolifeOrganic.Bll.ViewModels.Wishlist;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BiolifeOrganic.Bll.Services;
 
@@ -83,6 +84,65 @@ public class UserService:IUserService
         var user = await _userRepository.GetUserDetailsAsync(userId);
         return user == null ? null : _mapper.Map<UserDetailsViewModel>(user);
     }
+
+    public async Task<DeleteUserResult> DeleteUserAsync(string targetUserId, string currentUserId)
+    {
+        var user = await _userManager.FindByIdAsync(targetUserId);
+        if (user == null)
+            return new DeleteUserResult { Success = false, ErrorMessage = "User not found" };
+
+        if (await _userManager.IsInRoleAsync(user, "Admin"))
+            return new DeleteUserResult { Success = false, ErrorMessage = "Admin users cannot be deleted" };
+
+        if (user.Id == currentUserId)
+            return new DeleteUserResult { Success = false, ErrorMessage = "You cannot delete yourself" };
+
+        user.IsDeleted = true;
+        user.DeletedAt = DateTime.UtcNow;
+        user.UpdatedAt = DateTime.UtcNow;
+        user.LockoutEnabled = true;
+        user.LockoutEnd = DateTimeOffset.MaxValue;
+
+        var updateResult = await _userManager.UpdateAsync(user);
+        if (!updateResult.Succeeded)
+        {
+            return new DeleteUserResult
+            {
+                Success = false,
+                ErrorMessage = string.Join(", ", updateResult.Errors.Select(e => e.Description))
+            };
+        }
+
+        return new DeleteUserResult { Success = true };
+    }
+
+    public async Task<List<UserViewModel>> GetDeletedUsersAsync()
+    {
+        var users = await _userRepository.GetDeletedUsersAsync();
+        return _mapper.Map<List<UserViewModel>>(users);
+    }
+
+    public async Task<bool> RestoreUserAsync(string userId)
+    {
+        var user = await _userManager.Users
+            .IgnoreQueryFilters()
+            .FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user == null || !user.IsDeleted)
+            return false;
+
+        user.IsDeleted = false;
+        user.DeletedAt = null;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        user.LockoutEnd = null;
+
+        var result = await _userManager.UpdateAsync(user);
+        return result.Succeeded;
+    }
+
+
+
 
 
 }

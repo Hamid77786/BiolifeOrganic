@@ -11,6 +11,11 @@ public interface IUserService
     Task ToggleBlockAsync(string userId);
     Task ToggleAdminRoleAsync(string userId);
     Task<UserDetailsViewModel?> GetUserDetailsAsync(string userId);
+    Task<DeleteUserResult> DeleteUserAsync(string targetUserId, string currentUserId);
+    Task<List<UserViewModel>> GetDeletedUsersAsync();
+    Task<bool> RestoreUserAsync(string userId);
+
+
 
 
 

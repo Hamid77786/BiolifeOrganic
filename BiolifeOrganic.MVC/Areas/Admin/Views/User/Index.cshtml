@@ -62,6 +62,16 @@
                                             @(user.IsAdmin ? "Revoke Admin" : "Make Admin")
                                         </button>
                                     </td>
+                                    <td>
+                                        <a asp-area="Admin"
+                                           asp-controller="User"
+                                           asp-action="Contacts"
+                                           asp-route-userId="@user.Id"
+                                           class="btn btn-sm btn-info">
+                                            Contacts
+                                        </a>
+
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -83,15 +93,30 @@
     }
 
     function deleteUser(userId, userName) {
-        if (!confirm(`Are you sure you want to delete user "${userName}" and all their data?`)) return;
+        if (!confirm(`Are you sure you want to delete user "${userName}" and all their data?`))
+            return;
 
-        fetch(`/Admin/User/Delete/${userId}`, { method: 'POST' })
-            .then(() => location.reload())
-            .catch(err => {
-                console.error(err);
-                alert('Error deleting user!');
-            });
+        fetch(`/Admin/User/Delete/${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+            if (response.success) {
+                location.reload();
+            } else {
+                alert(response.errorMessage);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Error deleting user!');
+        });
     }
+
+    
 
     function toggleAdmin(userId) {
         fetch(`/Admin/User/ToggleAdminRole/${userId}`, { method: 'POST' })
