@@ -16,13 +16,15 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
     private readonly ICategoryService _categoryService;
     private readonly FileService _fileService;
     private readonly IMapper _mapper;
+    private readonly INewsletterService _newsletterService;
 
-    public ProductManager(IProductRepository repository,ICategoryService categoryService,FileService fileService, IMapper mapper) : base(repository, mapper)
+    public ProductManager(INewsletterService newsletterService,IProductRepository repository,ICategoryService categoryService,FileService fileService, IMapper mapper) : base(repository, mapper)
     {
         _productRepository = repository;
         _categoryService = categoryService;
         _fileService = fileService;
         _mapper = mapper;
+        _newsletterService = newsletterService;
     }
 
 
@@ -146,6 +148,18 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
         }
 
         await _productRepository.CreateAsync(product);
+
+        if (_newsletterService != null)
+        {
+            string subject = $"New Product: {product.Name}";
+            string htmlMessage = $@"
+            <h2>New Product Added!</h2>
+            <p>{product.Name} is now available at Biolife Organic.</p>
+            <p>{product.Description}</p> ";
+            
+
+            await _newsletterService.SendPromotionEmailAsync(subject, htmlMessage);
+        }
     }
 
     public  async Task<bool> UpdateProductAsync(int id, UpdateProductViewModel model)
@@ -154,7 +168,10 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
         if (product == null)
             throw new Exception("Product not found");
 
-        
+        bool wasOnSale = product.IsOnSale;
+
+
+
         product.Name = model.Name!;
         product.Description = model.Description;
         product.AdditionalInformation = model.AdditionalInformation;
@@ -224,6 +241,18 @@ public class ProductManager : CrudManager<Product, ProductViewModel, CreateProdu
         }
 
         await _productRepository.UpdateAsync(product);
+
+        if (!wasOnSale && product.IsOnSale && _newsletterService != null)
+        {
+            string subject = $"Sale Alert: {product.Name} is now on sale!";
+            string htmlMessage = $@"
+            <h2>{product.Name} is on Sale!</h2>
+            <p>{product.Description}</p>
+            <p>Don't miss the chance to get it at a discounted price!</p> ";
+       
+
+            await _newsletterService.SendPromotionEmailAsync(subject, htmlMessage);
+        }
 
         return true;
     }

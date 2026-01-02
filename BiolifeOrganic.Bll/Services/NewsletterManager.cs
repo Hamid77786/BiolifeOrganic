@@ -1,4 +1,5 @@
 ﻿using BiolifeOrganic.Bll.Services.Contracts;
+using BiolifeOrganic.Bll.ViewModels.Subscriber;
 using BiolifeOrganic.Dll.DataContext.Entities;
 using BiolifeOrganic.Dll.Reprositories.Contracts;
 
@@ -48,4 +49,15 @@ public class NewsletterManager : INewsletterService
             "<h2>You are successfully subscribed!</h2><p>You will now receive updates about discounts and new products.</p>"
         );
     }
+
+    public async Task<List<SubscriberViewModel>> GetAllSubscribersAsync()
+    {
+        var subscribers = await _newsletterRepository.GetAllAsync();
+        return subscribers.Select(s => new SubscriberViewModel
+        {
+            Email = s.Email,
+            SubscribedAt = s.SubscribedAt
+        }).ToList();
+    }
+
 }

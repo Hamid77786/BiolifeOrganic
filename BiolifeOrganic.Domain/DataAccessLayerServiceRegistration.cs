@@ -16,6 +16,7 @@ public static class DataAccessLayerServiceRegistration
           option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), option =>
           {
               option.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
+              option.CommandTimeout(60);
           }));
 
         services.AddScoped<DataInitializer>();

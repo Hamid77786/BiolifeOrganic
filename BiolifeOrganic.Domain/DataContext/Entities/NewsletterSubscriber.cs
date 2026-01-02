@@ -2,9 +2,8 @@
 
 namespace BiolifeOrganic.Dll.DataContext.Entities;
 
-public class NewsletterSubscriber:Entity
+public class NewsletterSubscriber:TimeStample
 {
-    public int Id { get; set; }
 
     [Required, EmailAddress]
     public string Email { get; set; } = null!;

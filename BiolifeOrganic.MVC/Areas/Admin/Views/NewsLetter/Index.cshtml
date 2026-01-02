@@ -1,0 +1,43 @@
+﻿@using BiolifeOrganic.Bll.ViewModels.Subscriber
+@model List<SubscriberViewModel>
+
+<div class="row">
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Subscribes</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Subscribed At</th>
+                             </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var sub in Model)
+                            {
+                                <tr>
+                                    <td>@sub.Email</td>
+                                    <td>@sub.SubscribedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                    
+                    
+                    
+                    
+                    
+
+
+               
+               
+                
